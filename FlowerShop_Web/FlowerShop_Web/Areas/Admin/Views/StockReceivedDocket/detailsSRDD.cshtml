@@ -1,0 +1,91 @@
+﻿@using Flower_Repository;
+@model IEnumerable<Flower_Models.StockReceivedDocketDetails>
+@{
+    ViewData["Title"] = "detailsSRDD";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+@inject ApplicationDbContext _context
+<h1>detailsSRDD</h1>
+
+<body>
+    <div class="w-full space-y-4 px-20 py-12">
+        <div class="flex flex-wrap items-end justify-between space-y-4 lg:space-y-0">
+            @{
+                var today = DateTime.Now;
+                var thenextday = today.AddDays(2);
+            }
+            <h2 class="w-full text-4xl font-bold uppercase lg:w-auto">Goods received note</h2>
+            <p>No. <span class="text-2xl font-bold">001</span></p>
+            <p>Date: <span class="text-2xl font-bold">@thenextday</span></p>
+         @*    <p>Total: <span class="text-2xl font-bold">$120</span></p> *@
+            <button class="min-w-fit rounded-sm border bg-black px-4 py-2 text-white hover:border-black">
+                <a href="orderconfirmed.html">Add</a>
+            </button>
+        </div>
+        <div class="space-y-8 rounded-lg p-12 shadow-lg">
+            <div class="flex items-end justify-between">
+                <div class="w-full space-y-1">
+                    <p class="text-3xl font-medium text-blue-600">Store 1</p>
+                    <p><b>Address:</b> Nguyen Thai Binh street, Ward 4, District 1, HCM city</p>
+                </div>
+                <div class="w-full space-y-1">
+                    <p><b>Supplier:</b> Store 2</p>
+                    <p><b>Address:</b> Ward 7, HCM city</p>
+                </div>
+            </div>
+            <div class="container mx-auto overflow-auto">
+                <table class="w-full table-auto border-separate border-spacing-x-12 border-spacing-y-2 border p-2 text-center">
+                    <thead>
+                        <tr>
+                            <th>No.</th>
+                            <th>Material Name</th>
+                            <th>Material ID</th>
+                            <th>Calculation Unit</th>
+                            <th>Unit Price</th>
+                            <th>Quantity</th>
+                            <th>Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            var count = 1;
+                            var totalAll = 0.0;
+                            var totalQuantity = 0;
+                        }
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@count</td>
+                                @{
+                                    count++;
+                                    var material = _context.Materials.Where(x => x.ID_Material == item.ID_Material).FirstOrDefault();
+                                    var total = material.Price_Material * item.StockReceived_Quantity;
+                                    totalAll += total;
+                                    totalQuantity += item.StockReceived_Quantity;
+                                }
+                                <td>@material.Name_Material</td>
+                                <td>@item.ID_Material</td>
+                                <td>Flower</td>
+                                <td>$@material.Price_Material</td>
+                                <td>@item.StockReceived_Quantity</td>
+                                <td>$@total</td>
+                            </tr>
+                        }
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th colspan="5" class="border bg-gray-50 py-1">Total</th>
+                            <th>@totalQuantity</th>
+                            <th>$@totalAll</th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+            <div class="flex justify-between">
+                <p><b>Vote maker:</b> Manager</p>
+                <p><b>Received by:</b> Staff A</p>
+            </div>
+        </div>
+    </div>
+</body>

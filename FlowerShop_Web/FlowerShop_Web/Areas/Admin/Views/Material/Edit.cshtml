@@ -1,0 +1,66 @@
+﻿@model Flower_Models.Material
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Edit</h1>
+
+<h4>Material</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit" method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="ID_Material" class="control-label"></label>
+                <input asp-for="ID_Material" class="form-control" readonly />
+                <span asp-validation-for="ID_Material" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ID_MaterialType" class="control-label"></label>
+                <select asp-for="ID_MaterialType" class="form-control" asp-items="@ViewBag.MaterialType">
+                    <option>Select Material Type</option>
+                </select>
+                <span asp-validation-for="ID_MaterialType" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Name_Material" class="control-label"></label>
+                <input asp-for="Name_Material" class="form-control" />
+                <span asp-validation-for="Name_Material" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ImportAt" class="control-label"></label>
+                <input asp-for="ImportAt" class="form-control" />
+                <span asp-validation-for="ImportAt" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EXP_Material" class="control-label"></label>
+                <input asp-for="EXP_Material" class="form-control" />
+                <span asp-validation-for="EXP_Material" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Price_Material" class="control-label"></label>
+                <input asp-for="Price_Material" class="form-control" />
+                <span asp-validation-for="Price_Material" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Img_Material" class="control-label"></label>
+                <input asp-for="Img_Material" type="file" class="form-control" />
+                <span asp-validation-for="Img_Material" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

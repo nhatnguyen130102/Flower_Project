@@ -1,0 +1,89 @@
+﻿@model IEnumerable<Flower_Models.StockReceivedDocket>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Index</h1>
+<p>
+    <a asp-action="CreateSRD">CreateSRD</a>
+</p>
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ID_StockReceivedDocket)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ID_Shop)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreatedAt)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsActive)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Received)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ReceivedAt)
+            </th>
+
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ID_StockReceivedDocket)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ID_Shop)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreatedAt)
+                </td>
+                @if (item.Received == false)
+                {
+                    <td>
+                        <a asp-action="isActive" asp-controller="StockReceivedDocket" asp-route-id="@item.ID_StockReceivedDocket">@item.IsActive</a>
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        @item.IsActive
+                    </td>
+                }
+
+                @if (item.IsActive == true)
+                {
+                    <td>
+                        <a asp-action="Received" asp-controller="StockReceivedDocket" asp-route-id="@item.ID_StockReceivedDocket">@item.Received</a>
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        @item.Received
+                    </td>
+                }
+                <td>
+                    @Html.DisplayFor(modelItem => item.ReceivedAt)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "CreateNext", new { id = item.ID_StockReceivedDocket  }) |
+                    @Html.ActionLink("Details", "detailsSRDD", new { id = item.ID_StockReceivedDocket }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.ID_StockReceivedDocket  })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

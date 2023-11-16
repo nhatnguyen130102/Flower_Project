@@ -1,0 +1,425 @@
+﻿@model Flower_Models.Product
+
+@{
+    ViewData["Title"] = "ProductDetails";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@inject ApplicationDbContext _context;
+@using Flower_Repository;
+@using Flower_ViewModels;
+@using Microsoft.AspNetCore.Identity;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Product's Details</title>
+    <meta name="description" content="Free open source Tailwind CSS Store template" />
+    <meta name="keywords" content="tailwind,tailwindcss,tailwind css,css,starter template,free template,store template, shop layout, minimal, monochrome, minimalistic, theme, nordic" />
+
+    <link rel="stylesheet" href="https://unpkg.com/tailwindcss@2.2.19/dist/tailwind.min.css" />
+
+    <link href="https://fonts.googleapis.com/css?family=Work+Sans:200,400&display=swap" rel="stylesheet" />
+
+    <script src="https://kit.fontawesome.com/6e08fcf7ad.js" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <style>
+        .work-sans {
+            font-family: 'Work Sans', sans-serif;
+        }
+
+        #menu-toggle:checked + #menu {
+            display: block;
+        }
+
+        .group-hover\:grow {
+            transition: all 0.3s;
+            transform: scale(1);
+        }
+
+            .group-hover\:grow:group-hover {
+                transform: scale(1.02);
+            }
+
+        .group:group-hover .group-group-hover\:block {
+            display: block !important;
+        }
+    </style>
+</head>
+
+<body class="work-sans bg-white text-base leading-normal tracking-normal text-gray-600">
+    <!--Nav-->
+
+    <hr class="opacity-50 mb-8 md:mb-0">
+    <!--
+      sm	640px
+      md	768px
+      lg	1024px
+      xl	1280px
+      2xl	1536px -->
+    <!-- detail -->
+    <div class="mx-20 grid grid-cols-1 lg:grid-cols-3 lg:gap-x-12">
+        <div class="min-w-full md:mt-8">
+            <img src="\@Model.Img_Product " alt="" class="h-auto w-auto object-cover rounded-sm" />
+        </div>
+        <div class="col-span-2 w-full ms-0 mt-4 lg:ms-12">
+            <div class="mb-4 pt-6 grid grid-cols-1 gap-y-4 md:gap-y-0 md:grid-cols-2">
+                <h1 class="text-5xl">@Model.Name_Product</h1>
+                <div class="md:justify-self-end">
+                    <button title="review" class="group">
+                        <i class="fa-solid fa-star text-yellow-400"></i>
+                        <i class="fa-solid fa-star text-yellow-400"></i>
+                        <i class="fa-solid fa-star text-yellow-400"></i>
+                        <i class="fa-solid fa-star text-yellow-400"></i>
+                        <i class="fa-solid fa-star text-yellow-400"></i>
+                    </button>
+                    | 2 reviews
+                </div>
+            </div>
+            <a href="" class="text-2xl font-thin text-gray-600">Roses and Freesias</a>
+            <h3 class="text-xl font-normal text-black mt-2">
+                Grab your welcome 15% discount gift, use the code
+                <span class="text-orange-600 font-bold">FIRSTBLOOM</span>
+                at the checkout and let the fun begin
+            </h3>
+            <div class="mx-4 my-6 grid grid-cols-2 md:grid-cols-3 gap-4 sm:mx-0 sm:gap-2">
+                <div class="group">
+                    <div class="h-32 w-full rounded-lg border border-gray-400 group-checked:border-black group-hover:border-orange-600">
+                        <div class="grid grid-cols-2 px-4 py-4 lg:px-6">
+                            <div>
+                                <img src="https://www.floraqueen.com/_ipx/q_80/images/icons/icon-flower-option-1.svg" alt="" />
+                            </div>
+                            <div class="justify-self-end text-end">
+                                <h4 class="text-center text-xl font-medium">Classic</h4>
+                                <h5 class="pt-3 text-lg text-gray-600 line-through">£12.00</h5>
+                                <h5 class="text-lg font-bold text-orange-600">£9.99</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="group">
+                    <div class="h-32 w-full rounded-lg border border-gray-400 group-checked:border-black group-hover:border-orange-600">
+                        <div class="grid grid-cols-2 px-4 py-4 lg:px-6">
+                            <div>
+                                <img src="https://www.floraqueen.com/_ipx/q_80/images/icons/icon-flower-option-1.svg" alt="" />
+                            </div>
+                            <div class="justify-self-end text-end">
+                                <h4 class="text-center text-xl font-medium">Premium</h4>
+                                <h5 class="pt-3 text-lg text-gray-600 line-through">£15.00</h5>
+                                <h5 class="text-lg font-bold text-orange-600">£13.39</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="group">
+                    <div class="h-32 w-full rounded-lg border border-gray-400 group-checked:border-black group-hover:border-orange-600">
+                        <div class="grid grid-cols-2 px-4 py-4 lg:px-6">
+                            <div>
+                                <img src="https://www.floraqueen.com/_ipx/q_80/images/icons/icon-flower-option-1.svg" alt="" />
+                            </div>
+                            <div class="justify-self-end text-end">
+                                <h4 class="text-center text-xl font-medium">Deluxe</h4>
+                                <h5 class="pt-3 text-lg text-gray-600 line-through">£17.00</h5>
+                                <h5 class="text-lg font-bold text-orange-600">£15.59</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <h3 class="text-xl font-normal text-gray-800"><span class="font-bold text-orange-600">Classic:</span> The classic size of a Bouquet, with the perfect balance of flowers.</h3>
+
+            @*     <a asp-action="AddToCart" asp-controller="Home" asp-route-id="@Model.ID_Product">
+            <button class="w-full h-14 mb-6 px-4 border border-gray-400 bg-black text-white rounded-lg text-xl font-bold hover:-translate-y-1">Add To Cart</button>
+            </a> *@
+            <a asp-action="AddToCart" asp-controller="Cart" asp-route-id="@Model.ID_Product">
+                <button class="w-full h-14 mt-2 mb-6 px-4 border border-gray-400 bg-black text-white rounded-lg text-xl font-bold hover:-translate-y-1">Add To Cart</button>
+            </a>
+        </div>
+    </div>
+
+    <div class="mx-20 space-y-4">
+        <hr>
+        <!-- ingredients -->
+        <div class="mt-12">
+            <div class="w-full p-4 flex gap-4">
+                <h2 class="text-xl font-bold uppercase tracking-wide text-gray-900">Includes:</h2>
+                @{
+                    var item = _context.Recipes.Where(x => x.ID_Product == Model.ID_Product).ToList();
+                }
+                @foreach (var a in item)
+                {
+                    <div>
+                        @{
+                            var material = _context.Materials.Where(x => x.ID_Material == a.ID_Material).FirstOrDefault();
+                        }
+                        <img src="\@material.Img_Material" alt="" class="w-28 h-28 object-cover rounded-full ring-1 ring-black">
+                    </div>
+                }
+                @*    <div>
+                <img src="https://i.pinimg.com/originals/a2/43/85/a24385b8ed8011b10db46d54698d68a9.gif" alt="" class="w-28 h-28 object-cover rounded-full ring-1 ring-black">
+                </div>
+                <div>
+                <img src="https://i.pinimg.com/564x/ca/5b/4f/ca5b4f002cc6a0a903e8085cae9e560c.jpg" alt="" class="w-28 h-28 object-cover rounded-full ring-1 ring-black">
+                </div>
+                <div>
+                <img src="https://i.pinimg.com/564x/7e/c2/14/7ec2143f2284a713d5dd05cf24b649cc.jpg" alt="" class="w-28 h-28 object-cover rounded-full ring-1 ring-black">
+                </div> *@
+            </div>
+        </div>
+        <hr>
+
+        <!-- description -->
+        <section class="w-full p-4">
+            <div class="container mx-auto">
+                <h2 class="mb-2 text-xl font-bold uppercase tracking-wide text-gray-900">About</h2>
+                <p class="mb-8">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vel risus commodo viverra maecenas accumsan lacus vel facilisis volutpat. Vitae aliquet nec ullamcorper sit. Nullam eget felis eget nunc lobortis mattis aliquam. In est ante in nibh mauris. Egestas congue quisque egestas diam in. Facilisi nullam vehicula ipsum a arcu. Nec nam aliquam sem et tortor consequat. Eget mi proin sed libero enim sed faucibus turpis in. Hac habitasse platea dictumst quisque. In aliquam sem fringilla ut. Gravida rutrum quisque non tellus orci ac auctor augue mauris. Accumsan lacus vel facilisis volutpat est velit egestas dui id. At tempor commodo ullamcorper a. Volutpat commodo sed egestas egestas fringilla. Vitae congue eu consequat ac.</p>
+            </div>
+        </section>
+        <hr>
+
+        <!-- reviews -->
+        <div class="w-full p-4">
+            <h2 class="text-xl font-bold uppercase tracking-wide text-gray-900 mb-4">What are our customers saying</h2>
+            <div class="mb-2 text-base">
+                <button title="review" class="group">
+                    <i class="fa-solid fa-star text-yellow-400"></i>
+                    <i class="fa-solid fa-star text-yellow-400"></i>
+                    <i class="fa-solid fa-star text-yellow-400"></i>
+                    <i class="fa-solid fa-star text-yellow-400"></i>
+                    <i class="fa-solid fa-star text-yellow-400"></i>
+                </button>
+                | 2023-10-14
+                <br>
+                Timely and beautiful. Thank you! <br>
+                <span class="font-light">
+                    by Adina Oprea
+                </span>
+            </div>
+            <div class="mb-4 text-base">
+                <button title="review" class="group">
+                    <i class="fa-solid fa-star text-yellow-400"></i>
+                    <i class="fa-solid fa-star text-yellow-400"></i>
+                    <i class="fa-solid fa-star text-yellow-400"></i>
+                    <i class="fa-solid fa-star text-yellow-400"></i>
+                    <i class="fa-solid fa-star text-yellow-400"></i>
+                </button>
+                | 2023-10-10
+                <br>
+                Great service fast and on time! <br>
+                <span class="font-light">
+                    by Ines De Blasi | Da Nang
+                </span>
+            </div>
+        </div>
+        <hr>
+
+        <!-- recommended products -->
+        @*  <div class="w-full p-4">
+        <h2 class="text-4xl text-center font-normal my-4">Bouquets you'll also love</h2>
+        <div class="container mx-auto flex flex-wrap items-center pb-12 pt-4">
+        <div class="flex w-full flex-col p-6 md:w-1/3 xl:w-1/4">
+        <a href="#">
+        <img class="transition-all hover:rounded-lg hover:shadow-lg hover:-translate-y-2" src="flower shop/1.jpg" alt="" />
+        <div class="px-1">
+        <div class="flex items-center justify-between pt-3">
+        <h4 class="text-xl">Product Name</h4>
+        <div class="flex space-x-2">
+        <i class="fa-solid fa-basket-shopping hover:text-blue-500"></i>
+        <i class="fa-regular fa-heart hover:text-red-500"></i>
+        </div>
+        </div>
+        <div class="grid grid-cols-2 text-gray-600">
+        <span>
+        5.0
+        <i class="fa-solid fa-star text-yellow-400"></i>
+        </span>
+        <span class="justify-self-end">100 sold</span>
+        </div>
+        <div class="grid grid-cols-2 mt-2">
+        <span class="font-normal">£9.99</span>
+        <span class="justify-self-end text-gray-400 line-through">£12.99</span>
+        </div>
+        </div>
+        </a>
+        </div>
+        <div class="flex w-full flex-col p-6 md:w-1/3 xl:w-1/4">
+        <a href="#">
+        <img class="transition-all hover:rounded-lg hover:shadow-lg hover:-translate-y-2" src="flower shop/2.jpg" alt="" />
+        <div class="px-1">
+        <div class="flex items-center justify-between pt-3">
+        <h4 class="text-xl">Product Name</h4>
+        <div class="flex space-x-2">
+        <i class="fa-solid fa-basket-shopping hover:text-blue-500"></i>
+        <i class="fa-regular fa-heart hover:text-red-500"></i>
+        </div>
+        </div>
+        <div class="grid grid-cols-2 text-gray-600">
+        <span>
+        5.0
+        <i class="fa-solid fa-star text-yellow-400"></i>
+        </span>
+        <span class="justify-self-end">100 sold</span>
+        </div>
+        <div class="grid grid-cols-2 mt-2">
+        <span class="font-normal">£9.99</span>
+        <span class="justify-self-end text-gray-400 line-through">£12.99</span>
+        </div>
+        </div>
+        </a>
+        </div>
+        <div class="flex w-full flex-col p-6 md:w-1/3 xl:w-1/4">
+        <a href="#">
+        <img class="transition-all hover:rounded-lg hover:shadow-lg hover:-translate-y-2" src="flower shop/3.jpg" alt="" />
+        <div class="px-1">
+        <div class="flex items-center justify-between pt-3">
+        <h4 class="text-xl">Product Name</h4>
+        <div class="flex space-x-2">
+        <i class="fa-solid fa-basket-shopping hover:text-blue-500"></i>
+        <i class="fa-regular fa-heart hover:text-red-500"></i>
+        </div>
+        </div>
+        <div class="grid grid-cols-2 text-gray-600">
+        <span>
+        5.0
+        <i class="fa-solid fa-star text-yellow-400"></i>
+        </span>
+        <span class="justify-self-end">100 sold</span>
+        </div>
+        <div class="grid grid-cols-2 mt-2">
+        <span class="font-normal">£9.99</span>
+        <span class="justify-self-end text-gray-400 line-through">£12.99</span>
+        </div>
+        </div>
+        </a>
+        </div>
+        <div class="flex w-full flex-col p-6 md:w-1/3 xl:w-1/4">
+        <a href="#">
+        <img class="transition-all hover:rounded-lg hover:shadow-lg hover:-translate-y-2" src="flower shop/4.jpg" alt="" />
+        <div class="px-1">
+        <div class="flex items-center justify-between pt-3">
+        <h4 class="text-xl">Product Name</h4>
+        <div class="flex space-x-2">
+        <i class="fa-solid fa-basket-shopping hover:text-blue-500"></i>
+        <i class="fa-regular fa-heart hover:text-red-500"></i>
+        </div>
+        </div>
+        <div class="grid grid-cols-2 text-gray-600">
+        <span>
+        5.0
+        <i class="fa-solid fa-star text-yellow-400"></i>
+        </span>
+        <span class="justify-self-end">100 sold</span>
+        </div>
+        <div class="grid grid-cols-2 mt-2">
+        <span class="font-normal">£9.99</span>
+        <span class="justify-self-end text-gray-400 line-through">£12.99</span>
+        </div>
+        </div>
+        </a>
+        </div>
+        </div>
+        </div> *@
+    </div>
+    <!-- footer -->
+    <footer class="w-full space-y-8 bg-black px-12 py-12 text-white">
+        <div class="space-y-4 border-white text-center lg:flex lg:justify-center lg:space-x-12 lg:space-y-0 lg:text-justify">
+            <h3 class="text-2xl lg:font-semibold">Signup to our newsletter</h3>
+            <div>
+                <div class="mb-2 block">
+                    <input type="email" name="" id="" placeholder="Enter your email address" required autocomplete="email" class="w-96 px-4 py-2" />
+                    <button class="border border-white px-4 py-2 hover:font-bold">Subscribe</button>
+                </div>
+                <input type="checkbox" name="" id="accept" class="me-1 h-3 w-3" />
+                <label for="accept">I accept <b>privacy policy.</b></label>
+            </div>
+        </div>
+        <hr class="opacity-50" />
+        <div class="grid grid-cols-3 text-center text-gray-400">
+            <div>
+                <ul>
+                    <b class="text-white">Trending cities</b>
+                    <li><a href="">Ho Chi Minh City</a></li>
+                    <li><a href="">Da Nang City</a></li>
+                    <li><a href="">Ha Noi City</a></li>
+                </ul>
+            </div>
+            <div>
+                <ul>
+                    <b class="text-white">Trending flowers</b>
+                    <li><a href="">Roses</a></li>
+                    <li><a href="">Lilies</a></li>
+                    <li><a href="">Gerberas</a></li>
+                    <li><a href="">Hydrangeas</a></li>
+                    <li><a href="">Sunflowers</a></li>
+                </ul>
+            </div>
+            <div>
+                <ul>
+                    <b class="text-white">Events & Occasions</b>
+                    <li><a href="">Happy Birthday</a></li>
+                    <li><a href="">Love</a></li>
+                    <li><a href="">Woman's Day</a></li>
+                    <li><a href="">Funeral</a></li>
+                </ul>
+            </div>
+        </div>
+        <hr class="opacity-50" />
+        <div class="grid grid-cols-4 text-center text-gray-400">
+            <div>
+                <ul>
+                    <b class="text-white">Company</b>
+                    <li><a href="">About us</a></li>
+                    <li><a href="">Contact us</a></li>
+                    <li><a href="">Frequently Asked Questions</a></li>
+                </ul>
+            </div>
+            <div>
+                <ul>
+                    <b class="text-white">Why <i>us</i>?</b>
+                    <li><a href="">Our magic</a></li>
+                    <li><a href="">Customer Reviews</a></li>
+                    <li><a href="">Blog</a></li>
+                </ul>
+            </div>
+            <div>
+                <ul>
+                    <b class="text-white">Policies</b>
+                    <li><a href="">Condition of purchase</a></li>
+                    <li><a href="">Privacy and Legal</a></li>
+                    <li><a href="">Sitemap</a></li>
+                </ul>
+            </div>
+            <div>
+                <b class="text-white">Connect With Us</b>
+                <hr class="my-2" />
+                <div class="flex justify-center space-x-8 px-8">
+                    <a href="">
+                        <svg fill="#fff" viewBox="0 0 24 24" class="h-10" xmlns="http://www.w3.org/2000/svg">
+                            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                            <g id="SVGRepo_iconCarrier"><path d="M12 2.03998C6.5 2.03998 2 6.52998 2 12.06C2 17.06 5.66 21.21 10.44 21.96V14.96H7.9V12.06H10.44V9.84998C10.44 7.33998 11.93 5.95998 14.22 5.95998C15.31 5.95998 16.45 6.14998 16.45 6.14998V8.61998H15.19C13.95 8.61998 13.56 9.38998 13.56 10.18V12.06H16.34L15.89 14.96H13.56V21.96C15.9164 21.5878 18.0622 20.3855 19.6099 18.57C21.1576 16.7546 22.0054 14.4456 22 12.06C22 6.52998 17.5 2.03998 12 2.03998Z"></path></g>
+                        </svg>
+                    </a>
+                    <a href="">
+                        <svg width="40px" height="40px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                            <g id="SVGRepo_iconCarrier">
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M12 18C15.3137 18 18 15.3137 18 12C18 8.68629 15.3137 6 12 6C8.68629 6 6 8.68629 6 12C6 15.3137 8.68629 18 12 18ZM12 16C14.2091 16 16 14.2091 16 12C16 9.79086 14.2091 8 12 8C9.79086 8 8 9.79086 8 12C8 14.2091 9.79086 16 12 16Z" fill="#fff"></path>
+                                <path d="M18 5C17.4477 5 17 5.44772 17 6C17 6.55228 17.4477 7 18 7C18.5523 7 19 6.55228 19 6C19 5.44772 18.5523 5 18 5Z" fill="#fff"></path>
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M1.65396 4.27606C1 5.55953 1 7.23969 1 10.6V13.4C1 16.7603 1 18.4405 1.65396 19.7239C2.2292 20.8529 3.14708 21.7708 4.27606 22.346C5.55953 23 7.23969 23 10.6 23H13.4C16.7603 23 18.4405 23 19.7239 22.346C20.8529 21.7708 21.7708 20.8529 22.346 19.7239C23 18.4405 23 16.7603 23 13.4V10.6C23 7.23969 23 5.55953 22.346 4.27606C21.7708 3.14708 20.8529 2.2292 19.7239 1.65396C18.4405 1 16.7603 1 13.4 1H10.6C7.23969 1 5.55953 1 4.27606 1.65396C3.14708 2.2292 2.2292 3.14708 1.65396 4.27606ZM13.4 3H10.6C8.88684 3 7.72225 3.00156 6.82208 3.0751C5.94524 3.14674 5.49684 3.27659 5.18404 3.43597C4.43139 3.81947 3.81947 4.43139 3.43597 5.18404C3.27659 5.49684 3.14674 5.94524 3.0751 6.82208C3.00156 7.72225 3 8.88684 3 10.6V13.4C3 15.1132 3.00156 16.2777 3.0751 17.1779C3.14674 18.0548 3.27659 18.5032 3.43597 18.816C3.81947 19.5686 4.43139 20.1805 5.18404 20.564C5.49684 20.7234 5.94524 20.8533 6.82208 20.9249C7.72225 20.9984 8.88684 21 10.6 21H13.4C15.1132 21 16.2777 20.9984 17.1779 20.9249C18.0548 20.8533 18.5032 20.7234 18.816 20.564C19.5686 20.1805 20.1805 19.5686 20.564 18.816C20.7234 18.5032 20.8533 18.0548 20.9249 17.1779C20.9984 16.2777 21 15.1132 21 13.4V10.6C21 8.88684 20.9984 7.72225 20.9249 6.82208C20.8533 5.94524 20.7234 5.49684 20.564 5.18404C20.1805 4.43139 19.5686 3.81947 18.816 3.43597C18.5032 3.27659 18.0548 3.14674 17.1779 3.0751C16.2777 3.00156 15.1132 3 13.4 3Z" fill="#fff"></path>
+                            </g>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
+
+

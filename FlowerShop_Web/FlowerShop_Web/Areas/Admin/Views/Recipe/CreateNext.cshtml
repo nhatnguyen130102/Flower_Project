@@ -1,0 +1,102 @@
+﻿@using Flower_Repository;
+@model Flower_ViewModels.RecipeVM
+@inject ApplicationDbContext _context
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Create</h1>
+
+<h4>Recipe</h4>
+<hr />
+<table class="table text-center">
+    <thead>
+        <tr>
+            <th>
+                ID Recipe
+            </th>
+            <th>
+                Product Name
+            </th>
+            <th>
+                Material
+            </th>
+            <th>
+                Quantity
+            </th>
+
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Recipes)
+        {
+            <tr>
+                <td>
+                    @item.ID_Recipe
+                </td>
+                <td>
+                    @{
+                        var pro = _context.Products.Where(x => x.ID_Product == item.ID_Product).FirstOrDefault();
+                    }
+                    @pro.Name_Product
+                </td>
+                <td>
+                    @{
+                        var material = _context.Materials.Where(x => x.ID_Material == item.ID_Material).FirstOrDefault();
+                    }
+                    @material.Name_Material
+                </td>
+                <td>
+                    @item.Material_Quantity
+                </td>
+                <td>
+                    <a asp-action="deleteMaterial" asp-controller="Recipe" asp-route-id="@item.ID_Recipe">
+                        <button class="btn btn-primary my-1 w-100">Delete</button>
+                    </a>
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CreateNext" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+             @*    <label asp-for="ID_Product" class="control-label"></label> *@
+                <input asp-for="ID_Product" class="form-control" value="@ViewBag.id" hidden/>
+                <span asp-validation-for="ID_Product" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ID_Material" class="control-label"></label>
+                <select asp-for="ID_Material" asp-items="@ViewBag.Material">
+                    <option value="">Select Material</option>
+                </select>
+                <span asp-validation-for="ID_Material" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Material_Quantity" class="control-label"></label>
+                <input asp-for="Material_Quantity" class="form-control" min="0" />
+                <span asp-validation-for="Material_Quantity" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Continue" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index" asp-controller="Product">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
