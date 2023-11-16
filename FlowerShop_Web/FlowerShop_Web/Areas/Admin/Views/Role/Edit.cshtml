@@ -1,0 +1,14 @@
+﻿@model Microsoft.AspNetCore.Identity.IdentityRole
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Edit</h1>
+
+<form asp-action="Edit" method="post">
+    <input type="hidden" asp-for="Id" />
+    <label for="Name">New Role Name:</label>
+    <input type="text" asp-for="Name" />
+    <button type="submit">Save Changes</button>
+</form>

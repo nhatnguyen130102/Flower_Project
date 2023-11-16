@@ -1,0 +1,73 @@
+﻿@model IEnumerable<Flower_Models.Material>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ID_Material)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ID_MaterialType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name_Material)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ImportAt)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EXP_Material)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price_Material)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Img_Material)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ID_Material)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ID_MaterialType)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name_Material)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ImportAt)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EXP_Material)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price_Material)
+                </td>
+                <td>
+                    <img src="\@Html.DisplayFor(modelItem => item.Img_Material)" style="width: 100px; height: 100px;" class="object-fit-cover">
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.ID_Material}) |
+                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

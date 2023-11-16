@@ -1,0 +1,9 @@
+﻿@model IEnumerable<Flower_Models.Locations>
+
+<select id="locationSelect">
+    <option value="">Chọn địa điểm</option>
+    @foreach (var location in Model)
+    {
+        <option value="@location.ID_Locations">@location.Name_Locations</option>
+    }
+</select>

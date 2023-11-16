@@ -1,0 +1,234 @@
+﻿<aside class="main-sidebar sidebar-light-primary elevation-4">
+    <!-- Brand Logo -->
+    <a href="index3.html" class="brand-link">
+        <img src="~/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+        <span class="brand-text font-weight-light">Admin</span>
+    </a>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <!-- Sidebar user panel (optional) -->
+        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+            <div class="image">
+                <img src="~/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+            </div>
+            <div class="info">
+                <a href="#" class="d-block">Alexander Pierce</a>
+            </div>
+        </div>
+        @*
+        <!-- SidebarSearch Form -->
+        <div class="form-inline">
+        <div class="input-group" data-widget="sidebar-search">
+        <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
+        <div class="input-group-append">
+        <button class="btn btn-sidebar">
+        <i class="fas fa-search fa-fw"></i>
+        </button>
+        </div>
+        </div>
+        </div> *@
+
+        <!-- Sidebar Menu -->
+        <nav class="mt-2">
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                <!-- Add icons to the links using the .nav-icon class
+                     with font-awesome or any other icon font library -->
+
+                <li class="nav-item menu-open">
+                    <a href="#" class="nav-link active">
+                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                        <p>
+                            Dashboard
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a asp-action="Index" asp-controller="Home" asp-area="Admin" class="nav-link">
+                                <p>Main Page</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-action="Index" asp-controller="Bill" asp-area="Admin" class="nav-link">
+                                <p>Bill</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-action="Index" asp-controller="BillDetails" asp-area="Admin" class="nav-link">
+                                <p>BillDetails</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-action="Index" asp-controller="Cart" asp-area="Admin" class="nav-link">
+                                <p>Cart</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-action="Index" asp-controller="CartDetails" asp-area="Admin" class="nav-link">
+                                <p>CartDetails</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-action="Index" asp-controller="Category" asp-area="Admin" class="nav-link">
+                                <p>Category</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-action="index" asp-controller="Account" asp-area="admin" class="nav-link">
+                                <p>Account</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-action="Index" asp-controller="CustomerType" asp-area="Admin" class="nav-link">
+                                <p>CustomerType</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-action="Index" asp-controller="FlashSale" asp-area="Admin" class="nav-link">
+                                <p>FlashSale</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-action="Index" asp-controller="Locations" asp-area="Admin" class="nav-link">
+                                <p>Location</p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a asp-action="Index" asp-controller="MaterialType" asp-area="Admin" class="nav-link">
+                                <p>MaterialType</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-action="Index" asp-controller="Material" asp-area="Admin" class="nav-link">
+                                <p>Material</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-action="Index" asp-controller="MaterialWareHouse" asp-area="Admin" class="nav-link">
+                                <p>Materia WareHouse</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-action="Index" asp-controller="Occasion" asp-area="Admin" class="nav-link">
+                                <p>Occasion</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-action="Index" asp-controller="Post" asp-area="Admin" class="nav-link">
+                                <p>Post</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-action="Index" asp-controller="Product" asp-area="Admin" class="nav-link">
+                                <p>Product</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-action="Index" asp-controller="ProductType" asp-area="Admin" class="nav-link">
+                                <p>ProductType</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-action="Index" asp-controller="ProductWarehouse" asp-area="Admin" class="nav-link">
+                                <p>ProductWarehouse</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-action="Index" asp-controller="Recipe" asp-area="Admin" class="nav-link">
+                                <p>Recipe</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-action="Index" asp-controller="Shop" asp-area="Admin" class="nav-link">
+                                <p>Shop</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-action="Index" asp-controller="StockReceivedDocket" asp-area="Admin" class="nav-link">
+                                <p>StockReceivedDocket</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-action="Index" asp-controller="Voucher" asp-area="Admin" class="nav-link">
+                                <p>Voucher</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-action="Index" asp-controller="Role" asp-area="Admin" class="nav-link">
+                                <p>Role</p>
+                            </a>
+                        </li>
+
+                    </ul>
+
+                </li>
+
+
+                @*
+                <li class="nav-item">
+                <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-chart-pie"></i>
+                <p>
+                Charts
+                <i class="right fas fa-angle-left"></i>
+                </p>
+                </a>
+                <ul class="nav nav-treeview">
+                <li class="nav-item">
+                <a href="~/pages/charts/chartjs.html" class="nav-link">
+                <p>ChartJS</p>
+                </a>
+                </li>
+                <li class="nav-item">
+                <a href="~/pages/charts/flot.html" class="nav-link">
+                <p>Flot</p>
+                </a>
+                </li>
+                <li class="nav-item">
+                <a href="~/pages/charts/inline.html" class="nav-link">
+                <p>Inline</p>
+                </a>
+                </li>
+                <li class="nav-item">
+                <a href="~/pages/charts/uplot.html" class="nav-link">
+                <p>uPlot</p>
+                </a>
+                </li>
+                </ul>
+                </li>
+                <li class="nav-item">
+                <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-table"></i>
+                <p>
+                Tables
+                <i class="fas fa-angle-left right"></i>
+                </p>
+                </a>
+                <ul class="nav nav-treeview">
+                <li class="nav-item">
+                <a href="~/pages/tables/simple.html" class="nav-link">
+                <p>Simple Tables</p>
+                </a>
+                </li>
+                <li class="nav-item">
+                <a href="~/pages/tables/data.html" class="nav-link">
+                <p>DataTables</p>
+                </a>
+                </li>
+                <li class="nav-item">
+                <a href="~/pages/tables/jsgrid.html" class="nav-link">
+                <p>jsGrid</p>
+                </a>
+                </li>
+                </ul>
+                </li> *@
+            </ul>
+        </nav>
+        <!-- /.sidebar-menu -->
+    </div>
+    <!-- /.sidebar -->
+</aside>
+

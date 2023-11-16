@@ -1,0 +1,54 @@
+﻿@model IEnumerable<Flower_Models.Recipe>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout ="~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ID_Recipe)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ID_Product)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ID_Material)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Material_Quantity)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ID_Recipe)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ID_Product)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ID_Material)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Material_Quantity)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
