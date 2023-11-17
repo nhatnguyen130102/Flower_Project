@@ -1,0 +1,167 @@
+﻿@model IEnumerable<Flower_Models.Bill>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Index</h1>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ID_Bill)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ID_Customer)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ID_Voucher)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Total_Bill)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Subtotal)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreatedAt)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DeliveredAt)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BillStatus)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DeliveredStatus)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.HandleStatus)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Phone)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name_Order)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Phone_Order)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ID_Shop)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.City)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Address)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Street)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.District)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Ward)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Message)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ID_Bill)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ID_Customer)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ID_Voucher)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Total_Bill)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Subtotal)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreatedAt)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DeliveredAt)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BillStatus)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DeliveredStatus)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.HandleStatus)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Phone)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name_Order)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Phone_Order)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ID_Shop)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.City)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Address)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Street)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.District)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Ward)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Message)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+<label for="filter">Filter:</label>
+<input type="text" id="filter" oninput="filterProducts()" />
+
+<ul id="productList">
+    @foreach (var item in Model)
+    {
+        <li>@item.ID_Bill</li>
+    }
+</ul>
+
