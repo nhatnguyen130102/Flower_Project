@@ -20,25 +20,20 @@
                 <div class="justify-self-center">
                     <input type="date" name="" id="" placeholder="Delivery date" class="rounded-sm border border-gray-400 px-4 py-2 shadow-sm focus:border-black focus:outline-none focus:ring-1 focus:ring-black" />
                 </div>
+                @using (Html.BeginForm("Index", "Home", FormMethod.Get, new { id = "filterForm" }))
+                {
+                    <div class="justify-self-center">
+                        <select asp-items="@ViewBag.Occasion" aria-label="flower-type" name="id" id="id" class="min-w-full appearance-none rounded-sm border border-gray-400 px-4 py-2 shadow-sm focus:border-black focus:outline-none focus:ring-1 focus:ring-black">
+                            <option value="">Choose type of Occasion </option>
+                        </select>
+                    </div>
 
-                <div class="justify-self-center">
-                    <select asp-items="@ViewBag.Occasion" aria-label="flower-type" name="" id="" class="min-w-full appearance-none rounded-sm border border-gray-400 px-4 py-2 shadow-sm focus:border-black focus:outline-none focus:ring-1 focus:ring-black">
-                        <option value="">Choose type of Flower</option>
-                        @*   <option value="birthay">Roses</option>
-                        <option value="romance">Lilies</option>
-                        <option value="congrats">Sunflowers</option>
-                        <option value="congrats">All</option> *@
-                    </select>
-                </div>
-
-                <div class="justify-self-center">
-                    <select asp-items="@ViewBag.ProductType" aria-label="occasions" name="occasions" id="occasions" class="min-w-full appearance-none rounded-sm border border-gray-400 px-4 py-2 shadow-sm focus:border-black focus:outline-none focus:ring-1 focus:ring-black">
-                        <option value="">Choose type of Occasion</option>
-                        @* <option value="birthay">Birthday</option>
-                        <option value="romance">Romance</option>
-                        <option value="congrats">Congratulations</option> *@
-                    </select>
-                </div>
+                  @*   <div class="justify-self-center">
+                        <select asp-items="@ViewBag.ProductType" aria-label="occasions" name="" id="occasions" class="min-w-full appearance-none rounded-sm border border-gray-400 px-4 py-2 shadow-sm focus:border-black focus:outline-none focus:ring-1 focus:ring-black">
+                            <option value=""> Choose type of Flower</option>
+                        </select>
+                    </div> *@
+                }
                 <button class="min-w-full rounded-sm border border-gray-400 px-4 py-2 bg-black text-white hover:border-black hover:font-bold" id="" title="view-flower">View flowers</button>
             </div>
         </div>
@@ -183,3 +178,13 @@
         </div>
     </div>
 </div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $("#id").change(function () {
+            $("#filterForm").submit();
+        });
+    });
+</script>

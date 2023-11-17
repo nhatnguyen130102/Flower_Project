@@ -34,7 +34,10 @@ namespace FlowerShop_Web.Areas.Admin.Controllers
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
                 return RedirectToAction("Index", "Home", new { area = "" });
-
+            if (!User.IsInRole("Manager"))
+            {
+                return RedirectToAction("Index", "Home");
+            }
             if (user.ID_Shop == null)
             {
                 return NotFound();

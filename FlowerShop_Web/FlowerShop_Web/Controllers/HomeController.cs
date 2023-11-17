@@ -13,6 +13,7 @@ using Newtonsoft.Json.Linq;
 using System.Net.WebSockets;
 using System.Net;
 using Microsoft.DotNet.Scaffolding.Shared.Messaging;
+using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace FlowerShop_Web.Controllers
 {
@@ -33,14 +34,29 @@ namespace FlowerShop_Web.Controllers
         }
 
 
-        public IActionResult Index()
+        public IActionResult Index(string? searching, string? id)
         {
-            //if (!User.IsInRole("User"))
-            //{
-            //    return RedirectToAction("Index", "Home", new { area = "Admin" });
-            //}
+            int? id_occation = !string.IsNullOrEmpty(id) ? int.Parse(id) : (int?)null;
+            var query = _context.Products.Select(model => new Product()
+            {
+                ID_Product = model.ID_Product,
+                ID_Occasion = model.ID_Occasion,
+                Name_Product = model.Name_Product,
+                Price_Product = model.Price_Product,
+                Img_Product = model.Img_Product,
+                isAvailabled = model.isAvailabled,
+                isDiscontinued = model.isDiscontinued,
+                CreatedAt = model.CreatedAt,
+                Rating = model.Rating,
+                ViewCount = model.ViewCount,
+                ID_FlashSale = model.ID_FlashSale,
+                ID_ProductType = model.ID_ProductType,
+                size = model.size,
+            });
 
-            var list = _context.Products.Include(x => x.FlashSale).Include(x => x.ProductType).Include(x => x.Occasion).ToList();
+
+
+            //var list = _context.Products.Include(x => x.FlashSale).Include(x => x.ProductType).Include(x => x.Occasion).ToList();
             if (_context.Occasions.Any())
             {
                 ViewBag.Occasion = new SelectList(_context.Occasions, "ID_Occasion", "Name_Occasion");
@@ -50,9 +66,17 @@ namespace FlowerShop_Web.Controllers
                 ViewBag.ProductType = new SelectList(_context.ProductTypes, "ID_ProductType", "Name_ProductType");
             }
 
+            if (id_occation.HasValue)
+            {
+                query = query.Where(b => b.ID_Occasion == id_occation);
+            }
 
-
-            return View(list);
+            if (!string.IsNullOrEmpty(searching))
+            {
+                query = query.Where(b => b.Name_Product.Contains(searching));
+            }
+            var model = query.ToList();
+            return View(model);
         }
 
         public IActionResult Privacy()
@@ -417,7 +441,7 @@ namespace FlowerShop_Web.Controllers
         //    {
         //        // lấy ra sản phẩm dựa trên giỏ hàng
         //        var pro = await _context.Products.Where(x => x.ID_Product == item.ID_Product).FirstOrDefaultAsync();
-               
+
         //        // cập nhật billdetails
         //        var newBillDetail = new BillDetails()
         //        {
@@ -447,7 +471,7 @@ namespace FlowerShop_Web.Controllers
             return View(item);
         }
 
-      
+
 
 
     }

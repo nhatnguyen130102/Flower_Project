@@ -29,7 +29,7 @@ namespace Flower_Models
         [ForeignKey("ID_Shop")]
         public Shop? Shop { get; set; }
 
-
+        public ICollection<FavoriteProduct>? FavoriteProducts { get; set; }
         public ICollection<Bill>? Bills { get; set; }
         public ICollection<Cart>? Carts { get; set; }
         public ICollection<ManagerUserProduct>? ManagerUserProduct { get; set; }

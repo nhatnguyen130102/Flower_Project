@@ -17,24 +17,17 @@ namespace Flower_Models
         public int ID_Occasion { get; set; }
         public string Name_Product { get; set; }
         public double Price_Product { get; set; }
-
         public string? Img_Product { get; set; }
-
         public bool isAvailabled { get; set; }
-
         public bool isDiscontinued { get; set; }
         public DateTime CreatedAt { get; set; }
-
         public double? Rating { get; set; }
-
         public int? ViewCount { get; set; }
-
         public int? ID_FlashSale { get; set; }
         public int ID_ProductType { get; set; }
-
         public string? size { get; set; }
 
-
+        public ICollection<FavoriteProductDetails>? FavoriteProductDetails { get; set; }
         public ICollection<BillDetails>? BillDetails { get; set; }
         public ICollection<CartDetails>? CartDetails { get; set; }
         public ICollection<ProductWarehouse>? ProductWarehouses { get; set; }

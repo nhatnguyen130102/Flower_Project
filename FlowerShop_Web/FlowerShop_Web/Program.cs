@@ -40,7 +40,7 @@ builder.Services.
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddSession();
-builder.Services.AddDistributedMemoryCache(); 
+builder.Services.AddDistributedMemoryCache();
 builder.Services.AddRazorPages();
 
 
@@ -80,6 +80,5 @@ app.UseStaticFiles();
 app.UseSession();
 
 app.MapRazorPages();
-
 
 app.Run();
