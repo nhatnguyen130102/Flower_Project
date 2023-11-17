@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 namespace FlowerShop_Web.Areas.Admin.Controllers
 {
     [Area("Admin")]
-
+    [Authorize(Roles = "Manager")]
     public class MaterialWareHouseController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -24,7 +24,7 @@ namespace FlowerShop_Web.Areas.Admin.Controllers
             _roleManager = roleManager;
         }
 
-        [Authorize(Roles = "Admin,Manager")]
+       
         public async Task<IActionResult> Index()
         {
             var user = await _userManager.GetUserAsync(User);
@@ -32,7 +32,11 @@ namespace FlowerShop_Web.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            var list = await _context.MaterialWarehouses.ToListAsync();
+            if(user.ID_Shop == null)
+            {
+                return NotFound();
+            }
+            var list = await _context.MaterialWarehouses.Where(x=>x.ID_Shop == user.ID_Shop).ToListAsync();
             return View(list);
         }
     }

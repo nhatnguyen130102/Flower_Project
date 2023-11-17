@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using SQLitePCL;
 using System.Drawing;
 using System.Security.Cryptography.Pkcs;
 
@@ -247,6 +248,7 @@ namespace FlowerShop_Web.Areas.Admin.Controllers
                 return NotFound();
             }
             var getPro = await _context.Products.FindAsync(id);
+    
             if (getPro.isAvailabled == false)
             {
                 getPro.isAvailabled = true;

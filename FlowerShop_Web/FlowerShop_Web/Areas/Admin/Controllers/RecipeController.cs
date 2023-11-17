@@ -2,6 +2,7 @@
 using Flower_Repository;
 using Flower_ViewModels;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Connections.Features;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -19,7 +20,7 @@ namespace FlowerShop_Web.Areas.Admin.Controllers
             _context = context;
         }
 
-
+        [Authorize(Roles ="Admin,Manager")]
         [HttpGet]
         public IActionResult Index()
         {
@@ -46,22 +47,35 @@ namespace FlowerShop_Web.Areas.Admin.Controllers
             }
             return View(model);
         }
+
+        [Authorize(Roles = "Admin,Manager")]
         [HttpGet]
         public async Task<IActionResult> CreateNext(int? id)
         {
+            if(id == null)
+            {
+                return NotFound();
+            }
             ViewBag.id = id;
             var recipe = await _context.Recipes.Where(x => x.ID_Product == id).ToListAsync();
-            ViewBag.Material = new SelectList(_context.Materials, "ID_Material", "Name_Material");
-            if (recipe != null)
+            var getPro = await _context.Products.Where(x => x.ID_Product == id).FirstOrDefaultAsync();
+            if(getPro.isAvailabled == true)
             {
-                var list = new RecipeVM()
-                {
-                    Recipes = recipe,
-                };
-                return View(list);
+                return RedirectToAction("Index", "Product");
             }
-            return View();
-
+            else
+            {
+                ViewBag.Material = new SelectList(_context.Materials, "ID_Material", "Name_Material");
+                if (recipe != null)
+                {
+                    var list = new RecipeVM()
+                    {
+                        Recipes = recipe,
+                    };
+                    return View(list);
+                }
+                return View();
+            }
         }
 
         [HttpPost]
@@ -98,6 +112,8 @@ namespace FlowerShop_Web.Areas.Admin.Controllers
             return View(model);
         }
 
+       
+
         public async Task<IActionResult> deleteMaterial(int? id)
         {
             if(id == null)
@@ -113,7 +129,7 @@ namespace FlowerShop_Web.Areas.Admin.Controllers
             return RedirectToAction("CreateNext", "Recipe", new { id = getPro });
         }
 
-
+        [Authorize(Roles = "Admin,Manager")]
         [HttpGet]
         public async Task<IActionResult> Edit(int? id)
         {
@@ -151,6 +167,7 @@ namespace FlowerShop_Web.Areas.Admin.Controllers
             return View(model);
         }
 
+        [Authorize(Roles = "Admin,Manager")]
         [HttpGet]
         public async Task<IActionResult> Details(int? id)
         {
@@ -162,6 +179,7 @@ namespace FlowerShop_Web.Areas.Admin.Controllers
             return View(item);
         }
 
+        [Authorize(Roles = "Admin,Manager")]
         [HttpGet]
         public async Task<IActionResult> Delete(int? id)
         {
