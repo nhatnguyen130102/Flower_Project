@@ -9,7 +9,7 @@ namespace FlowerShop_Web.Areas.Admin.Controllers
 {
 
     [Area("Admin")]
-    
+
     public class MaterialController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -23,10 +23,30 @@ namespace FlowerShop_Web.Areas.Admin.Controllers
 
         [Authorize(Roles = "Admin,Manager")]
         [HttpGet]
-        public IActionResult Index()
+        public async Task<IActionResult> Index(string? filter)
         {
-            var item = _context.Materials.ToList();
-            return View(item);
+            var query = _context.Materials.Select(model => new Material()
+            {
+                ID_Material = model.ID_Material,
+                ID_MaterialType = model.ID_MaterialType,
+                Name_Material = model.Name_Material,
+                ImportAt = model.ImportAt,
+                EXP_Material = model.EXP_Material,
+                Price_Material = model.Price_Material,
+                Img_Material = model.Img_Material,
+            });
+            var model = query.ToList();
+            if (!string.IsNullOrEmpty(filter))
+            {
+                query = query.Where(b => b.Name_Material.Contains(filter));
+                model = query.ToList();
+            }
+            else
+            {
+                model = query.ToList();
+            }
+           
+            return View(model);
         }
 
 

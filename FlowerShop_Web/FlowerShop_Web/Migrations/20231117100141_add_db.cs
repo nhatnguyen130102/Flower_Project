@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace FlowerShop_Web.Migrations
 {
     /// <inheritdoc />
-    public partial class db_1 : Migration
+    public partial class add_db : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -187,42 +187,6 @@ namespace FlowerShop_Web.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "AspNetUsers",
-                columns: table => new
-                {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ID_CustomerType = table.Column<int>(type: "int", nullable: true),
-                    Spend = table.Column<double>(type: "float", nullable: true),
-                    UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    NormalizedEmail = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    EmailConfirmed = table.Column<bool>(type: "bit", nullable: false),
-                    PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    SecurityStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PhoneNumberConfirmed = table.Column<bool>(type: "bit", nullable: false),
-                    TwoFactorEnabled = table.Column<bool>(type: "bit", nullable: false),
-                    LockoutEnd = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
-                    LockoutEnabled = table.Column<bool>(type: "bit", nullable: false),
-                    AccessFailedCount = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AspNetUsers", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_AspNetUsers_CustomerTypes_ID_CustomerType",
-                        column: x => x.ID_CustomerType,
-                        principalTable: "CustomerTypes",
-                        principalColumn: "ID_CustomerType");
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Shops",
                 columns: table => new
                 {
@@ -306,6 +270,153 @@ namespace FlowerShop_Web.Migrations
                         column: x => x.ID_ProductType,
                         principalTable: "ProductTypes",
                         principalColumn: "ID_ProductType",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetUsers",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ID_CustomerType = table.Column<int>(type: "int", nullable: true),
+                    ID_Shop = table.Column<int>(type: "int", nullable: true),
+                    Spend = table.Column<double>(type: "float", nullable: true),
+                    UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    NormalizedEmail = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    EmailConfirmed = table.Column<bool>(type: "bit", nullable: false),
+                    PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SecurityStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhoneNumberConfirmed = table.Column<bool>(type: "bit", nullable: false),
+                    TwoFactorEnabled = table.Column<bool>(type: "bit", nullable: false),
+                    LockoutEnd = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    LockoutEnabled = table.Column<bool>(type: "bit", nullable: false),
+                    AccessFailedCount = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AspNetUsers_CustomerTypes_ID_CustomerType",
+                        column: x => x.ID_CustomerType,
+                        principalTable: "CustomerTypes",
+                        principalColumn: "ID_CustomerType");
+                    table.ForeignKey(
+                        name: "FK_AspNetUsers_Shops_ID_Shop",
+                        column: x => x.ID_Shop,
+                        principalTable: "Shops",
+                        principalColumn: "ID_Shop");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "StockReceivedDockets",
+                columns: table => new
+                {
+                    ID_StockReceivedDocket = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ID_Shop = table.Column<int>(type: "int", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsActive = table.Column<bool>(type: "bit", nullable: true),
+                    Received = table.Column<bool>(type: "bit", nullable: true),
+                    ReceivedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_StockReceivedDockets", x => x.ID_StockReceivedDocket);
+                    table.ForeignKey(
+                        name: "FK_StockReceivedDockets_Shops_ID_Shop",
+                        column: x => x.ID_Shop,
+                        principalTable: "Shops",
+                        principalColumn: "ID_Shop",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "MaterialWarehouses",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ID_Shop = table.Column<int>(type: "int", nullable: false),
+                    ID_Material = table.Column<int>(type: "int", nullable: false),
+                    InStock_Quantity = table.Column<int>(type: "int", nullable: false),
+                    Sold_Quantity = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MaterialWarehouses", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_MaterialWarehouses_Materials_ID_Material",
+                        column: x => x.ID_Material,
+                        principalTable: "Materials",
+                        principalColumn: "ID_Material",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_MaterialWarehouses_Shops_ID_Shop",
+                        column: x => x.ID_Shop,
+                        principalTable: "Shops",
+                        principalColumn: "ID_Shop",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ProductWarehouses",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ID_Shop = table.Column<int>(type: "int", nullable: false),
+                    ID_Product = table.Column<int>(type: "int", nullable: false),
+                    InStock_Quantity = table.Column<int>(type: "int", nullable: false),
+                    Sold_Quantity = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProductWarehouses", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_ProductWarehouses_Products_ID_Product",
+                        column: x => x.ID_Product,
+                        principalTable: "Products",
+                        principalColumn: "ID_Product",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ProductWarehouses_Shops_ID_Shop",
+                        column: x => x.ID_Shop,
+                        principalTable: "Shops",
+                        principalColumn: "ID_Shop",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Recipes",
+                columns: table => new
+                {
+                    ID_Recipe = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ID_Product = table.Column<int>(type: "int", nullable: false),
+                    ID_Material = table.Column<int>(type: "int", nullable: false),
+                    Material_Quantity = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Recipes", x => x.ID_Recipe);
+                    table.ForeignKey(
+                        name: "FK_Recipes_Materials_ID_Material",
+                        column: x => x.ID_Material,
+                        principalTable: "Materials",
+                        principalColumn: "ID_Material",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Recipes_Products_ID_Product",
+                        column: x => x.ID_Product,
+                        principalTable: "Products",
+                        principalColumn: "ID_Product",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -395,24 +506,6 @@ namespace FlowerShop_Web.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Carts",
-                columns: table => new
-                {
-                    ID_Cart = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ID_Customer = table.Column<string>(type: "nvarchar(450)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Carts", x => x.ID_Cart);
-                    table.ForeignKey(
-                        name: "FK_Carts_AspNetUsers_ID_Customer",
-                        column: x => x.ID_Customer,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Bills",
                 columns: table => new
                 {
@@ -423,8 +516,10 @@ namespace FlowerShop_Web.Migrations
                     Total_Bill = table.Column<double>(type: "float", nullable: false),
                     Subtotal = table.Column<double>(type: "float", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DeliveredAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DeliveredAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     BillStatus = table.Column<bool>(type: "bit", nullable: true),
+                    DeliveredStatus = table.Column<bool>(type: "bit", nullable: true),
+                    HandleStatus = table.Column<bool>(type: "bit", nullable: true),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Phone = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Name_Order = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -432,6 +527,9 @@ namespace FlowerShop_Web.Migrations
                     ID_Shop = table.Column<int>(type: "int", nullable: false),
                     City = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Street = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    District = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Ward = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Message = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -456,72 +554,39 @@ namespace FlowerShop_Web.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "StockReceivedDockets",
+                name: "Carts",
                 columns: table => new
                 {
-                    ID_StockReceivedDocket = table.Column<int>(type: "int", nullable: false)
+                    ID_Cart = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ID_Shop = table.Column<int>(type: "int", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    ID_Customer = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_StockReceivedDockets", x => x.ID_StockReceivedDocket);
+                    table.PrimaryKey("PK_Carts", x => x.ID_Cart);
                     table.ForeignKey(
-                        name: "FK_StockReceivedDockets_Shops_ID_Shop",
-                        column: x => x.ID_Shop,
-                        principalTable: "Shops",
-                        principalColumn: "ID_Shop",
-                        onDelete: ReferentialAction.Cascade);
+                        name: "FK_Carts_AspNetUsers_ID_Customer",
+                        column: x => x.ID_Customer,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
-                name: "MaterialWarehouses",
+                name: "FavoriteProducts",
                 columns: table => new
                 {
-                    ID = table.Column<int>(type: "int", nullable: false)
+                    ID_FavoriteProduct = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ID_Shop = table.Column<int>(type: "int", nullable: false),
-                    ID_Material = table.Column<int>(type: "int", nullable: false),
-                    InStock_Quantity = table.Column<int>(type: "int", nullable: false),
-                    Sold_Quantity = table.Column<int>(type: "int", nullable: false)
+                    ID_Customer = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_MaterialWarehouses", x => x.ID);
+                    table.PrimaryKey("PK_FavoriteProducts", x => x.ID_FavoriteProduct);
                     table.ForeignKey(
-                        name: "FK_MaterialWarehouses_Materials_ID_Material",
-                        column: x => x.ID_Material,
-                        principalTable: "Materials",
-                        principalColumn: "ID_Material",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_MaterialWarehouses_Shops_ID_Shop",
-                        column: x => x.ID_Shop,
-                        principalTable: "Shops",
-                        principalColumn: "ID_Shop",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "StockReceivedDocketDetails",
-                columns: table => new
-                {
-                    ID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ID_StockReceivedDocket = table.Column<int>(type: "int", nullable: false),
-                    ID_Material = table.Column<int>(type: "int", nullable: false),
-                    StockReceived_Quantity = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_StockReceivedDocketDetails", x => x.ID);
-                    table.ForeignKey(
-                        name: "FK_StockReceivedDocketDetails_Materials_ID_Material",
-                        column: x => x.ID_Material,
-                        principalTable: "Materials",
-                        principalColumn: "ID_Material",
-                        onDelete: ReferentialAction.Cascade);
+                        name: "FK_FavoriteProducts_AspNetUsers_ID_Customer",
+                        column: x => x.ID_Customer,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -552,54 +617,54 @@ namespace FlowerShop_Web.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ProductWarehouses",
+                name: "StockReceivedDocketDetails",
                 columns: table => new
                 {
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ID_Shop = table.Column<int>(type: "int", nullable: false),
-                    ID_Product = table.Column<int>(type: "int", nullable: false),
-                    InStock_Quantity = table.Column<int>(type: "int", nullable: false),
-                    Sold_Quantity = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ProductWarehouses", x => x.ID);
-                    table.ForeignKey(
-                        name: "FK_ProductWarehouses_Products_ID_Product",
-                        column: x => x.ID_Product,
-                        principalTable: "Products",
-                        principalColumn: "ID_Product",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ProductWarehouses_Shops_ID_Shop",
-                        column: x => x.ID_Shop,
-                        principalTable: "Shops",
-                        principalColumn: "ID_Shop",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Recipes",
-                columns: table => new
-                {
-                    ID_Recipe = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ID_Product = table.Column<int>(type: "int", nullable: false),
+                    ID_StockReceivedDocket = table.Column<int>(type: "int", nullable: false),
                     ID_Material = table.Column<int>(type: "int", nullable: false),
-                    Material_Quantity = table.Column<int>(type: "int", nullable: false)
+                    StockReceived_Quantity = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Recipes", x => x.ID_Recipe);
+                    table.PrimaryKey("PK_StockReceivedDocketDetails", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_Recipes_Materials_ID_Material",
+                        name: "FK_StockReceivedDocketDetails_Materials_ID_Material",
                         column: x => x.ID_Material,
                         principalTable: "Materials",
                         principalColumn: "ID_Material",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Recipes_Products_ID_Product",
+                        name: "FK_StockReceivedDocketDetails_StockReceivedDockets_ID_StockReceivedDocket",
+                        column: x => x.ID_StockReceivedDocket,
+                        principalTable: "StockReceivedDockets",
+                        principalColumn: "ID_StockReceivedDocket",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "BillDetails",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ID_Bill = table.Column<int>(type: "int", nullable: false),
+                    ID_Product = table.Column<int>(type: "int", nullable: false),
+                    Product_Quantity = table.Column<int>(type: "int", nullable: false),
+                    Total = table.Column<double>(type: "float", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BillDetails", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_BillDetails_Bills_ID_Bill",
+                        column: x => x.ID_Bill,
+                        principalTable: "Bills",
+                        principalColumn: "ID_Bill",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_BillDetails_Products_ID_Product",
                         column: x => x.ID_Product,
                         principalTable: "Products",
                         principalColumn: "ID_Product",
@@ -633,31 +698,28 @@ namespace FlowerShop_Web.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "BillDetails",
+                name: "FavoriteProductDetails",
                 columns: table => new
                 {
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ID_Bill = table.Column<int>(type: "int", nullable: false),
-                    ID_Product = table.Column<int>(type: "int", nullable: false),
-                    Product_Quantity = table.Column<int>(type: "int", nullable: false),
-                    Total = table.Column<double>(type: "float", nullable: false)
+                    ID_FavoriteProduct = table.Column<int>(type: "int", nullable: false),
+                    ID_Product = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_BillDetails", x => x.ID);
+                    table.PrimaryKey("PK_FavoriteProductDetails", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_BillDetails_Bills_ID_Bill",
-                        column: x => x.ID_Bill,
-                        principalTable: "Bills",
-                        principalColumn: "ID_Bill",
+                        name: "FK_FavoriteProductDetails_FavoriteProducts_ID_FavoriteProduct",
+                        column: x => x.ID_FavoriteProduct,
+                        principalTable: "FavoriteProducts",
+                        principalColumn: "ID_FavoriteProduct",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_BillDetails_Products_ID_Product",
+                        name: "FK_FavoriteProductDetails_Products_ID_Product",
                         column: x => x.ID_Product,
                         principalTable: "Products",
-                        principalColumn: "ID_Product",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "ID_Product");
                 });
 
             migrationBuilder.InsertData(
@@ -665,17 +727,17 @@ namespace FlowerShop_Web.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "7fb63ac0-49b8-49b6-bd05-4b418fe17600", null, "Admin", "ADMIN" },
-                    { "d38c90b7-de1e-4a8d-bed9-50a8d8c3b722", null, "User", "USER" }
+                    { "718238ab-92a8-48b0-9e43-5ef0f43b218b", null, "Admin", "ADMIN" },
+                    { "9939c409-25bc-459a-a91e-b00d2b153d23", null, "Manager", "MANAGER" }
                 });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
-                columns: new[] { "Id", "AccessFailedCount", "Address", "ConcurrencyStamp", "Discriminator", "Email", "EmailConfirmed", "FirstName", "ID_CustomerType", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "Spend", "TwoFactorEnabled", "UserName" },
+                columns: new[] { "Id", "AccessFailedCount", "Address", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "ID_CustomerType", "ID_Shop", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "Spend", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "21996b92-f46a-4011-aba9-abbd057eb3d9", 0, null, "aa25cbd6-1157-470c-95c5-3693da6d483f", "ApplicationUser", "user3@hotmail.com", true, null, null, null, false, null, "USER3@HOTMAIL.COM", "USER3@HOTMAIL.COM", "AQAAAAIAAYagAAAAEIyyyFe6rBiYte6uIRFLK1MJS1F71H79vPGz5MQzNin1ETRuOe3QxDYlHpXTzwps9A==", null, false, "b1bc46dd-f734-4610-842c-dfb6d48b3808", null, false, "user3@hotmail.com" },
-                    { "f51d566f-502b-4725-93f2-21d19af4e55e", 0, null, "c4c32212-f4fc-459a-a1ac-2da4215791a6", "ApplicationUser", "user2@hotmail.com", true, null, null, null, false, null, "USER2@HOTMAIL.COM", "USER2@HOTMAIL.COM", "AQAAAAIAAYagAAAAEPn9P7H8NkqhZ/FVF9oSdp/Mn3qmE6XgGEWfYhCEayf6Cd2wz5Q5E1J2jK8jV7zexw==", null, false, "1cdec7be-f32e-4e2c-88f4-f02a1d287dcf", null, false, "user2@hotmail.com" }
+                    { "0f04181a-5b9d-4766-b503-041cf80209b9", 0, null, "0e65192a-21d1-4fb2-9b22-0df3c82e1abf", "user3@hotmail.com", true, null, null, null, null, false, null, "USER3@HOTMAIL.COM", "USER3@HOTMAIL.COM", "AQAAAAIAAYagAAAAEOQqFbLA6Yi85SyuYT73cYKidJFVfwwkb5bfDxyb3PhpaG1HSm80HPqxytOQ5M9yow==", null, false, "3fe5d61e-60c9-4c2d-88a8-a5f6ac79e7d3", null, false, "user3@hotmail.com" },
+                    { "8b6df906-e206-4ab2-89b4-7b86be24dc5c", 0, null, "32a01024-ffe8-4ecb-8db6-e7d189267e2a", "user2@hotmail.com", true, null, null, null, null, false, null, "USER2@HOTMAIL.COM", "USER2@HOTMAIL.COM", "AQAAAAIAAYagAAAAEC6rmFrF+N8mja81314TANOsohrkh0mD13F7yrreq94HdsY4XuqOmkyoA0rMhrruSQ==", null, false, "db56a88d-7074-479d-b4ad-3b827bc823f6", null, false, "user2@hotmail.com" }
                 });
 
             migrationBuilder.InsertData(
@@ -683,8 +745,8 @@ namespace FlowerShop_Web.Migrations
                 columns: new[] { "RoleId", "UserId" },
                 values: new object[,]
                 {
-                    { "7fb63ac0-49b8-49b6-bd05-4b418fe17600", "21996b92-f46a-4011-aba9-abbd057eb3d9" },
-                    { "d38c90b7-de1e-4a8d-bed9-50a8d8c3b722", "f51d566f-502b-4725-93f2-21d19af4e55e" }
+                    { "718238ab-92a8-48b0-9e43-5ef0f43b218b", "0f04181a-5b9d-4766-b503-041cf80209b9" },
+                    { "9939c409-25bc-459a-a91e-b00d2b153d23", "8b6df906-e206-4ab2-89b4-7b86be24dc5c" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -723,6 +785,11 @@ namespace FlowerShop_Web.Migrations
                 name: "IX_AspNetUsers_ID_CustomerType",
                 table: "AspNetUsers",
                 column: "ID_CustomerType");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AspNetUsers_ID_Shop",
+                table: "AspNetUsers",
+                column: "ID_Shop");
 
             migrationBuilder.CreateIndex(
                 name: "UserNameIndex",
@@ -769,6 +836,21 @@ namespace FlowerShop_Web.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Carts_ID_Customer",
                 table: "Carts",
+                column: "ID_Customer");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_FavoriteProductDetails_ID_FavoriteProduct",
+                table: "FavoriteProductDetails",
+                column: "ID_FavoriteProduct");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_FavoriteProductDetails_ID_Product",
+                table: "FavoriteProductDetails",
+                column: "ID_Product");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_FavoriteProducts_ID_Customer",
+                table: "FavoriteProducts",
                 column: "ID_Customer");
 
             migrationBuilder.CreateIndex(
@@ -847,6 +929,11 @@ namespace FlowerShop_Web.Migrations
                 column: "ID_Material");
 
             migrationBuilder.CreateIndex(
+                name: "IX_StockReceivedDocketDetails_ID_StockReceivedDocket",
+                table: "StockReceivedDocketDetails",
+                column: "ID_StockReceivedDocket");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_StockReceivedDockets_ID_Shop",
                 table: "StockReceivedDockets",
                 column: "ID_Shop");
@@ -877,6 +964,9 @@ namespace FlowerShop_Web.Migrations
                 name: "CartDetails");
 
             migrationBuilder.DropTable(
+                name: "FavoriteProductDetails");
+
+            migrationBuilder.DropTable(
                 name: "ManagerUserProducts");
 
             migrationBuilder.DropTable(
@@ -895,9 +985,6 @@ namespace FlowerShop_Web.Migrations
                 name: "StockReceivedDocketDetails");
 
             migrationBuilder.DropTable(
-                name: "StockReceivedDockets");
-
-            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
@@ -905,6 +992,9 @@ namespace FlowerShop_Web.Migrations
 
             migrationBuilder.DropTable(
                 name: "Carts");
+
+            migrationBuilder.DropTable(
+                name: "FavoriteProducts");
 
             migrationBuilder.DropTable(
                 name: "Categories");
@@ -916,7 +1006,7 @@ namespace FlowerShop_Web.Migrations
                 name: "Materials");
 
             migrationBuilder.DropTable(
-                name: "Shops");
+                name: "StockReceivedDockets");
 
             migrationBuilder.DropTable(
                 name: "Vouchers");
@@ -937,10 +1027,13 @@ namespace FlowerShop_Web.Migrations
                 name: "MaterialTypes");
 
             migrationBuilder.DropTable(
-                name: "Locations");
+                name: "CustomerTypes");
 
             migrationBuilder.DropTable(
-                name: "CustomerTypes");
+                name: "Shops");
+
+            migrationBuilder.DropTable(
+                name: "Locations");
         }
     }
 }

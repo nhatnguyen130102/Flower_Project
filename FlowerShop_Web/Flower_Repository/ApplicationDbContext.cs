@@ -26,6 +26,9 @@ namespace Flower_Repository
             //SeedRoles(builder);
             //SeedUser(builder);
         }
+
+
+
         public DbSet<MaterialType> MaterialTypes { get; set; }
         public DbSet<Material> Materials { get; set; }
         public DbSet<ProductType> ProductTypes { get; set; }
@@ -48,9 +51,13 @@ namespace Flower_Repository
         public DbSet<Post> Posts { get; set; }
         public DbSet<Cart> Carts { get; set; }
         public DbSet<CartDetails> CartDetails { get; set; }
+        public DbSet<FavoriteProduct> FavoriteProducts { get; set; }
+        public DbSet<FavoriteProductDetails> FavoriteProductDetails { get; set; }
         public DbSet<ManagerUserProduct> ManagerUserProducts { get; set; }
 
-      
+
+
+
         //private static void SeedRoles(ModelBuilder builder)
         //{
         //    builder.Entity<IdentityRole>().HasData(
@@ -78,7 +85,7 @@ namespace Flower_Repository
         //    });
         //    List<IdentityUserRole<string>> userRoles = new List<IdentityUserRole<string>>();
 
-            
+
 
         //}
     }
