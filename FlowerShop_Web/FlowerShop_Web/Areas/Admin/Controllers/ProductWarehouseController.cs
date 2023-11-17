@@ -3,11 +3,13 @@ using Flower_Repository;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.DiaSymReader;
 using Microsoft.EntityFrameworkCore;
 
 namespace FlowerShop_Web.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Manager")]
     public class ProductWarehouseController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -23,19 +25,22 @@ namespace FlowerShop_Web.Areas.Admin.Controllers
             _roleManager = roleManager;
         }
 
-        [Authorize(Roles = "Admin,Manager")]
+      
         [HttpGet]
         public async Task<IActionResult> Index()
         {
             var user = await _userManager.GetUserAsync(User);
-            if(user == null)
+            if (user == null)
             {
                 return NotFound();
             }
-            var item = await _context.ProductWarehouses.ToListAsync();
+
+            if (user.ID_Shop == null)
+            {
+                return NotFound();
+            }
+            var item = await _context.ProductWarehouses.Where(x => x.ID_Shop == user.ID_Shop).ToListAsync();
             return View(item);
-
-
         }
 
         [Authorize(Roles = "Manager")]
@@ -58,7 +63,6 @@ namespace FlowerShop_Web.Areas.Admin.Controllers
             return View(model);
         }
 
-        [Authorize(Roles = "Manager")]
         [HttpGet]
         public async Task<IActionResult> Edit(int? id)
         {
@@ -97,7 +101,6 @@ namespace FlowerShop_Web.Areas.Admin.Controllers
             return View(model);
         }
 
-        [Authorize(Roles = "Manager,Admin")]
         [HttpGet]
         public async Task<IActionResult> Details(int? id)
         {
@@ -109,7 +112,6 @@ namespace FlowerShop_Web.Areas.Admin.Controllers
             return View(item);
         }
 
-        [Authorize(Roles = "Manager")]
         [HttpGet]
         public async Task<IActionResult> Delete(int? id)
         {

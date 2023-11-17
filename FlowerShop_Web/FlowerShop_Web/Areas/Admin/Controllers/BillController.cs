@@ -9,6 +9,8 @@ using NuGet.Packaging.Signing;
 namespace FlowerShop_Web.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Manager")]
+
     public class BillController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -26,7 +28,6 @@ namespace FlowerShop_Web.Areas.Admin.Controllers
         }
 
         // Xem danh sách Bill của cửa hàng
-        [Authorize(Roles = "Manager,Admin")]
         [HttpGet]
         public async Task<IActionResult> Index()
         {
@@ -36,24 +37,10 @@ namespace FlowerShop_Web.Areas.Admin.Controllers
 
             if (user.ID_Shop == null)
             {
-                var item = await _context.Bills.ToListAsync();
-                if(item == null)
-                {
-                    return RedirectToAction("Index", "Home");
-                }
-                return View(item);
-
+                return NotFound();
             }
-            else
-            {
-                var item = await _context.Bills.Where(x => x.ID_Shop == user.ID_Shop).ToListAsync();
-                if (item == null)
-                {
-                    return RedirectToAction("Index", "Home");
-                }
-                return View(item);
-
-            }
+            var list = await _context.Bills.Where(x=>x.ID_Shop == user.ID_Shop).ToListAsync();
+            return View(list);  
         }
 
         [HttpGet]
