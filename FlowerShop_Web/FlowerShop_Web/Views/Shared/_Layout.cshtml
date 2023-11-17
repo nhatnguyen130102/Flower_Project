@@ -1,4 +1,10 @@
-﻿
+﻿@inject ApplicationDbContext _context;
+@inject SignInManager<ApplicationUser> _signInManager;
+@inject UserManager<ApplicationUser> _userManager
+@using Flower_Models;
+@using Flower_Repository;
+@using Flower_ViewModels;
+@using Microsoft.AspNetCore.Identity;
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -62,9 +68,15 @@
                   @*   <a title="user" class="inline-block no-underline hover:text-black" href="#">
                         <i class="fa-solid fa-user"></i>
                     </a> *@
-                    <a title="cart" class="inline-block no-underline hover:text-black" asp-action="CartView" asp-controller="Cart">
-                        <i class="fa-solid fa-cart-shopping"></i>
-                    </a>
+                    @if (_signInManager.IsSignedIn(User))
+                    {
+                        <a title="cart" class="inline-block no-underline hover:text-black" asp-action="CartView" asp-controller="Cart">
+                            <i class="fa-solid fa-cart-shopping"></i>
+                        </a>
+                        <a title="favorite" class="inline-block no-underline hover:text-black" asp-action="favoriteView" asp-controller="FavoriteProduct">
+                            <i class="fa-solid fa-heart hover:text-red-500" style="color: #fa0000;"></i>
+                        </a>
+                    }
                 </div>
             </div>
         </div>
