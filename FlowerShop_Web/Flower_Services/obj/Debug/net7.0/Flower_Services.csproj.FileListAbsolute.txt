@@ -28,3 +28,5 @@ E:\Document\VS\FlowerShop_Web\Flower_Services\obj\Debug\net7.0\Flower_Services.d
 E:\Document\VS\FlowerShop_Web\Flower_Services\obj\Debug\net7.0\refint\Flower_Services.dll
 E:\Document\VS\FlowerShop_Web\Flower_Services\obj\Debug\net7.0\Flower_Services.pdb
 E:\Document\VS\FlowerShop_Web\Flower_Services\obj\Debug\net7.0\ref\Flower_Services.dll
+E:\Document\VS\New_Project_1\FlowerShop_Web\Flower_Services\bin\Debug\net7.0\Flower_Repository.dll
+E:\Document\VS\New_Project_1\FlowerShop_Web\Flower_Services\bin\Debug\net7.0\Flower_Repository.pdb

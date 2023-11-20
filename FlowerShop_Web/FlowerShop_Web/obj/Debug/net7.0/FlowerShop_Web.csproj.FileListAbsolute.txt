@@ -604,3 +604,8 @@ E:\Document\VS\FlowerShop_Web\FlowerShop_Web\obj\Debug\net7.0\refint\FlowerShop_
 E:\Document\VS\FlowerShop_Web\FlowerShop_Web\obj\Debug\net7.0\FlowerShop_Web.pdb
 E:\Document\VS\FlowerShop_Web\FlowerShop_Web\obj\Debug\net7.0\FlowerShop_Web.genruntimeconfig.cache
 E:\Document\VS\FlowerShop_Web\FlowerShop_Web\obj\Debug\net7.0\ref\FlowerShop_Web.dll
+E:\Document\VS\New_Project_1\FlowerShop_Web\FlowerShop_Web\bin\Debug\net7.0\Microsoft.Extensions.Caching.Abstractions.dll
+E:\Document\VS\New_Project_1\FlowerShop_Web\FlowerShop_Web\bin\Debug\net7.0\Microsoft.Extensions.Caching.Memory.dll
+E:\Document\VS\New_Project_1\FlowerShop_Web\FlowerShop_Web\bin\Debug\net7.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+E:\Document\VS\New_Project_1\FlowerShop_Web\FlowerShop_Web\bin\Debug\net7.0\Microsoft.Extensions.Logging.Abstractions.dll
+E:\Document\VS\New_Project_1\FlowerShop_Web\FlowerShop_Web\bin\Debug\net7.0\Microsoft.Extensions.Primitives.dll

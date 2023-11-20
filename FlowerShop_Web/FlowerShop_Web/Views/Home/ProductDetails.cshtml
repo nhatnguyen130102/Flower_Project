@@ -132,9 +132,7 @@
             </div>
             <h3 class="text-xl font-normal text-gray-800"><span class="font-bold text-orange-600">Classic:</span> The classic size of a Bouquet, with the perfect balance of flowers.</h3>
 
-            @*     <a asp-action="AddToCart" asp-controller="Home" asp-route-id="@Model.ID_Product">
-            <button class="w-full h-14 mb-6 px-4 border border-gray-400 bg-black text-white rounded-lg text-xl font-bold hover:-translate-y-1">Add To Cart</button>
-            </a> *@
+           
             <a asp-action="AddToCart" asp-controller="Cart" asp-route-id="@Model.ID_Product">
                 <button class="w-full h-14 mt-2 mb-6 px-4 border border-gray-400 bg-black text-white rounded-lg text-xl font-bold hover:-translate-y-1">Add To Cart</button>
             </a>

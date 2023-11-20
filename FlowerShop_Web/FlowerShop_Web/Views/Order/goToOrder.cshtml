@@ -215,7 +215,7 @@
                             <span>Subtotal</span>
                             <h4 class="text-xl font-medium">$@subtotal</h4>
                         </div>
-                        <input asp-for="DeliveredAt" class="form-control" />
+                        <input asp-for="DeliveredAt" class="form-control" type="date"/>
                         <span asp-validation-for="DeliveredAt" class="text-danger"></span>
                         <div class="space-y-2">
                             <div class="flex items-baseline justify-between">
@@ -233,10 +233,15 @@
                                 <h4 class="text-xl font-medium">0</h4>
                             </div>
                             <div class="flex w-full">
-                                <input asp-for="Code" type="text" placeholder="Enter Promo code" class="w-2/3 rounded-sm border px-4 py-2" />
-                                <span asp-validation-for="Code" class="text-danger"></span>
+                              @*   <input asp-for="Code" type="text" placeholder="Enter Promo code" class="w-2/3 rounded-sm border px-4 py-2" />
+                                <span asp-validation-for="Code" class="text-danger"></span> *@
 
-                                <button class="w-1/3 rounded-sm border bg-black px-4 py-2 text-white hover:border-black">Apply</button>
+                                <select name="Code" id="voucherCode" asp-items="@ViewBag.Voucher">
+                                    <option value="">Select Voucher</option>
+                                </select>
+                                <button onclick="checkVoucher()">Kiểm tra Voucher</button>
+                                <div id="result"></div>
+                             @*    <button class="w-1/3 rounded-sm border bg-black px-4 py-2 text-white hover:border-black">Apply</button> *@
                             </div>
                         </div>
                         <hr />
@@ -246,6 +251,7 @@
                         <div class="flex items-baseline justify-between">
                             <span>Total</span>
                             <h3 class="text-2xl font-medium">$@total</h3>
+                            <input type="number" id="totalAmount" value="@total" hidden/>
                         </div>
                         <button class="w-full rounded-sm border bg-black px-4 py-2 text-white hover:border-black">Check out</button>
                     </div>
@@ -452,5 +458,4 @@
         // }
 
     </script>
-
 }

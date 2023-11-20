@@ -1,0 +1,27 @@
+﻿@model List<Flower_Models.CartDetails>
+
+@{
+    ViewData["Title"] = "confirmOrderView";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@if (Model != null && Model.Any())
+{
+    <h1>Danh sách sản phẩm</h1>
+    <ul>
+        @foreach (var item in Model)
+        {
+            <li>@item.ID_Product - @item.Product_Quantity</li>
+        }
+    </ul>
+}
+else
+{
+    <p>Danh sách sản phẩm không tồn tại hoặc đã hết hạn.</p>
+}
+
+<button>
+    <a asp-action="saveInfo" asp-controller="Order">
+        Finish
+    </a>
+</button>

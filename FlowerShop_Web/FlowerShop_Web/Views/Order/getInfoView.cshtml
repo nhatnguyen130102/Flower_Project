@@ -1,0 +1,64 @@
+﻿@using Flower_Repository;
+@model Flower_ViewModels.OrderVM
+
+@{
+    ViewData["Title"] = "getInfoView";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@inject ApplicationDbContext _context;
+<h1>getInfoView</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                ID Cart
+            </th>
+            <th>
+                ID Product - Name Product
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.CartDetails)
+        {
+            <tr>
+                <td>
+                    @item.ID_Cart
+                </td>
+                <td>
+                    @{
+                        var pro = _context.Products.Where(x => x.ID_Product == item.ID_Product).FirstOrDefault();
+                    }
+                    @pro.ID_Product - @pro.Name_Product
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+<form asp-action="getInfo">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div>Name</div>
+    <input asp-for="Name" type="text" />
+    <div>phone</div>
+    <input asp-for="Phone" type="tel" />
+    <div>City</div>
+    <input asp-for="City" type="text" />
+    <div>Address</div>
+    <input asp-for="Address" type="text" />
+    <div>Street</div>
+    <input asp-for="Street" type="text" />
+    <div>Ward</div>
+    <input asp-for="Ward" type="text" />
+    <div>District</div>
+    <input asp-for="District" type="text" />
+    <div>Name_Order</div>
+    <input asp-for="Name_Order" type="text" />
+    <div>Phone_Order</div>
+    <input asp-for="Phone_Order" type="tel" />
+    <div>DeliveryAt</div>
+    <input asp-for="DeliveredAt"/>
+    <button type="submit">Contiue</button>
+</form>
+

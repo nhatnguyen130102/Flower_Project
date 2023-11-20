@@ -68,13 +68,21 @@
                   @*   <a title="user" class="inline-block no-underline hover:text-black" href="#">
                         <i class="fa-solid fa-user"></i>
                     </a> *@
+                  
                     @if (_signInManager.IsSignedIn(User))
                     {
                         <a title="cart" class="inline-block no-underline hover:text-black" asp-action="CartView" asp-controller="Cart">
                             <i class="fa-solid fa-cart-shopping"></i>
                         </a>
+                  
                         <a title="favorite" class="inline-block no-underline hover:text-black" asp-action="favoriteView" asp-controller="FavoriteProduct">
                             <i class="fa-solid fa-heart hover:text-red-500" style="color: #fa0000;"></i>
+                        </a>
+                    }
+                    else
+                    {
+                        <a title="cart" class="inline-block no-underline hover:text-black" asp-action="ViewCart" asp-controller="Cart">
+                            <i class="fa-solid fa-cart-shopping"></i>
                         </a>
                     }
                 </div>

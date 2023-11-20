@@ -25,9 +25,10 @@ builder.Services.AddDistributedMemoryCache();
 
 builder.Services.AddSession(options =>
 {
-    options.IdleTimeout = TimeSpan.FromSeconds(10);
+    options.IdleTimeout = TimeSpan.FromMinutes(30); // Thời gian tồn tại của session
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
+
 });
 // Identity
 builder.Services.
@@ -43,7 +44,7 @@ builder.Services.AddSession();
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddRazorPages();
 
-
+builder.Services.AddMemoryCache();
 
 var app = builder.Build();
 
@@ -55,6 +56,7 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+app.UseSession();
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
@@ -77,7 +79,6 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.UseStaticFiles();
-app.UseSession();
 
 app.MapRazorPages();
 
