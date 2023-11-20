@@ -1,0 +1,31 @@
+﻿@{
+    ViewData["Title"] = "getVoucherView";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model Flower_Models.Bill
+
+@if (Model != null)
+{
+    <div>@Model.Subtotal</div>
+}
+
+@if (ViewBag.Discount != null)
+{
+    <div>@ViewBag.Discount</div>
+}
+<form asp-action="getVoucherView" method="post">
+    <select id="code" name="code" asp-items="@ViewBag.Voucher">
+        <option value="">Select Voucher</option>
+    </select>
+
+    <button type="submit">Check</button>
+</form>
+
+<button>
+    <a asp-action="confirmOrderView" asp-controller="Order">
+        Contitue
+    </a>
+</button>
+
+

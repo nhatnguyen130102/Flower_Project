@@ -53,8 +53,10 @@
             <div class="min-w-max">
                 @if (Model is not null)
                 {
+                    var AllBill = 0.0;
                     @foreach (var item in Model)
                     {
+                       
                         if (item.ID_Product != null)
                         {
                             <div class="flex h-36 w-full items-center space-x-12 border-b ps-8 text-lg text-gray-900 lg:space-x-12">
@@ -101,13 +103,14 @@
                             var pro = _context.Products.Where(x => x.ID_Product == item.ID_Product).FirstOrDefault();
                             var Total = 0.0;
                             Total = item.Product_Quantity * pro.Price_Product;
-                            ViewBag.Total = Total;
+                            AllBill += Total;
                         }
                         else
                         {
 
                         }
                     }
+                    ViewBag.AllBill = AllBill;
                 }
             </div>
             <!-- summary -->
@@ -116,7 +119,7 @@
                 <hr />
                 <div class="flex items-baseline justify-between">
                     <span>Subtotal</span>
-                    <h4 class="text-xl font-medium">$@ViewBag.Total</h4>
+                    <h4 class="text-xl font-medium">$@ViewBag.AllBill</h4>
                 </div>
                 @*      <div class="space-y-2">
                 <div class="flex items-baseline justify-between">
@@ -141,10 +144,12 @@
                 <hr />
                 <div class="flex items-baseline justify-between">
                     <span>Total</span>
-                    <h3 class="text-2xl font-medium">$@ViewBag.Total</h3>
+                    <h3 class="text-2xl font-medium">$@ViewBag.AllBill</h3>
                 </div>
                 @*  <a asp-action="Order" asp-controller="Home" asp-route-id="@((int)ViewData["ID_Cart"])"> <button class="w-full rounded-sm border bg-black px-4 py-2 text-white hover:border-black">Check out</button></a> *@
-                <a asp-action="goToOrder" asp-controller="Order" asp-route-id="@((int)ViewData["ID_Cart"])"> <button class="my-3 w-full rounded-sm border bg-black px-4 py-2 text-white hover:border-black">Checkout</button></a>
+                <a asp-action="goToOrder" asp-controller="Order"> <button class="my-3 w-full rounded-sm border bg-black px-4 py-2 text-white hover:border-black">Checkout</button></a>
+
+                <a asp-action="getInfoView" asp-controller="Order"> <button class="my-3 w-full rounded-sm border bg-black px-4 py-2 text-white hover:border-black">Check Out 2</button></a>
 
             </div>
         </div>

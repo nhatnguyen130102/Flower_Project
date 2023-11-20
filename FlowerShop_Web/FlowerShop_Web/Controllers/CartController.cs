@@ -1,8 +1,11 @@
 ﻿using Flower_Models;
 using Flower_Repository;
+using Flower_ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Memory;
+using NuGet.Protocol;
 using System.Runtime.CompilerServices;
 
 namespace FlowerShop_Web.Controllers
@@ -13,69 +16,108 @@ namespace FlowerShop_Web.Controllers
         private readonly ApplicationDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly IMemoryCache _memoryCache;
 
-        public CartController(ILogger<HomeController> logger, ApplicationDbContext context, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
+        public CartController(ILogger<HomeController> logger, ApplicationDbContext context, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IMemoryCache memoryCache)
         {
             _logger = logger;
             _context = context;
             _userManager = userManager;
             _signInManager = signInManager;
-
+            _memoryCache = memoryCache;
         }
+
+        public IActionResult ViewCart()
+        {
+            // Lấy giỏ hàng từ cache (nếu có)
+            var cart = _memoryCache.Get<ShoppingCart>("UserCart") ?? new ShoppingCart();
+
+            return View(cart);
+        }
+
+        public IActionResult _AddToCart(int productId)
+        {
+            // Lấy giỏ hàng từ cache (nếu có)
+            var cart = _memoryCache.Get<ShoppingCart>("UserCart") ?? new ShoppingCart();
+
+            // Kiểm tra xem sản phẩm đã tồn tại trong giỏ hàng chưa
+            var existingItem = cart.Items.Find(item => item.ProductId == productId);
+
+            if (existingItem != null)
+            {
+                // Nếu đã tồn tại, cập nhật số lượng
+                existingItem.Quantity += 1;
+            }
+            else
+            {
+                // Nếu chưa tồn tại, thêm sản phẩm vào giỏ hàng
+                cart.Items.Add(new CartItem
+                {
+                    ProductId = productId,
+                    Quantity = 1,
+                });
+            }
+
+            // Cập nhật giỏ hàng trong cache
+            _memoryCache.Set("UserCart", cart, TimeSpan.FromDays(1)); // Lưu trong 1 ngày, bạn có thể điều chỉnh thời gian lưu trữ
+
+            // Chuyển hướng hoặc thực hiện các thao tác khác
+            return RedirectToAction("Index", "Home");
+        }
+
+
         public async Task<IActionResult> CartView()
         {
             // kiểm tra người dùng đã đăng nhập hay chưa
             var user = await _userManager.GetUserAsync(User);
-            if (user != null)
+            if (user == null)
             {
-                // kiểm tra thông tin giỏ hàng
-                var cart = await _context.Carts.Where(x => x.ID_Customer == user.Id).FirstOrDefaultAsync();
-                if (cart == null)
-                {
-                    var newcart = new Cart();
-                    newcart.ID_Customer = user.Id;
+                return NotFound();
+            }
+            // kiểm tra thông tin giỏ hàng
+            var cart = await _context.Carts.Where(x => x.ID_Customer == user.Id).FirstOrDefaultAsync();
+            if (cart == null)
+            {
+                var newcart = new Cart();
+                newcart.ID_Customer = user.Id;
 
-                    await _context.Carts.AddAsync(newcart);
-                    await _context.SaveChangesAsync();
+                await _context.Carts.AddAsync(newcart);
+                await _context.SaveChangesAsync();
 
-                    var newcartdetails = new CartDetails();
-                    newcartdetails.ID_Cart = newcart.ID_Cart;
+                var newcartdetails = new CartDetails();
+                newcartdetails.ID_Cart = newcart.ID_Cart;
 
-                    await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync();
 
-                    var list = await _context.CartDetails.Where(x => x.ID_Cart == newcartdetails.ID_Cart).Include(x => x.Product).ToListAsync();
+                var list = await _context.CartDetails.Where(x => x.ID_Cart == newcartdetails.ID_Cart).Include(x => x.Product).ToListAsync();
 
-                    ViewData["ID_Cart"] = newcart.ID_Cart;
+                ViewData["ID_Cart"] = newcart.ID_Cart;
 
-                    return View(list);
-                }
-                else
-                {
-                    ViewData["ID_Cart"] = cart.ID_Cart;
-
-                    var cartdetails = await _context.CartDetails.Where(x => x.ID_Cart == cart.ID_Cart).ToListAsync();
-
-                    if (cartdetails != null)
-                    {
-                        return View(cartdetails);
-                    }
-                    else
-                    {
-                        var newCartDetails = new CartDetails()
-                        {
-                            ID_Cart = cart.ID_Cart,
-                        };
-
-                        await _context.CartDetails.AddAsync(newCartDetails);
-                        await _context.SaveChangesAsync();
-                        return View(newCartDetails);
-                    }
-                }
+                return View(list);
             }
             else
             {
-                return RedirectToAction("Index");
+                ViewData["ID_Cart"] = cart.ID_Cart;
+
+                var cartdetails = await _context.CartDetails.Where(x => x.ID_Cart == cart.ID_Cart).ToListAsync();
+
+                if (cartdetails != null)
+                {
+                    return View(cartdetails);
+                }
+                else
+                {
+                    var newCartDetails = new CartDetails()
+                    {
+                        ID_Cart = cart.ID_Cart,
+                    };
+
+                    await _context.CartDetails.AddAsync(newCartDetails);
+                    await _context.SaveChangesAsync();
+                    return View(newCartDetails);
+                }
             }
+
         }
 
         public async Task<IActionResult> AddToCart(int? id)
@@ -256,7 +298,7 @@ namespace FlowerShop_Web.Controllers
 
             var cartDetails = await _context.CartDetails.Where(x => x.ID_Cart == cart.ID_Cart).ToListAsync();
 
-            if(cartDetails == null)
+            if (cartDetails == null)
             {
                 var newCartDetail = new CartDetails()
                 {
@@ -265,5 +307,7 @@ namespace FlowerShop_Web.Controllers
             }
             return RedirectToAction("CartView", "Cart");
         }
+
+
     }
 }

@@ -61,6 +61,10 @@
               "target": "Package",
               "version": "[7.0.12, )"
             },
+            "Microsoft.AspNetCore.Session": {
+              "target": "Package",
+              "version": "[2.2.0, )"
+            },
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
               "version": "[7.0.13, )"
@@ -74,6 +78,10 @@
               "suppressParent": "All",
               "target": "Package",
               "version": "[7.0.13, )"
+            },
+            "Microsoft.Extensions.Caching.Memory": {
+              "target": "Package",
+              "version": "[8.0.0, )"
             },
             "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
               "target": "Package",
@@ -151,6 +159,10 @@
               "target": "Package",
               "version": "[7.0.13, )"
             },
+            "Microsoft.AspNetCore.Session": {
+              "target": "Package",
+              "version": "[2.2.0, )"
+            },
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
               "version": "[7.0.13, )"
@@ -160,6 +172,10 @@
               "suppressParent": "All",
               "target": "Package",
               "version": "[7.0.13, )"
+            },
+            "Microsoft.Extensions.Caching.Memory": {
+              "target": "Package",
+              "version": "[8.0.0, )"
             },
             "X.PagedList": {
               "target": "Package",
@@ -234,6 +250,10 @@
               "target": "Package",
               "version": "[7.0.12, )"
             },
+            "Microsoft.AspNetCore.Session": {
+              "target": "Package",
+              "version": "[2.2.0, )"
+            },
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
               "version": "[7.0.13, )"
@@ -243,6 +263,10 @@
               "suppressParent": "All",
               "target": "Package",
               "version": "[7.0.13, )"
+            },
+            "Microsoft.Extensions.Caching.Memory": {
+              "target": "Package",
+              "version": "[8.0.0, )"
             },
             "X.PagedList": {
               "target": "Package",
@@ -295,6 +319,9 @@
             "projectReferences": {
               "E:\\Document\\VS\\New_Project_1\\FlowerShop_Web\\Flower_Models\\Flower_Models.csproj": {
                 "projectPath": "E:\\Document\\VS\\New_Project_1\\FlowerShop_Web\\Flower_Models\\Flower_Models.csproj"
+              },
+              "E:\\Document\\VS\\New_Project_1\\FlowerShop_Web\\Flower_Repository\\Flower_Repository.csproj": {
+                "projectPath": "E:\\Document\\VS\\New_Project_1\\FlowerShop_Web\\Flower_Repository\\Flower_Repository.csproj"
               }
             }
           }
@@ -312,6 +339,14 @@
             "Microsoft.AspNetCore.Identity.UI": {
               "target": "Package",
               "version": "[7.0.12, )"
+            },
+            "Microsoft.AspNetCore.Session": {
+              "target": "Package",
+              "version": "[2.2.0, )"
+            },
+            "Microsoft.Extensions.Caching.Memory": {
+              "target": "Package",
+              "version": "[8.0.0, )"
             },
             "SendGrid": {
               "target": "Package",
@@ -381,6 +416,16 @@
       "frameworks": {
         "net7.0": {
           "targetAlias": "net7.0",
+          "dependencies": {
+            "Microsoft.AspNetCore.Session": {
+              "target": "Package",
+              "version": "[2.2.0, )"
+            },
+            "Microsoft.Extensions.Caching.Memory": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",

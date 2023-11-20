@@ -70,23 +70,27 @@
                             <div class="flex items-center justify-between pt-3">
                                 <h4 class="text-xl">@item.Name_Product</h4>
                                 <div class="flex space-x-2">
-                                    <a asp-action="AddToCart" asp-controller="Cart" asp-route-id="@item.ID_Product">
-                                        <i class="fa-solid fa-basket-shopping hover:text-blue-500"></i>
-                                    </a>
+                                  
 
+                                    
                                     @if (_signInManager.IsSignedIn(User))
                                     {
+                                        <a asp-action="AddToCart" asp-controller="Cart" asp-route-id="@item.ID_Product">
+                                            <i class="fa-solid fa-basket-shopping hover:text-blue-500"></i>
+                                        </a>
                                         var getUser = await _userManager.GetUserAsync(User);
                                         var getFavorite = _context.FavoriteProducts.Where(x => x.ID_Customer == getUser.Id).FirstOrDefault();
                                         var getFavoriteDetails = _context.FavoriteProductDetails.Where(x => x.ID_Product == item.ID_Product).FirstOrDefault();
                                         if (getFavoriteDetails == null)
                                         {
+                                           
                                             <a asp-action="addFavorite" asp-controller="FavoriteProduct" asp-route-id="@item.ID_Product">
                                                 <i class="fa-regular fa-heart hover:text-red-500"></i>
                                             </a>
                                         }
                                         else
                                         {
+                                           
                                             <a asp-action="addFavorite" asp-controller="FavoriteProduct" asp-route-id="@item.ID_Product">
                                                 <i class="fa-solid fa-heart hover:text-red-500" style="color: #fa0000;"></i>
                                             </a>
@@ -94,6 +98,9 @@
                                     }
                                     else
                                     {
+                                        <a asp-action="_AddToCart" asp-controller="Cart" asp-route-id="@item.ID_Product">
+                                            <i class="fa-solid fa-basket-shopping hover:text-blue-500"></i>
+                                        </a>
                                         <i class="fa-regular fa-heart hover:text-red-500"></i>
                                     }
                                  
