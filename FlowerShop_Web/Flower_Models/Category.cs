@@ -13,6 +13,6 @@ namespace Flower_Models
         public int ID_Category { get; set; }
         public string Name_Category { get; set; }
 
-        public ICollection<Post>? Posts { get; set; }
+        public List<Post>? Posts { get; set; }
     }
 }

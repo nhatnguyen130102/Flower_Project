@@ -27,12 +27,12 @@ namespace Flower_Models
         public int ID_ProductType { get; set; }
         public string? size { get; set; }
 
-        public ICollection<FavoriteProductDetails>? FavoriteProductDetails { get; set; }
-        public ICollection<BillDetails>? BillDetails { get; set; }
-        public ICollection<CartDetails>? CartDetails { get; set; }
-        public ICollection<ProductWarehouse>? ProductWarehouses { get; set; }
-        public ICollection<Recipe>? Recipes { get; set; }
-        public ICollection<ManagerUserProduct>? ManagerUsers { get; set; }
+        public List<FavoriteProductDetails>? FavoriteProductDetails { get; set; }
+        public List<BillDetails>? BillDetails { get; set; }
+        public List<CartDetails>? CartDetails { get; set; }
+        public List<ProductWarehouse>? ProductWarehouses { get; set; }
+        public List<Recipe>? Recipes { get; set; }
+        public List<ManagerUserProduct>? ManagerUsers { get; set; }
 
         //[ForeignKey("ID_Shop")]
         //public Shop? Shop { get; set; }

@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace FlowerShop_Web.Migrations
 {
     /// <inheritdoc />
-    public partial class add_db : Migration
+    public partial class new_db : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -727,8 +727,8 @@ namespace FlowerShop_Web.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "718238ab-92a8-48b0-9e43-5ef0f43b218b", null, "Admin", "ADMIN" },
-                    { "9939c409-25bc-459a-a91e-b00d2b153d23", null, "Manager", "MANAGER" }
+                    { "1c1c1d8c-e5b0-41c6-a085-f25bf0ddf324", null, "Manager", "MANAGER" },
+                    { "73a37cfb-615f-448c-8675-73c7e479bdf3", null, "Admin", "ADMIN" }
                 });
 
             migrationBuilder.InsertData(
@@ -736,8 +736,8 @@ namespace FlowerShop_Web.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "Address", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "ID_CustomerType", "ID_Shop", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "Spend", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "0f04181a-5b9d-4766-b503-041cf80209b9", 0, null, "0e65192a-21d1-4fb2-9b22-0df3c82e1abf", "user3@hotmail.com", true, null, null, null, null, false, null, "USER3@HOTMAIL.COM", "USER3@HOTMAIL.COM", "AQAAAAIAAYagAAAAEOQqFbLA6Yi85SyuYT73cYKidJFVfwwkb5bfDxyb3PhpaG1HSm80HPqxytOQ5M9yow==", null, false, "3fe5d61e-60c9-4c2d-88a8-a5f6ac79e7d3", null, false, "user3@hotmail.com" },
-                    { "8b6df906-e206-4ab2-89b4-7b86be24dc5c", 0, null, "32a01024-ffe8-4ecb-8db6-e7d189267e2a", "user2@hotmail.com", true, null, null, null, null, false, null, "USER2@HOTMAIL.COM", "USER2@HOTMAIL.COM", "AQAAAAIAAYagAAAAEC6rmFrF+N8mja81314TANOsohrkh0mD13F7yrreq94HdsY4XuqOmkyoA0rMhrruSQ==", null, false, "db56a88d-7074-479d-b4ad-3b827bc823f6", null, false, "user2@hotmail.com" }
+                    { "54f12c2c-c55d-467a-b5a7-10932909fb33", 0, null, "d6dadc6d-c82e-4181-971e-ffe1adb10622", "user3@hotmail.com", true, null, null, null, null, false, null, "USER3@HOTMAIL.COM", "USER3@HOTMAIL.COM", "AQAAAAIAAYagAAAAEC6IAttpWz2sPFYKw9amIIsX2+xww4fA7z9Cio/R/JP+whUssxkjDBhQWXdP3SkitA==", null, false, "69ac9389-b40d-499a-9d5d-2f5b27a5ef06", null, false, "user3@hotmail.com" },
+                    { "c0db3333-949a-44c3-936a-1c6115437006", 0, null, "832131da-9ca0-4230-aeef-4aad2408d8ac", "user2@hotmail.com", true, null, null, null, null, false, null, "USER2@HOTMAIL.COM", "USER2@HOTMAIL.COM", "AQAAAAIAAYagAAAAEAGXlFhJ5T2Go8i03TH4U0mlTe9+w/5krF9Du4uBI8VS9RSDb4MOAurRZaL2UmZp5A==", null, false, "4967da2a-c4a8-4cff-a3ad-2a4890017c90", null, false, "user2@hotmail.com" }
                 });
 
             migrationBuilder.InsertData(
@@ -745,8 +745,8 @@ namespace FlowerShop_Web.Migrations
                 columns: new[] { "RoleId", "UserId" },
                 values: new object[,]
                 {
-                    { "718238ab-92a8-48b0-9e43-5ef0f43b218b", "0f04181a-5b9d-4766-b503-041cf80209b9" },
-                    { "9939c409-25bc-459a-a91e-b00d2b153d23", "8b6df906-e206-4ab2-89b4-7b86be24dc5c" }
+                    { "73a37cfb-615f-448c-8675-73c7e479bdf3", "54f12c2c-c55d-467a-b5a7-10932909fb33" },
+                    { "1c1c1d8c-e5b0-41c6-a085-f25bf0ddf324", "c0db3333-949a-44c3-936a-1c6115437006" }
                 });
 
             migrationBuilder.CreateIndex(

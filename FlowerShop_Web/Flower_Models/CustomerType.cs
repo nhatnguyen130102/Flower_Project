@@ -16,7 +16,7 @@ namespace Flower_Models
         public int MaxSpend { get; set; }
         public double Discount { get; set; }
 
-        public ICollection<ApplicationUser>? ApplicationUser { get; set; }
+        public List<ApplicationUser>? ApplicationUser { get; set; }
     }
 
 }

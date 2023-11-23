@@ -17,7 +17,7 @@ namespace Flower_Models
         // Mối quan hệ với Customer
         [ForeignKey("ID_Customer")]
         public ApplicationUser? ApplicationUser { get; set; }
-        public ICollection<FavoriteProductDetails>? FavoriteProductDetails { get; set; }
+        public List<FavoriteProductDetails>? FavoriteProductDetails { get; set; }
 
 
     }

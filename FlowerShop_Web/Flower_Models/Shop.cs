@@ -17,9 +17,9 @@ namespace Flower_Models
         public string Phone_Shop { get; set; }
         public int ID_Locations { get; set; }
 
-        public ICollection<MaterialWarehouse>? MaterialWarehouses { get; set; }
-        public ICollection<ProductWarehouse>? ProductWarehouses { get; set; }
-        public ICollection<StockReceivedDocket>? StockReceivedDockets { get; set; }
+        public List<MaterialWarehouse>? MaterialWarehouses { get; set; }
+        public List<ProductWarehouse>? ProductWarehouses { get; set; }
+        public List<StockReceivedDocket>? StockReceivedDockets { get; set; }
 
         // Mối quan hệ với Locations
         [ForeignKey("ID_Locations")]

@@ -111,33 +111,33 @@ namespace FlowerShop_Web.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "8b6df906-e206-4ab2-89b4-7b86be24dc5c",
+                            Id = "c0db3333-949a-44c3-936a-1c6115437006",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "32a01024-ffe8-4ecb-8db6-e7d189267e2a",
+                            ConcurrencyStamp = "832131da-9ca0-4230-aeef-4aad2408d8ac",
                             Email = "user2@hotmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "USER2@HOTMAIL.COM",
                             NormalizedUserName = "USER2@HOTMAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEC6rmFrF+N8mja81314TANOsohrkh0mD13F7yrreq94HdsY4XuqOmkyoA0rMhrruSQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEAGXlFhJ5T2Go8i03TH4U0mlTe9+w/5krF9Du4uBI8VS9RSDb4MOAurRZaL2UmZp5A==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "db56a88d-7074-479d-b4ad-3b827bc823f6",
+                            SecurityStamp = "4967da2a-c4a8-4cff-a3ad-2a4890017c90",
                             TwoFactorEnabled = false,
                             UserName = "user2@hotmail.com"
                         },
                         new
                         {
-                            Id = "0f04181a-5b9d-4766-b503-041cf80209b9",
+                            Id = "54f12c2c-c55d-467a-b5a7-10932909fb33",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "0e65192a-21d1-4fb2-9b22-0df3c82e1abf",
+                            ConcurrencyStamp = "d6dadc6d-c82e-4181-971e-ffe1adb10622",
                             Email = "user3@hotmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "USER3@HOTMAIL.COM",
                             NormalizedUserName = "USER3@HOTMAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEOQqFbLA6Yi85SyuYT73cYKidJFVfwwkb5bfDxyb3PhpaG1HSm80HPqxytOQ5M9yow==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEC6IAttpWz2sPFYKw9amIIsX2+xww4fA7z9Cio/R/JP+whUssxkjDBhQWXdP3SkitA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "3fe5d61e-60c9-4c2d-88a8-a5f6ac79e7d3",
+                            SecurityStamp = "69ac9389-b40d-499a-9d5d-2f5b27a5ef06",
                             TwoFactorEnabled = false,
                             UserName = "user3@hotmail.com"
                         });
@@ -863,13 +863,13 @@ namespace FlowerShop_Web.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "718238ab-92a8-48b0-9e43-5ef0f43b218b",
+                            Id = "73a37cfb-615f-448c-8675-73c7e479bdf3",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "9939c409-25bc-459a-a91e-b00d2b153d23",
+                            Id = "1c1c1d8c-e5b0-41c6-a085-f25bf0ddf324",
                             Name = "Manager",
                             NormalizedName = "MANAGER"
                         });
@@ -964,13 +964,13 @@ namespace FlowerShop_Web.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = "8b6df906-e206-4ab2-89b4-7b86be24dc5c",
-                            RoleId = "9939c409-25bc-459a-a91e-b00d2b153d23"
+                            UserId = "c0db3333-949a-44c3-936a-1c6115437006",
+                            RoleId = "1c1c1d8c-e5b0-41c6-a085-f25bf0ddf324"
                         },
                         new
                         {
-                            UserId = "0f04181a-5b9d-4766-b503-041cf80209b9",
-                            RoleId = "718238ab-92a8-48b0-9e43-5ef0f43b218b"
+                            UserId = "54f12c2c-c55d-467a-b5a7-10932909fb33",
+                            RoleId = "73a37cfb-615f-448c-8675-73c7e479bdf3"
                         });
                 });
 

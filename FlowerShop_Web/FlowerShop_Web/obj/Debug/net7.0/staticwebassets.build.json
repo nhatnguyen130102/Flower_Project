@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "g5Tznn+BSvbOu68N/fvvOXSRZF0LuEZCFIgVvmbwrrA=",
+  "Hash": "zwL/sZ9uphZadvW0dCeuNTUAaAZm/eeNzWx4bY9VbvI=",
   "Source": "FlowerShop_Web",
   "BasePath": "_content/FlowerShop_Web",
   "Mode": "Default",
@@ -4877,6 +4877,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\products\\tesst\\tesst.jpg"
+    },
+    {
+      "Identity": "E:\\Document\\VS\\New_Project_1\\FlowerShop_Web\\FlowerShop_Web\\wwwroot\\images\\products\\test\\test.jpg",
+      "SourceId": "FlowerShop_Web",
+      "SourceType": "Discovered",
+      "ContentRoot": "E:\\Document\\VS\\New_Project_1\\FlowerShop_Web\\FlowerShop_Web\\wwwroot\\",
+      "BasePath": "_content/FlowerShop_Web",
+      "RelativePath": "images/products/test/test.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\products\\test\\test.jpg"
     },
     {
       "Identity": "E:\\Document\\VS\\New_Project_1\\FlowerShop_Web\\FlowerShop_Web\\wwwroot\\js\\site.js",

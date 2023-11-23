@@ -32,7 +32,6 @@
   <ItemGroup>
     <Folder Include="Areas\Customer\Controllers\" />
     <Folder Include="Areas\Customer\Views\" />
-    <Folder Include="Migrations\" />
     <Folder Include="wwwroot\images\materials\" />
     <Folder Include="wwwroot\images\products\" />
     <Folder Include="wwwroot\images\others\" />

@@ -19,9 +19,9 @@ namespace Flower_Models
         public double Price_Material { get; set; }
         public string? Img_Material { get; set; }
 
-        public ICollection<MaterialWarehouse>? Warehouse_Warehouse { get; set; }
-        public ICollection<Recipe>? Recipes { get; set; }
-        public ICollection<StockReceivedDocketDetails>? StockReceivedDocketDetails { get; set; }
+        public List<MaterialWarehouse>? Warehouse_Warehouse { get; set; }
+        public List<Recipe>? Recipes { get; set; }
+        public List<StockReceivedDocketDetails>? StockReceivedDocketDetails { get; set; }
 
         // Mối quan hệ với MaterialType
         [ForeignKey("ID_MaterialType")]

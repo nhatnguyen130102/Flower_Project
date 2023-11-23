@@ -3,6 +3,7 @@ using Flower_Repository;
 using Flower_ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using NuGet.Protocol;
@@ -27,44 +28,13 @@ namespace FlowerShop_Web.Controllers
             _memoryCache = memoryCache;
         }
 
-        public IActionResult ViewCart()
+        public IActionResult CartViewGuest()
         {
             // Lấy giỏ hàng từ cache (nếu có)
-            var cart = _memoryCache.Get<ShoppingCart>("UserCart") ?? new ShoppingCart();
+            var cart = _memoryCache.Get<Cart>("UserCart") ?? new Cart();
 
             return View(cart);
         }
-
-        public IActionResult _AddToCart(int productId)
-        {
-            // Lấy giỏ hàng từ cache (nếu có)
-            var cart = _memoryCache.Get<ShoppingCart>("UserCart") ?? new ShoppingCart();
-
-            // Kiểm tra xem sản phẩm đã tồn tại trong giỏ hàng chưa
-            var existingItem = cart.Items.Find(item => item.ProductId == productId);
-
-            if (existingItem != null)
-            {
-                // Nếu đã tồn tại, cập nhật số lượng
-                existingItem.Quantity += 1;
-            }
-            else
-            {
-                // Nếu chưa tồn tại, thêm sản phẩm vào giỏ hàng
-                cart.Items.Add(new CartItem
-                {
-                    ProductId = productId,
-                    Quantity = 1,
-                });
-            }
-
-            // Cập nhật giỏ hàng trong cache
-            _memoryCache.Set("UserCart", cart, TimeSpan.FromDays(1)); // Lưu trong 1 ngày, bạn có thể điều chỉnh thời gian lưu trữ
-
-            // Chuyển hướng hoặc thực hiện các thao tác khác
-            return RedirectToAction("Index", "Home");
-        }
-
 
         public async Task<IActionResult> CartView()
         {
@@ -209,103 +179,205 @@ namespace FlowerShop_Web.Controllers
             }
             else
             {
+                // Lấy giỏ hàng từ cache (nếu có)
+                var cart = _memoryCache.Get<Cart>("UserCart") ?? new Cart();
+
+                // Kiểm tra xem sản phẩm đã tồn tại trong giỏ hàng chưa
+                var existingItem = cart.CartDetails.Find(item => item.ID_Product == id);
+
+                if (existingItem != null)
+                {
+                    // Nếu đã tồn tại, cập nhật số lượng
+                    existingItem.Product_Quantity += 1;
+                }
+                else
+                {
+                    var getPro = await _context.Products.Where(x => x.ID_Product == id).FirstOrDefaultAsync();
+                    // Nếu chưa tồn tại, thêm sản phẩm vào giỏ hàng
+                    cart.CartDetails.Add(new CartDetails
+                    {
+                        ID_Product = id,
+                        Product_Quantity = 1,
+                    });
+                }
+
+                // Cập nhật giỏ hàng trong cache
+                _memoryCache.Set("UserCart", cart, TimeSpan.FromDays(1)); // Lưu trong 1 ngày, bạn có thể điều chỉnh thời gian lưu trữ
+
+                // Chuyển hướng hoặc thực hiện các thao tác khác
                 return RedirectToAction("Index", "Home");
             }
         }
 
         public async Task<IActionResult> IncreaseBtn(int? id)
         {
-            var user = await _userManager.GetUserAsync(User);
-            if (user == null)
+            if (_signInManager.IsSignedIn(User))
             {
-                return NotFound();
+                var user = await _userManager.GetUserAsync(User);
+                if (user == null)
+                {
+                    return NotFound();
+                }
+                var cart = await _context.Carts.Where(x => x.ID_Customer == user.Id).FirstOrDefaultAsync();
+                if (cart == null)
+                {
+                    return NotFound();
+                }
+                if (id == null)
+                {
+                    return NotFound();
+                }
+                var item = await _context.CartDetails.Where(x => x.ID_Product == id && x.ID_Cart == cart.ID_Cart).FirstOrDefaultAsync();
+                if (item == null)
+                {
+                    return NotFound();
+                }
+                item.Product_Quantity += 1;
+                _context.CartDetails.Update(item);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("CartView", "Cart");
             }
-            var cart = await _context.Carts.Where(x => x.ID_Customer == user.Id).FirstOrDefaultAsync();
-            if (cart == null)
+            else
             {
-                return NotFound();
+                // Lấy giỏ hàng từ cache hoặc từ nơi bạn lưu trữ giỏ hàng
+                var cart = _memoryCache.GetOrCreate("UserCart", entry =>
+                {
+                    entry.SlidingExpiration = TimeSpan.FromMinutes(30);
+                    return new Cart();
+                });
+
+                var cartDetails = cart.CartDetails;
+
+                var getPro = cart.CartDetails.Find(item => item.ID_Product == id);
+
+                getPro.Product_Quantity += 1;
+
+                _memoryCache.Set("UserCart", cart, TimeSpan.FromDays(1)); // Lưu trong 1 ngày, bạn có thể điều chỉnh thời gian lưu trữ
+
+                return RedirectToAction("CartViewGuest", "Cart");
             }
-            if (id == null)
-            {
-                return NotFound();
-            }
-            var item = await _context.CartDetails.Where(x => x.ID_Product == id && x.ID_Cart == cart.ID_Cart).FirstOrDefaultAsync();
-            if (item == null)
-            {
-                return NotFound();
-            }
-            item.Product_Quantity += 1;
-            _context.CartDetails.Update(item);
-            await _context.SaveChangesAsync();
-            return RedirectToAction("CartView", "Cart");
+            
         }
 
         public async Task<IActionResult> DecreaseBtn(int? id)
         {
-            var user = await _userManager.GetUserAsync(User);
-            if (user == null)
+            if (_signInManager.IsSignedIn(User))
             {
-                return NotFound();
+                var user = await _userManager.GetUserAsync(User);
+                if (user == null)
+                {
+                    return NotFound();
+                }
+                var cart = await _context.Carts.Where(x => x.ID_Customer == user.Id).FirstOrDefaultAsync();
+                if (cart == null)
+                {
+                    return NotFound();
+                }
+                if (id == null)
+                {
+                    return NotFound();
+                }
+                var item = await _context.CartDetails.Where(x => x.ID_Product == id && x.ID_Cart == cart.ID_Cart).FirstOrDefaultAsync();
+                if (item == null)
+                {
+                    return NotFound();
+                }
+                item.Product_Quantity -= 1;
+                if (item.Product_Quantity < 1)
+                {
+                    item.Product_Quantity = 1;
+                }
+                _context.CartDetails.Update(item);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("CartView", "Cart");
             }
-            var cart = await _context.Carts.Where(x => x.ID_Customer == user.Id).FirstOrDefaultAsync();
-            if (cart == null)
+            else
             {
-                return NotFound();
+                // Lấy giỏ hàng từ cache hoặc từ nơi bạn lưu trữ giỏ hàng
+                var cart = _memoryCache.GetOrCreate("UserCart", entry =>
+                {
+                    entry.SlidingExpiration = TimeSpan.FromMinutes(30);
+                    return new Cart();
+                });
+
+                var cartDetails = cart.CartDetails;
+
+                var getPro = cart.CartDetails.Find(item => item.ID_Product == id);
+
+                getPro.Product_Quantity -= 1;
+
+                if(getPro.Product_Quantity < 1)
+                {
+                    getPro.Product_Quantity = 1;
+                }
+
+                _memoryCache.Set("UserCart", cart, TimeSpan.FromDays(1)); // Lưu trong 1 ngày, bạn có thể điều chỉnh thời gian lưu trữ
+
+                return RedirectToAction("CartViewGuest", "Cart");
             }
-            if (id == null)
-            {
-                return NotFound();
-            }
-            var item = await _context.CartDetails.Where(x => x.ID_Product == id && x.ID_Cart == cart.ID_Cart).FirstOrDefaultAsync();
-            if (item == null)
-            {
-                return NotFound();
-            }
-            item.Product_Quantity -= 1;
-            if (item.Product_Quantity < 1)
-            {
-                item.Product_Quantity = 1;
-            }
-            _context.CartDetails.Update(item);
-            await _context.SaveChangesAsync();
-            return RedirectToAction("CartView", "Cart");
+
         }
 
         public async Task<IActionResult> RemoveItem(int? id)
         {
-            var user = await _userManager.GetUserAsync(User);
-            if (user == null)
+            if (_signInManager.IsSignedIn(User))
             {
-                return NotFound();
-            }
-            var cart = await _context.Carts.Where(x => x.ID_Customer == user.Id).FirstOrDefaultAsync();
-            if (cart == null)
-            {
-                return NotFound();
-            }
-            if (id == null)
-            {
-                return NotFound();
-            }
-            var item = await _context.CartDetails.Where(x => x.ID_Product == id && x.ID_Cart == cart.ID_Cart).FirstOrDefaultAsync();
-            if (item == null)
-            {
-                return NotFound();
-            }
-
-            _context.CartDetails.Remove(item);
-            await _context.SaveChangesAsync();
-
-            var cartDetails = await _context.CartDetails.Where(x => x.ID_Cart == cart.ID_Cart).ToListAsync();
-
-            if (cartDetails == null)
-            {
-                var newCartDetail = new CartDetails()
+                var user = await _userManager.GetUserAsync(User);
+                if (user == null)
                 {
-                    ID_Cart = cart.ID_Cart,
-                };
+                    return NotFound();
+                }
+                var cart = await _context.Carts.Where(x => x.ID_Customer == user.Id).FirstOrDefaultAsync();
+                if (cart == null)
+                {
+                    return NotFound();
+                }
+                if (id == null)
+                {
+                    return NotFound();
+                }
+                var item = await _context.CartDetails.Where(x => x.ID_Product == id && x.ID_Cart == cart.ID_Cart).FirstOrDefaultAsync();
+                if (item == null)
+                {
+                    return NotFound();
+                }
+
+                _context.CartDetails.Remove(item);
+                await _context.SaveChangesAsync();
+
+                var cartDetails = await _context.CartDetails.Where(x => x.ID_Cart == cart.ID_Cart).ToListAsync();
+
+                if (cartDetails == null)
+                {
+                    var newCartDetail = new CartDetails()
+                    {
+                        ID_Cart = cart.ID_Cart,
+                    };
+                }
+                return RedirectToAction("CartView", "Cart");
             }
-            return RedirectToAction("CartView", "Cart");
+            else
+            {
+                // Lấy giỏ hàng từ cache hoặc từ nơi bạn lưu trữ giỏ hàng
+                var cart = _memoryCache.GetOrCreate("UserCart", entry =>
+                {
+                    entry.SlidingExpiration = TimeSpan.FromMinutes(30);
+                    return new Cart();
+                });
+
+                var cartDetails = cart.CartDetails;
+
+                var getPro = cart.CartDetails.Find(item => item.ID_Product == id);
+
+                if(getPro != null)
+                {
+                    cartDetails.Remove(getPro);
+                }
+
+                _memoryCache.Set("UserCart", cart, TimeSpan.FromDays(1)); // Lưu trong 1 ngày, bạn có thể điều chỉnh thời gian lưu trữ
+
+                return RedirectToAction("CartViewGuest", "Cart");
+            }
         }
 
 

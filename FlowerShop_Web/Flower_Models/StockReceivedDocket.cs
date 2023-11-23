@@ -22,7 +22,7 @@ namespace Flower_Models
         [ForeignKey("ID_Shop")]
         public Shop? Shop { get; set; }
 
-        public ICollection<StockReceivedDocketDetails>? stockReceivedDocketDetails { get; set; }
+        public List<StockReceivedDocketDetails>? stockReceivedDocketDetails { get; set; }
     }
 
 }

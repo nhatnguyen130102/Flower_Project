@@ -13,6 +13,6 @@ namespace Flower_Models
         public int ID_MaterialType { get; set; }
         public string Name_MaterialType { get; set; }
 
-        public ICollection<Material>? Materials { get; set; }
+        public List<Material>? Materials { get; set; }
     }
 }

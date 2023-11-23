@@ -14,6 +14,6 @@ namespace Flower_Models
         public string Name_ProductType { get; set; }
        
 
-        public ICollection<Product>? Products { get; set; }
+        public List<Product>? Products { get; set; }
     }
 }

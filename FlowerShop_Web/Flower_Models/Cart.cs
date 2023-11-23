@@ -17,7 +17,13 @@ namespace Flower_Models
         // Mối quan hệ với Customer
         [ForeignKey("ID_Customer")]
         public ApplicationUser? ApplicationUser { get; set; }
-        public ICollection<CartDetails>? CartDetails { get; set; }  
+      
+        public List<CartDetails>? CartDetails { get; set; }
+
+        public Cart()
+        {
+            CartDetails = new List<CartDetails>();
+        }
     }
 
 }

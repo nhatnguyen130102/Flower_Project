@@ -13,6 +13,6 @@ namespace Flower_Models
         public int ID_Occasion { get; set; }
         public string Name_Occasion { get; set; }
 
-        public ICollection<Product>? Products { get; set; }
+        public List<Product>? Products { get; set; }
     }
 }
