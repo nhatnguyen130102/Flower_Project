@@ -13,6 +13,6 @@ namespace Flower_Models
         public int ID_FlashSale { get; set; }
         public double Price_FlashSale { get; set; }
 
-        public ICollection<Product>? Products { get; set; }
+        public List<Product>? Products { get; set; }
     }
 }

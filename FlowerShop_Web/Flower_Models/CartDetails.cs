@@ -22,6 +22,8 @@ namespace Flower_Models
         // Mối quan hệ với Product
         [ForeignKey("ID_Cart")]
         public Cart? Cart { get; set; }
+
+   
     }
 
 }

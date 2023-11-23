@@ -58,7 +58,18 @@
     <div>Phone_Order</div>
     <input asp-for="Phone_Order" type="tel" />
     <div>DeliveryAt</div>
-    <input asp-for="DeliveredAt"/>
+    <input asp-for="DeliveredAt" type="date"  id="dateInput" min="" onchange="updateMinDate()"/>
     <button type="submit">Contiue</button>
 </form>
 
+<script>
+    function updateMinDate(){
+
+        const today = new Date();
+
+        const formmatedDate = today.toISOString().split('T')[0];
+
+        document.getElementById('dateInput').min = formmatedDate;
+    }
+    updateMinDate();
+</script>

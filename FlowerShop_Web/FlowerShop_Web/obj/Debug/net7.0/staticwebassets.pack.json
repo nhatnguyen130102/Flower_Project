@@ -901,6 +901,10 @@
       "PackagePath": "staticwebassets\\images\\products\\tesst\\tesst.jpg"
     },
     {
+      "Id": "E:\\Document\\VS\\New_Project_1\\FlowerShop_Web\\FlowerShop_Web\\wwwroot\\images\\products\\test\\test.jpg",
+      "PackagePath": "staticwebassets\\images\\products\\test\\test.jpg"
+    },
+    {
       "Id": "E:\\Document\\VS\\New_Project_1\\FlowerShop_Web\\FlowerShop_Web\\wwwroot\\js\\site.js",
       "PackagePath": "staticwebassets\\js\\site.js"
     },

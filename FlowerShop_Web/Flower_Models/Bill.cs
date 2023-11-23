@@ -33,7 +33,7 @@ namespace Flower_Models
         public string Ward { get; set; }
         public string? Message { get; set; }
 
-        public ICollection<BillDetails>? BillDetails { get; set; }
+        public List<BillDetails>? BillDetails { get; set; }
 
         [ForeignKey("ID_Shop")]
         public Shop? Shop { get; set; }

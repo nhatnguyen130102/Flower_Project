@@ -13,7 +13,7 @@ namespace Flower_Models
         public int ID_Locations { get; set; }
         public string Name_Locations { get; set; }
 
-        public ICollection<Shop>?  Shops { get; set; }
+        public List<Shop>?  Shops { get; set; }
     }
 
 }

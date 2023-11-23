@@ -20,7 +20,7 @@ namespace Flower_Models
         public double MinimumAmount { get; set; }
         public bool IsActive { get; set; }
 
-        public ICollection<Bill>? Bills { get; set; }
+        public List<Bill>? Bills { get; set; }
 
     }
     public enum VoucherType
