@@ -52,3 +52,17 @@
 }
     </tbody>
 </table>
+
+
+<!-- Biểu mẫu xuất và nhập Excel -->
+
+<form method="post" asp-action="ExportToExcel" asp-controller="ExcelService">
+    <button type="submit">Export to Excel</button>
+</form>
+
+
+<form method="post" asp-action="ImportFromExcel" asp-controller="ExcelService" enctype="multipart/form-data">
+    <input type="file" name="file" />
+    <button type="submit">Import from Excel</button>
+</form>
+

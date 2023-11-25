@@ -1,0 +1,109 @@
+﻿@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model Flower_ViewModels.AccoutManagerVM
+
+@if (Model != null)
+{
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+        <link rel="stylesheet" href="https://unpkg.com/tailwindcss@2.2.19/dist/tailwind.min.css" />
+
+        <link href="https://fonts.googleapis.com/css?family=Work+Sans:200,400&display=swap" rel="stylesheet" />
+
+        <script src="https://kit.fontawesome.com/6e08fcf7ad.js" crossorigin="anonymous"></script>
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+        <style>
+            .work-sans {
+                font-family: 'Work Sans', sans-serif;
+            }
+
+            #menu-toggle:checked + #menu {
+                display: block;
+            }
+
+            .hover\:grow {
+                transition: all 0.3s;
+                transform: scale(1);
+            }
+
+                .hover\:grow:hover {
+                    transform: scale(1.02);
+                }
+
+            .group:hover .group-hover\:block {
+                display: block !important;
+            }
+        </style>
+        <title>Profile</title>
+    </head>
+    <body>
+        <div class="mb-8 flex h-32 w-full justify-center bg-stone-100 md:mb-0 md:justify-end" style="background-image:url('https://i.pinimg.com/564x/23/3b/b6/233bb616530879e6e2725491be4f4ff4.jpg'); --tw-bg-opacity: 0.25; ">
+            <img src="https://i.pinimg.com/564x/50/a2/41/50a2415a5c2bdc190c2ebb356fd54ddc.jpg" alt="" class="h-40 w-40 m-8 rounded-full border border-black object-cover md:me-24 lg:me-40" />
+            <hr class="text-black" />
+        </div>
+        <div class="flex flex-col space-y-12 p-12 md:flex-row md:space-x-12 md:space-y-0">
+
+            <partial name="_UserSideBarPV.cshtml" />
+
+            <div class="w-full md:w-2/3 lg:w-4/5">
+                <form asp-action="Index" method="post">
+                    <h1 class="mb-8 text-5xl">My Profile</h1>
+                    <h3 class="text-xl font-thin text-gray-600">Personal information</h3>
+                    <hr class="mb-8 mt-2" />
+                    <div class="grid w-full grid-cols-1 gap-x-8 gap-y-4 lg:grid-cols-2">
+
+                        <div class="relative">
+                            <input asp-for="FirstName" type="text" id="name" class="peer block w-full appearance-none rounded-sm border border-gray-400 bg-transparent px-4 py-4 text-base text-gray-900 focus:border-blue-600 focus:outline-none" placeholder="" />
+                            <label for="name" class="absolute left-1 top-2 z-10 origin-[0] -translate-y-4 scale-75 transform bg-white px-2 text-sm text-gray-500 duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:px-2 peer-focus:text-blue-600">First Name</label>
+                        </div>
+                        <div class="relative">
+                            <input asp-for="LastName" type="text" id="name" class="peer block w-full appearance-none rounded-sm border border-gray-400 bg-transparent px-4 py-4 text-base text-gray-900 focus:border-blue-600 focus:outline-none" placeholder="" />
+                            <label for="name" class="absolute left-1 top-2 z-10 origin-[0] -translate-y-4 scale-75 transform bg-white px-2 text-sm text-gray-500 duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:px-2 peer-focus:text-blue-600">Last Name</label>
+                        </div>
+
+                        <div class="relative">
+                            <input asp-for="Phone" type="text" id="name" class="peer block w-full appearance-none rounded-sm border border-gray-400 bg-transparent px-4 py-4 text-base text-gray-900 focus:border-blue-600 focus:outline-none" placeholder="" />
+                            <label for="name" class="absolute left-1 top-2 z-10 origin-[0] -translate-y-4 scale-75 transform bg-white px-2 text-sm text-gray-500 duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:px-2 peer-focus:text-blue-600">Phone Number</label>
+                        </div>
+                        <div class="relative">
+                            <input readonly asp-for="Email" type="text" id="name" class="peer block w-full appearance-none rounded-sm border border-gray-400 bg-transparent px-4 py-4 text-base text-gray-900 focus:border-blue-600 focus:outline-none" placeholder="" />
+                            <label for="name" class="absolute left-1 top-2 z-10 origin-[0] -translate-y-4 scale-75 transform bg-white px-2 text-sm text-gray-500 duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:px-2 peer-focus:text-blue-600">Email</label>
+                        </div>
+                        <button class="w-full justify-self-end border border-gray-200 bg-black px-8 py-2 text-center text-white hover:border-black lg:col-span-2 lg:w-48">Update Profile</button>
+                    </div>
+                    <h3 class="mt-8 text-xl font-thin text-gray-600 lg:mt-0">Password</h3>
+                    <hr class="mb-8 mt-2" />
+                    <div class="grid w-full grid-cols-1 gap-x-8 gap-y-4 lg:grid-cols-2">
+                        <div class="relative">
+                            <input asp-for="OldPassword" title="pass" type="password" id="new-pass" class="peer block w-full appearance-none rounded-sm border border-gray-400 bg-transparent px-4 py-4 text-base text-gray-900 focus:border-blue-600 focus:outline-none" placeholder="" />
+                            <label for="name" class="absolute left-1 top-2 z-10 origin-[0] -translate-y-4 scale-75 transform bg-white px-2 text-sm text-gray-500 duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:px-2 peer-focus:text-blue-600">Old password</label>
+                        </div>
+                        <div class="relative">
+                            <input asp-for="NewPassword" title="pass" type="password" id="new-pass" class="peer block w-full appearance-none rounded-sm border border-gray-400 bg-transparent px-4 py-4 text-base text-gray-900 focus:border-blue-600 focus:outline-none" placeholder="" />
+                            <label for="name" class="absolute left-1 top-2 z-10 origin-[0] -translate-y-4 scale-75 transform bg-white px-2 text-sm text-gray-500 duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:px-2 peer-focus:text-blue-600">New password</label>
+                        </div>
+                        <div class="relative">
+                            <input asp-for="ConfirmPassword" title="confirm-pass" type="password" id="confirm-new-pass" class="peer block w-full appearance-none rounded-sm border border-gray-400 bg-transparent px-4 py-4 text-base text-gray-900 focus:border-blue-600 focus:outline-none" placeholder="" />
+                            <label for="surname" class="absolute left-1 top-2 z-10 origin-[0] -translate-y-4 scale-75 transform bg-white px-2 text-sm text-gray-500 duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:px-2 peer-focus:text-blue-600">Confirm new password</label>
+                        </div>
+                        <button class="w-full justify-self-end border border-gray-200 bg-black px-8 py-2 text-center text-white hover:border-black lg:col-span-2 lg:w-48">Change Password</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <script src="/js/sidebar.js"></script>
+    </body>
+    </html>
+
+}

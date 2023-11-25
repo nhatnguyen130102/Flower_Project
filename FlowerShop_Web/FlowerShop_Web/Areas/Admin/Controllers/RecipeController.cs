@@ -20,7 +20,7 @@ namespace FlowerShop_Web.Areas.Admin.Controllers
             _context = context;
         }
 
-        [Authorize(Roles ="Admin,Manager")]
+        [Authorize(Roles = "Admin,Manager")]
         [HttpGet]
         public IActionResult Index()
         {
@@ -52,32 +52,32 @@ namespace FlowerShop_Web.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> CreateNext(int? id)
         {
-            if(id == null)
+            if (id == null)
             {
                 return NotFound();
             }
             ViewBag.id = id;
             var recipe = await _context.Recipes.Where(x => x.ID_Product == id).ToListAsync();
             var getPro = await _context.Products.Where(x => x.ID_Product == id).FirstOrDefaultAsync();
-            if(getPro.isAvailabled == true)
+            //if(getPro.isAvailabled == true)
+            //{
+            //    return RedirectToAction("Index", "Product");
+            //}
+            //else
+            //{
+            ViewBag.Material = new SelectList(_context.Materials, "ID_Material", "Name_Material");
+            if (recipe != null)
             {
-                return RedirectToAction("Index", "Product");
-            }
-            else
-            {
-                ViewBag.Material = new SelectList(_context.Materials, "ID_Material", "Name_Material");
-                if (recipe != null)
+                var list = new RecipeVM()
                 {
-                    var list = new RecipeVM()
-                    {
-                        Recipes = recipe,
-                    };
-                    return View(list);
-                }
-                return View();
+                    Recipes = recipe,
+                };
+                return View(list);
             }
+            return View();
+            //}
         }
-
+        [Authorize(Roles = "Admin,Manager")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateNext(RecipeVM model)
@@ -85,8 +85,8 @@ namespace FlowerShop_Web.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 // Kiểm tra xem công thức đã có chưa, nếu có thì chỉ bổ sung thêm số lượng
-                var getRecipe = await _context.Recipes.Where(x=>x.ID_Material == model.ID_Material && x.ID_Product == model.ID_Product).FirstOrDefaultAsync();  
-                if(getRecipe == null)
+                var getRecipe = await _context.Recipes.Where(x => x.ID_Material == model.ID_Material && x.ID_Product == model.ID_Product).FirstOrDefaultAsync();
+                if (getRecipe == null)
                 {
                     var recipe = new Recipe()
                     {
@@ -106,22 +106,20 @@ namespace FlowerShop_Web.Areas.Admin.Controllers
                     _context.SaveChanges();
 
                 }
-            
+
                 return RedirectToAction("CreateNext", "Recipe", new { id = model.ID_Product });
             }
             return View(model);
         }
 
-       
-
         public async Task<IActionResult> deleteMaterial(int? id)
         {
-            if(id == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
-            var getRecipe = await _context.Recipes.Where(x=>x.ID_Recipe == id).FirstOrDefaultAsync();
+            var getRecipe = await _context.Recipes.Where(x => x.ID_Recipe == id).FirstOrDefaultAsync();
             var getPro = getRecipe.ID_Product;
             _context.Recipes.Remove(getRecipe);
             _context.SaveChanges();
