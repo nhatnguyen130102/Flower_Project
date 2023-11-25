@@ -1,0 +1,40 @@
+﻿@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+@model IEnumerable<Flower_Models.Recipe>
+
+<h2>Recipes</h2>
+
+<!-- Hiển thị bảng dữ liệu -->
+<table border="1">
+    <thead>
+        <tr>
+            <th>ID Recipe</th>
+            <th>ID Product</th>
+            <th>ID Material</th>
+            <th>Material Quantity</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var recipe in Model)
+        {
+            <tr>
+                <td>@recipe.ID_Recipe</td>
+                <td>@recipe.ID_Product</td>
+                <td>@recipe.ID_Material</td>
+                <td>@recipe.Material_Quantity</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<!-- Biểu mẫu xuất và nhập Excel -->
+<form method="post" action="@Url.Action("ExportToExcel")">
+    <button type="submit">Export to Excel</button>
+</form>
+
+<form method="post" action="@Url.Action("ImportFromExcel")" enctype="multipart/form-data">
+    <input type="file" name="file" />
+    <button type="submit">Import from Excel</button>
+</form>

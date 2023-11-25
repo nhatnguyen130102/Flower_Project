@@ -17,6 +17,14 @@ namespace Flower_Models
         [PersonalData]
         public string? Address { get; set; }
         [PersonalData]
+        public string? District { get; set; }
+        [PersonalData]
+        public string? Street { get; set; }
+        [PersonalData]
+        public string? Ward { get; set; }
+        [PersonalData]
+        public string? City { get; set; }
+        [PersonalData]
         public int? ID_CustomerType { get; set; }
 
         public int? ID_Shop { get; set; }

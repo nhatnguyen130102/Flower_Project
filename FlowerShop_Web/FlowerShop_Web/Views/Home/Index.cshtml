@@ -9,215 +9,146 @@
 @using Flower_Repository;
 @using Flower_ViewModels;
 @using Microsoft.AspNetCore.Identity;
-<section class="mx-auto w-full bg-cover bg-center pt-12 md:items-center md:pt-0" style="max-width:1600px; height: 32rem; background-image: url('https://images.unsplash.com/photo-1561334251-b306baba437a?auto=format&fit=crop&q=80&w=1974&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');">
-    <div class="container mx-auto">
-        <div class="flex w-full items-start px-6 tracking-wide lg:w-1/2">
-            <h1 class="my-4 text-2xl text-black"></h1>
-            <button class="mt-80 inline-block rounded-sm border border-white bg-black px-4 py-2 text-xl leading-relaxed text-white no-underline hover:border-black">Discover it</button>
-        </div>
-        <div class="mt-12 w-auto justify-self-center rounded-sm bg-white align-bottom">
-            <div class="mx-8 grid grid-cols-5 gap-8 py-8">
-                <div class="justify-self-center">
-                    <input type="text" name="" id="" placeholder="Delivery city" class="max-w-full rounded-sm border border-gray-400 px-4 py-2 focus:border-black focus:outline-none focus:ring-1 focus:ring-black" />
-                </div>
-                <div class="justify-self-center">
-                    <input type="date" name="" id="" placeholder="Delivery date" class="rounded-sm border border-gray-400 px-4 py-2 shadow-sm focus:border-black focus:outline-none focus:ring-1 focus:ring-black" />
-                </div>
-                @using (Html.BeginForm("Index", "Home", FormMethod.Get, new { id = "filterForm" }))
-                {
-                    <div class="justify-self-center">
-                        <select asp-items="@ViewBag.Occasion" aria-label="flower-type" name="id" id="id" class="min-w-full appearance-none rounded-sm border border-gray-400 px-4 py-2 shadow-sm focus:border-black focus:outline-none focus:ring-1 focus:ring-black">
-                            <option value="">Choose type of Occasion </option>
-                        </select>
+<section>
+    <div class="row mx-auto w-full bg-cover bg-center pt-12 md:items-center md:pt-0" style="max-width:1600px; height: 32rem; background-image: url('https://images.unsplash.com/photo-1561334251-b306baba437a?auto=format&fit=crop&q=80&w=1974&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');">
+        <div class="container mx-auto">
+            <div class="flex w-full items-start px-6 tracking-wide lg:w-1/2">
+                <h1 class="my-4 text-2xl text-black"></h1>
+                <button class="mt-80 inline-block rounded-sm border border-white bg-black px-4 py-2 text-xl leading-relaxed text-white no-underline hover:border-black">Discover it</button>
+            </div>
+            <div class="my-12 justify-self-center rounded-sm bg-white align-bottom w-auto">
+                <div class="items-center flex flex-wrap gap-8 p-8 mx-auto" style="width:fit-content">
+                    <div>
+                        <input type="text" name="" id="" placeholder="Delivery city" class="max-w-full rounded-sm border border-gray-400 px-4 py-2 focus:border-black focus:outline-none focus:ring-1 focus:ring-black" />
                     </div>
+                    <div>
+                        <input type="date" name="" id="" placeholder="Delivery date" class="rounded-sm border border-gray-400 px-4 py-2 shadow-sm focus:border-black focus:outline-none focus:ring-1 focus:ring-black" />
+                    </div>
+                    @using (Html.BeginForm("Index", "Home", FormMethod.Get, new { id = "filterForm" }))
+                    {
+                        <div>
+                            <select asp-items="@ViewBag.Occasion" aria-label="flower-type" name="id" id="id" class="min-w-full appearance-none rounded-sm border border-gray-400 px-4 py-2 shadow-sm focus:border-black focus:outline-none focus:ring-1 focus:ring-black">
+                                <option value="">Choose type of Occasion </option>
+                            </select>
+                        </div>
 
-                    @*   <div class="justify-self-center">
-                <select asp-items="@ViewBag.ProductType" aria-label="occasions" name="" id="occasions" class="min-w-full appearance-none rounded-sm border border-gray-400 px-4 py-2 shadow-sm focus:border-black focus:outline-none focus:ring-1 focus:ring-black">
-                <option value=""> Choose type of Flower</option>
-                </select>
-                </div> *@
-                }
-                <button class="min-w-full rounded-sm border border-gray-400 px-4 py-2 bg-black text-white hover:border-black hover:font-bold" id="" title="view-flower">View flowers</button>
+                        @*   <div>
+                    <select asp-items="@ViewBag.ProductType" aria-label="occasions" name="" id="occasions" class="min-w-full appearance-none rounded-sm border border-gray-400 px-4 py-2 shadow-sm focus:border-black focus:outline-none focus:ring-1 focus:ring-black">
+                    <option value=""> Choose type of Flower</option>
+                    </select>
+                    </div> *@
+                    }
+                    <div>
+                        <button class="min-w-full rounded-sm border border-gray-400 px-4 py-2 bg-black text-white hover:border-black hover:font-bold" id="" title="view-flower">View flowers</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-</section>
-<section class="bg-white py-8">
-    <div class="container mx-auto flex flex-wrap justify-center pt-4">
-        <nav id="store" class="top-0 z-30 w-full px-6 py-1">
-            <div class="container mx-auto mt-0 flex w-full flex-wrap items-center justify-between px-2 py-3">
-                <a class="text-xl font-bold uppercase tracking-wide text-gray-800 no-underline hover:no-underline" href="#"> Store </a>
+    <div class="row bg-white py-8 row">
+        <div class="container mx-auto flex flex-wrap justify-center pt-4">
+            <nav id="store" class="top-0 z-30 w-full px-6 py-1">
+                <div class="container mx-auto mt-0 flex w-full flex-wrap items-center justify-between px-2 py-3">
+                    <a class="text-xl font-bold uppercase tracking-wide text-gray-800 no-underline hover:no-underline" href="#"> Store </a>
 
-                <div class="flex items-center gap-2 text-gray-400" id="store-nav-content">
-                    <a class="inline-block no-underline hover:text-black" href="#">
-                        <i class="fa-solid fa-filter"></i>
-                    </a>
-                    <a class="inline-block no-underline hover:text-black" href="#">
-                        <i class="fa-solid fa-magnifying-glass"></i>
-                    </a>
+                    <div class="flex items-center gap-2 text-gray-400" id="store-nav-content">
+                        <a class="inline-block no-underline hover:text-black" href="#">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 3c2.755 0 5.455.232 8.083.678.533.09.917.556.917 1.096v1.044a2.25 2.25 0 01-.659 1.591l-5.432 5.432a2.25 2.25 0 00-.659 1.591v2.927a2.25 2.25 0 01-1.244 2.013L9.75 21v-6.568a2.25 2.25 0 00-.659-1.591L3.659 7.409A2.25 2.25 0 013 5.818V4.774c0-.54.384-1.006.917-1.096A48.32 48.32 0 0112 3z" />
+                            </svg>
+
+                        </a>
+                        <a class="inline-block no-underline hover:text-black" href="#">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+                            </svg>
+
+                        </a>
+                    </div>
                 </div>
-            </div>
-        </nav>
+            </nav>
 
-        @foreach (var item in Model)
-        {
-            if (item.isAvailabled == true @* && item.size == "0" *@)
+            @foreach (var item in Model)
             {
-                <div class="flex w-full flex-col p-6 md:w-1/3 xl:w-1/4 text-gray-900">
-                    <a asp-action="ProductDetails" asp-controller="Home" asp-route-id="@item.ID_Product">
-                        <img class="transition-all hover:grow hover:rounded-lg hover:shadow-lg" src="\@item.Img_Product" alt="" />
-                        <div class="px-1">
-                            <div class="flex items-center justify-between pt-3">
-                                <h4 class="text-xl">@item.Name_Product</h4>
-                                <div class="flex space-x-2">
+                if (item.isAvailabled == true @* && item.size == "0" *@)
+                {
+                    <div class="flex w-full flex-col p-6 md:w-1/3 xl:w-1/4 text-gray-900">
+                        <a asp-action="ProductDetails" asp-controller="Home" asp-route-id="@item.ID_Product">
+                            <img class="transition-all hover:grow hover:rounded-lg hover:shadow-lg" src="\@item.Img_Product" alt="" />
+                            <div class="px-1">
+                                <div class="flex items-center justify-between pt-3">
+                                    <h4 class="text-xl">@item.Name_Product</h4>
+                                    <div class="flex space-x-2 items-center">
+                                        <a asp-action="AddToCart" asp-controller="Cart" asp-route-id="@item.ID_Product">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 font-medium hover:text-blue-500">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+                                            </svg>
 
+                                        </a>
 
-                                    <a asp-action="AddToCart" asp-controller="Cart" asp-route-id="@item.ID_Product">
-                                        <i class="fa-solid fa-basket-shopping hover:text-blue-500"></i>
-                                    </a>
-                                    @if (_signInManager.IsSignedIn(User))
-                                    {
-                                       @*  <a asp-action="AddToCart" asp-controller="Cart" asp-route-id="@item.ID_Product">
-                                            <i class="fa-solid fa-basket-shopping hover:text-blue-500"></i>
-                                        </a> *@
-                                        var getUser = await _userManager.GetUserAsync(User);
-                                        var getFavorite = _context.FavoriteProducts.Where(x => x.ID_Customer == getUser.Id).FirstOrDefault();
-                                        var getFavoriteDetails = _context.FavoriteProductDetails.Where(x => x.ID_Product == item.ID_Product).FirstOrDefault();
-                                        if (getFavoriteDetails == null)
+                                        @if (_signInManager.IsSignedIn(User))
                                         {
-
-                                            <a asp-action="addFavorite" asp-controller="FavoriteProduct" asp-route-id="@item.ID_Product">
-                                                <i class="fa-regular fa-heart hover:text-red-500"></i>
-                                            </a>
+                                            var getUser = await _userManager.GetUserAsync(User);
+                                            var getFavorite = _context.FavoriteProducts.Where(x => x.ID_Customer == getUser.Id).FirstOrDefault();
+                                            var getFavoriteDetails = _context.FavoriteProductDetails.Where(x => x.ID_Product == item.ID_Product).FirstOrDefault();
+                                            if (getFavoriteDetails == null)
+                                            {
+                                                <a asp-action="addFavorite" asp-controller="FavoriteProduct" asp-route-id="@item.ID_Product">
+                                                    <i class="fa-regular fa-heart hover:text-red-500"></i>
+                                                </a>
+                                            }
+                                            else
+                                            {
+                                                <a asp-action="addFavorite" asp-controller="FavoriteProduct" asp-route-id="@item.ID_Product">
+                                                    <i class="fa-solid fa-heart hover:text-red-500" style="color: #fa0000;"></i>
+                                                </a>
+                                            }
                                         }
                                         else
                                         {
-                                            <a asp-action="addFavorite" asp-controller="FavoriteProduct" asp-route-id="@item.ID_Product">
-                                                <i class="fa-solid fa-heart hover:text-red-500" style="color: #fa0000;"></i>
-                                            </a>
+                                            <i class="fa-regular fa-heart hover:text-red-500"></i>
                                         }
+
+                                    </div>
+                                </div>
+                                <div class="grid grid-cols-2 text-gray-600">
+                                    <span>
+                                        @item.Rating
+                                        <i class="fa-solid fa-star text-yellow-400"></i>
+                                    </span>
+                                    <span class="justify-self-end">@item.ViewCount</span>
+                                </div>
+                                <div class="grid grid-cols-2 mt-2">
+                                    @if (item.ID_FlashSale != null)
+                                    {
+                                        var flashsale = _context.FlashSales.Where(x => x.ID_FlashSale == item.ID_FlashSale).FirstOrDefault();
+                                        <span class="font-normal">@flashsale.Price_FlashSale</span>
+                                        <span class="justify-self-end text-gray-400 line-through">$@item.Price_Product</span>
                                     }
                                     else
                                     {
-                                      @*   <a asp-action="_AddToCart" asp-controller="Cart" asp-route-id="@item.ID_Product">
-                                            <i class="fa-solid fa-basket-shopping hover:text-blue-500"></i>
-                                        </a> *@
-                                        <i class="fa-regular fa-heart hover:text-red-500"></i>
+                                        <span class="font-normal">@item.Price_Product</span>
                                     }
                                 </div>
                             </div>
-                            <div class="grid grid-cols-2 text-gray-600">
-                                <span>
-                                    @item.Rating
-                                    <i class="fa-solid fa-star text-yellow-400"></i>
-                                </span>
-                                <span class="justify-self-end">@item.ViewCount</span>
-                            </div>
-                            <div class="grid grid-cols-2 mt-2">
-                                @if (item.ID_FlashSale != null)
-                                {
-                                    var flashsale = _context.FlashSales.Where(x => x.ID_FlashSale == item.ID_FlashSale).FirstOrDefault();
-                                    <span class="font-normal">@flashsale.Price_FlashSale</span>
-                                    <span class="justify-self-end text-gray-400 line-through">$@item.Price_Product</span>
-                                }
-                                else
-                                {
-                                    <span class="font-normal">@item.Price_Product</span>
-                                }
-                            </div>
-                        </div>
-                    </a>
-                </div>
+                        </a>
+                    </div>
+                }
             }
-        }
-        @*     <button class="mt-8 w-1/3 rounded-sm border border-gray-400 px-4 py-2 bg-black text-white hover:border-black hover:font-bold" id="" title="view-flower">View all flowers</button> *@
-    </div>
-</section>
-
-<!--
-  h1: 5xl
-  h2: 4xl
-  h3: 2xl
-  h4: xl
- -->
-<!-- reviews -->
-<div class="m-12 grid w-auto grid-cols-1 gap-8 rounded-lg border border-gray-400 border-opacity-50 px-14 py-12 md:flex md:gap-0 md:space-x-8 shadow-lg">
-    <div class="text-center md:w-1/2">
-        <h1 class="mb-2 text-5xl">We make people smile</h1>
-        <h4 class="text-xl text-gray-600">What our customers are saying</h4>
-        <div class="flex justify-center p-12">
-            <img src="https://i.pinimg.com/564x/9d/5c/3c/9d5c3c101987bb2311f284fd23f76ce7.jpg" alt="" class="h-96 w-96 rounded-sm shadow-lg" />
+            @*     <button class="mt-8 w-1/3 rounded-sm border border-gray-400 px-4 py-2 bg-black text-white hover:border-black hover:font-bold" id="" title="view-flower">View all flowers</button> *@
         </div>
     </div>
-    <div class="space-y-8 md:w-1/2">
-        <div>
-            <button class="flex text-yellow-400">
-                <i class="fa-solid fa-star text-yellow-400"></i>
-                <i class="fa-solid fa-star text-yellow-400"></i>
-                <i class="fa-solid fa-star text-yellow-400"></i>
-                <i class="fa-solid fa-star text-yellow-400"></i>
-                <i class="fa-solid fa-star text-yellow-400"></i>
-                <span class="text-base text-black">| 20/10/2023</span>
-            </button>
-            <p class="mt-2 text-lg">
-                <b>Lorem, ipsum dolor sit amet consectetur adipisicing elit.</b><br />
-                By Laura | Da Nang
-            </p>
-        </div>
-        <hr />
-        <div>
-            <button class="flex text-yellow-400">
-                <i class="fa-solid fa-star text-yellow-400"></i>
-                <i class="fa-solid fa-star text-yellow-400"></i>
-                <i class="fa-solid fa-star text-yellow-400"></i>
-                <i class="fa-solid fa-star text-yellow-400"></i>
-                <i class="fa-solid fa-star text-yellow-400"></i>
-                <span class="text-base text-black">| 20/10/2023</span>
-            </button>
-            <p class="mt-2 text-lg">
-                <b>Lorem, ipsum dolor sit amet consectetur adipisicing elit.</b><br />
-                By Laura | Da Nang
-            </p>
-        </div>
-        <hr />
-        <div>
-            <button class="flex text-yellow-400">
-                <i class="fa-solid fa-star text-yellow-400"></i>
-                <i class="fa-solid fa-star text-yellow-400"></i>
-                <i class="fa-solid fa-star text-yellow-400"></i>
-                <i class="fa-solid fa-star text-yellow-400"></i>
-                <i class="fa-solid fa-star text-yellow-400"></i>
-                <span class="text-base text-black">| 20/10/2023</span>
-            </button>
-            <p class="mt-2 text-lg">
-                <b>Lorem, ipsum dolor sit amet consectetur adipisicing elit.</b><br />
-                By Laura | Da Nang
-            </p>
-        </div>
-        <hr />
-        <div>
-            <button class="flex text-yellow-400">
-                <i class="fa-solid fa-star text-yellow-400"></i>
-                <i class="fa-solid fa-star text-yellow-400"></i>
-                <i class="fa-solid fa-star text-yellow-400"></i>
-                <i class="fa-solid fa-star text-yellow-400"></i>
-                <i class="fa-solid fa-star text-yellow-400"></i>
-                <span class="text-base text-black">| 20/10/2023</span>
-            </button>
-            <p class="mt-2 text-lg">
-                <b>Lorem, ipsum dolor sit amet consectetur adipisicing elit.</b><br />
-                By Laura | Da Nang
-            </p>
-        </div>
-    </div>
-</div>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-<script>
-    $(document).ready(function () {
-        $("#id").change(function () {
-            $("#filterForm").submit();
+    <!-- reviews -->
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $("#id").change(function () {
+                $("#filterForm").submit();
+            });
         });
-    });
-</script>
+    </script>
+</section>

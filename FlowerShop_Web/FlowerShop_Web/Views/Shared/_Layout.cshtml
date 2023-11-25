@@ -45,235 +45,145 @@
     </style>
 </head>
 
-<body class="work-sans bg-white text-base leading-normal tracking-normal text-gray-600">
+<body class="work-sans bg-white text-base leading-normal tracking-normal">
     <!--Nav-->
-    <nav id="header" class="top-0 z-30 w-full py-1">
-        <div class="shadow-sm">
-            <div class="container mx-auto mt-0 flex w-full flex-wrap items-center justify-between p-6 py-2">
-                <nav>
-                    <ul class="items-center justify-between pt-4 text-base text-gray-600 md:flex md:pt-0">
-                        <li><a class="inline-block py-2 no-underline hover:text-black" asp-action="Index" asp-area="Admin" asp-controller="Home">About</a></li>
-                    </ul>
-                </nav>
-
-                <div class="order-1 md:order-2">
-                    <a class="flex items-center text-xl font-bold tracking-wide text-gray-800 no-underline hover:no-underline"  asp-action="Index" asp-controller="Home"> Florist Store </a>
-                </div>
-
-                <div class="order-2 flex items-center gap-2 text-gray-400 md:order-3" id="nav-content">
-
-
-
-                    <partial name="_LoginPartial.cshtml"/>
-                  @*   <a title="user" class="inline-block no-underline hover:text-black" href="#">
-                        <i class="fa-solid fa-user"></i>
-                    </a> *@
-                  
+    <nav id="header" class="top-0 z-30 w-full py-3">
+        <div class="container mx-auto mt-0 flex w-full flex-wrap items-center justify-between py-2">
+            <div>
+                <a class="items-center tracking-wide text-gray-800 no-underline hover:no-underline" asp-action="Index" asp-controller="Home">
+                    <div class="gap-4">
+                        <div class="text-2xl font-bold leading-2">Florist Store</div>
+                        <div class="text-xs text-wrap">Group 4 . 2023.</div>
+                    </div>
+                </a>
+            </div>
+            <nav class="inline-block">
+                <ul class="items-center justify-between text-base md:flex md:pt-0 gap-8">
+                    <li><a class="inline-block no-underline hover:border-b-2 hover:border-black hover:text-black py-2" asp-action="Index" asp-area="Admin" asp-controller="Home">About</a></li>
+                    <li><a class="inline-block no-underline hover:border-b-2 hover:border-black hover:text-black py-2" asp-action="Post" asp-controller="Post">News</a></li>
                     @if (_signInManager.IsSignedIn(User))
                     {
-                        <a title="cart" class="inline-block no-underline hover:text-black" asp-action="CartView" asp-controller="Cart">
-                            <i class="fa-solid fa-cart-shopping"></i>
-                        </a>
-                  
-                        <a title="favorite" class="inline-block no-underline hover:text-black" asp-action="favoriteView" asp-controller="FavoriteProduct">
-                            <i class="fa-solid fa-heart hover:text-red-500" style="color: #fa0000;"></i>
-                        </a>
+                        <li><a class="inline-block no-underline hover:border-b-2 hover:border-black hover:text-black py-2" asp-action="CartView" asp-controller="Cart">Cart</a></li>
+                        <li><a class="inline-block no-underline hover:border-b-2 hover:border-black hover:text-black py-2" asp-action="favoriteView" asp-controller="FavoriteProduct">Wishlist</a></li>
                     }
-                    else
-                    {
-                        <a title="cart" class="inline-block no-underline hover:text-black" asp-action="CartViewGuest" asp-controller="Cart">
-                            <i class="fa-solid fa-cart-shopping"></i>
-                        </a>
-                    }
-                </div>
-            </div>
-        </div>
+                </ul>
+            </nav>
 
-        <div class="container mx-auto mt-0 flex w-full flex-wrap items-center justify-between px-6 py-1">
-            <label for="menu-toggle" class="block cursor-pointer md:hidden">
-                <i class="fa-solid fa-bars"></i>
-            </label>
-            <input class="hidden" type="checkbox" id="menu-toggle" placeholder="none" />
+            <div class="flex items-center gap-4" id="nav-content">
+                <partial name="_LoginPartial.cshtml" />
+                @if (_signInManager.IsSignedIn(User))
+                {
+                    <a title="cart" class="inline-block no-underline hover:text-black" asp-action="CartView" asp-controller="Cart">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                    </a>
 
-            <div class="order-3 hidden w-full md:order-1 md:flex md:w-auto md:items-center" id="menu">
-                <nav>
-                    <ul class="pt-4 text-base text-gray-600 md:flex md:pt-0">
-                        <li class="py-2 pe-6 md:mb-0">
-                            <a class="whitespace-nowrap hover:font-semibold hover:italic hover:text-black" href="#">Trending</a>
-                        </li>
-                        <li class="px-6 py-2 md:mb-0">
-                            <a class="whitespace-nowrap hover:font-semibold hover:italic hover:text-black" href="#">Flash Sales</a>
-                        </li>
-                        <li class="group relative rounded-full px-6 py-2 md:mb-0" id="button_admin">
-                            <a class="whitespace-nowrap" href="">
-                                <span class="firstlevel group-hover:font-semibold group-hover:italic group-hover:text-black">Flowers</span>
-                            </a>
-                            <ul class="absolute left-0 top-0 z-10 mt-10 hidden rounded-sm bg-white p-2 shadow-lg group-hover:block">
-                                <li class="whitespace-nowrap rounded-full p-1 text-sm text-gray-600 hover:bg-gray-100 hover:text-gray-800 md:text-base">
-                                    <a class="px-2 py-1" href="">
-                                        <span class="">Roses</span>
-                                    </a>
-                                </li>
-                                <li class="whitespace-nowrap rounded-full p-1 text-sm text-gray-600 hover:bg-gray-100 hover:text-gray-800 md:text-base">
-                                    <a class="px-2 py-1" href="">
-                                        <span class="">Lilies</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="group relative rounded-full px-6 py-2 md:mb-0" id="button_admin">
-                            <a class="whitespace-nowrap" href="">
-                                <span class="firstlevel group-hover:font-semibold group-hover:italic group-hover:text-black">Occasions</span>
-                            </a>
-                            <ul class="absolute left-0 top-0 z-10 mt-10 hidden rounded-sm bg-white p-2 shadow-lg group-hover:block">
-                                <li class="whitespace-nowrap rounded-full p-1 text-sm text-gray-600 hover:bg-gray-100 hover:text-gray-800 md:text-base">
-                                    <a class="px-2 py-1" href="">
-                                        <span class="">Birthday</span>
-                                    </a>
-                                </li>
-                                <li class="whitespace-nowrap rounded-full p-1 text-sm text-gray-600 hover:bg-gray-100 hover:text-gray-800 md:text-base">
-                                    <a class="px-2 py-1" href="">
-                                        <span class="">Romance</span>
-                                    </a>
-                                </li>
-                                <li class="whitespace-nowrap rounded-full p-1 text-sm text-gray-600 hover:bg-gray-100 hover:text-gray-800 md:text-base">
-                                    <a class="px-2 py-1" href="">
-                                        <span class="">Congratulations</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="group relative rounded-full px-6 py-2 md:mb-0" id="button_admin">
-                            <a class="whitespace-nowrap" href="">
-                                <span class="firstlevel group-hover:font-semibold group-hover:italic group-hover:text-black">Destinations</span>
-                            </a>
-                            <ul class="absolute left-0 top-0 z-10 mt-10 hidden rounded-sm bg-white p-2 shadow-lg group-hover:block">
-                                <li class="whitespace-nowrap rounded-full p-1 text-sm text-gray-600 hover:bg-gray-100 hover:text-gray-800 md:text-base">
-                                    <a class="px-2 py-1" href="">
-                                        <span class="">Ho Chi Minh City</span>
-                                    </a>
-                                </li>
-                                <li class="whitespace-nowrap rounded-full p-1 text-sm text-gray-600 hover:bg-gray-100 hover:text-gray-800 md:text-base">
-                                    <a class="px-2 py-1" href="">
-                                        <span class="">Da Nang City</span>
-                                    </a>
-                                </li>
-                                <li class="whitespace-nowrap rounded-full p-1 text-sm text-gray-600 hover:bg-gray-100 hover:text-gray-800 md:text-base">
-                                    <a class="px-2 py-1" href="">
-                                        <span class="">Ha Noi Capital</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="px-6 py-2 md:mb-0"><a class="whitespace-nowrap hover:font-semibold hover:italic hover:text-black" href="#">Personalized Gifts</a></li>
-                        <li class="px-6 py-2 md:mb-0"><a class="whitespace-nowrap hover:font-semibold hover:italic hover:text-black" asp-action="Post" asp-controller="Post">News</a></li>
-                    </ul>
-                </nav>
+
+                }
+                else
+                {
+                    <a title="cart" class="inline-block no-underline hover:text-black" asp-action="CartViewGuest" asp-controller="Cart">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                    </a>
+                }
             </div>
         </div>
     </nav>
 
     <!-- banner -->
-  
-
     <!-- content -->
-  @RenderBody()
-
+    <section class="flex-wrap gap-6">
+        @RenderBody()
+    </section>
     <!-- footer -->
-    <footer class="w-full space-y-8 bg-black px-12 py-12 text-white">
-        <div class="space-y-4 border-white text-center lg:flex lg:justify-center lg:space-x-12 lg:space-y-0 lg:text-justify">
-            <h3 class="text-2xl lg:font-semibold">Signup to our newsletter</h3>
-            <div>
-                <div class="mb-2 block">
-                    <input type="email" name="" id="" placeholder="Enter your email address" required autocomplete="email" class="w-96 px-4 py-2" />
-                    <button class="border border-white px-4 py-2 hover:font-bold">Subscribe</button>
+    <footer class="p-4 w-full bg-black text-gray-200 text-center">
+        <ul class="mx-auto flex flex-wrap gap-8 font-medium my-4 text-lg" style="width:fit-content">
+            <li class="cursor-pointer hover:text-gray-100 hover:font-medium">About</li>
+            <li class="cursor-pointer hover:text-gray-100 hover:font-medium">Blogs</li>
+            <li class="cursor-pointer hover:text-gray-100 hover:font-medium">Jobs</li>
+            <li class="cursor-pointer hover:text-gray-100 hover:font-medium">Services</li>
+            <li class="cursor-pointer hover:text-gray-100 hover:font-medium">Partners</li>
+        </ul>
+        <ul class="mx-auto flex flex-wrap gap-8 font-medium my-10 text-xl" style="width:fit-content">
+            <li class="cursor-pointer hover:text-gray-100 hover:font-medium">
+                <i class="fa-brands fa-facebook"></i>
+            </li>
+            <li class="cursor-pointer hover:text-gray-100 hover:font-medium">
+                <i class="fa-brands fa-twitter"></i>
+            </li>
+            <li class="cursor-pointer hover:text-gray-100 hover:font-medium">
+                <i class="fa-brands fa-instagram"></i>
+            </li>
+            <li class="cursor-pointer hover:text-gray-100 hover:font-medium">
+                <i class="fa-brands fa-linkedin"></i>
+            </li>
+            <li class="cursor-pointer hover:text-gray-100 hover:font-medium">
+                <i class="fa-brands fa-github"></i>
+            </li>
+        </ul>
+        <div class="text-start" style="padding: 3rem">
+            <div class="grid grid-cols-3 text-gray-500 gap-10">
+                <div>
+                    <ul>
+                        <b class="text-white">Trending cities</b>
+                        <li><a href="">Ho Chi Minh City</a></li>
+                        <li><a href="">Da Nang City</a></li>
+                        <li><a href="">Ha Noi City</a></li>
+                    </ul>
                 </div>
-                <input type="checkbox" name="" id="accept" class="me-1 h-3 w-3" />
-                <label for="accept">I accept <b>privacy policy.</b></label>
-            </div>
-        </div>
-        <hr class="opacity-50" />
-        <div class="grid grid-cols-3 text-center text-gray-400">
-            <div>
-                <ul>
-                    <b class="text-white">Trending cities</b>
-                    <li><a href="">Ho Chi Minh City</a></li>
-                    <li><a href="">Da Nang City</a></li>
-                    <li><a href="">Ha Noi City</a></li>
-                </ul>
-            </div>
-            <div>
-                <ul>
-                    <b class="text-white">Trending flowers</b>
-                    <li><a href="">Roses</a></li>
-                    <li><a href="">Lilies</a></li>
-                    <li><a href="">Gerberas</a></li>
-                    <li><a href="">Hydrangeas</a></li>
-                    <li><a href="">Sunflowers</a></li>
-                </ul>
-            </div>
-            <div>
-                <ul>
-                    <b class="text-white">Events & Occasions</b>
-                    <li><a href="">Happy Birthday</a></li>
-                    <li><a href="">Love</a></li>
-                    <li><a href="">Woman's Day</a></li>
-                    <li><a href="">Funeral</a></li>
-                </ul>
-            </div>
-        </div>
-        <hr class="opacity-50" />
-        <div class="grid grid-cols-4 text-center text-gray-400">
-            <div>
-                <ul>
-                    <b class="text-white">Company</b>
-                    <li><a href="">About us</a></li>
-                    <li><a href="">Contact us</a></li>
-                    <li><a href="">Frequently Asked Questions</a></li>
-                </ul>
-            </div>
-            <div>
-                <ul>
-                    <b class="text-white">Why <i>us</i>?</b>
-                    <li><a href="">Our magic</a></li>
-                    <li><a href="">Customer Reviews</a></li>
-                    <li><a href="">Blog</a></li>
-                </ul>
-            </div>
-            <div>
-                <ul>
-                    <b class="text-white">Policies</b>
-                    <li><a href="">Condition of purchase</a></li>
-                    <li><a href="">Privacy and Legal</a></li>
-                    <li><a href="">Sitemap</a></li>
-                </ul>
-            </div>
-            <div>
-                <b class="text-white">Connect With Us</b>
-                <hr class="my-2" />
-                <div class="flex justify-center space-x-8 px-8">
-                    <a href="">
-                        <svg fill="#fff" viewBox="0 0 24 24" class="h-10" xmlns="http://www.w3.org/2000/svg">
-                            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
-                            <g id="SVGRepo_iconCarrier"><path d="M12 2.03998C6.5 2.03998 2 6.52998 2 12.06C2 17.06 5.66 21.21 10.44 21.96V14.96H7.9V12.06H10.44V9.84998C10.44 7.33998 11.93 5.95998 14.22 5.95998C15.31 5.95998 16.45 6.14998 16.45 6.14998V8.61998H15.19C13.95 8.61998 13.56 9.38998 13.56 10.18V12.06H16.34L15.89 14.96H13.56V21.96C15.9164 21.5878 18.0622 20.3855 19.6099 18.57C21.1576 16.7546 22.0054 14.4456 22 12.06C22 6.52998 17.5 2.03998 12 2.03998Z"></path></g>
-                        </svg>
-                    </a>
-                    <a href="">
-                        <svg width="40px" height="40px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
-                            <g id="SVGRepo_iconCarrier">
-                                <path fill-rule="evenodd" clip-rule="evenodd" d="M12 18C15.3137 18 18 15.3137 18 12C18 8.68629 15.3137 6 12 6C8.68629 6 6 8.68629 6 12C6 15.3137 8.68629 18 12 18ZM12 16C14.2091 16 16 14.2091 16 12C16 9.79086 14.2091 8 12 8C9.79086 8 8 9.79086 8 12C8 14.2091 9.79086 16 12 16Z" fill="#fff"></path>
-                                <path d="M18 5C17.4477 5 17 5.44772 17 6C17 6.55228 17.4477 7 18 7C18.5523 7 19 6.55228 19 6C19 5.44772 18.5523 5 18 5Z" fill="#fff"></path>
-                                <path fill-rule="evenodd" clip-rule="evenodd" d="M1.65396 4.27606C1 5.55953 1 7.23969 1 10.6V13.4C1 16.7603 1 18.4405 1.65396 19.7239C2.2292 20.8529 3.14708 21.7708 4.27606 22.346C5.55953 23 7.23969 23 10.6 23H13.4C16.7603 23 18.4405 23 19.7239 22.346C20.8529 21.7708 21.7708 20.8529 22.346 19.7239C23 18.4405 23 16.7603 23 13.4V10.6C23 7.23969 23 5.55953 22.346 4.27606C21.7708 3.14708 20.8529 2.2292 19.7239 1.65396C18.4405 1 16.7603 1 13.4 1H10.6C7.23969 1 5.55953 1 4.27606 1.65396C3.14708 2.2292 2.2292 3.14708 1.65396 4.27606ZM13.4 3H10.6C8.88684 3 7.72225 3.00156 6.82208 3.0751C5.94524 3.14674 5.49684 3.27659 5.18404 3.43597C4.43139 3.81947 3.81947 4.43139 3.43597 5.18404C3.27659 5.49684 3.14674 5.94524 3.0751 6.82208C3.00156 7.72225 3 8.88684 3 10.6V13.4C3 15.1132 3.00156 16.2777 3.0751 17.1779C3.14674 18.0548 3.27659 18.5032 3.43597 18.816C3.81947 19.5686 4.43139 20.1805 5.18404 20.564C5.49684 20.7234 5.94524 20.8533 6.82208 20.9249C7.72225 20.9984 8.88684 21 10.6 21H13.4C15.1132 21 16.2777 20.9984 17.1779 20.9249C18.0548 20.8533 18.5032 20.7234 18.816 20.564C19.5686 20.1805 20.1805 19.5686 20.564 18.816C20.7234 18.5032 20.8533 18.0548 20.9249 17.1779C20.9984 16.2777 21 15.1132 21 13.4V10.6C21 8.88684 20.9984 7.72225 20.9249 6.82208C20.8533 5.94524 20.7234 5.49684 20.564 5.18404C20.1805 4.43139 19.5686 3.81947 18.816 3.43597C18.5032 3.27659 18.0548 3.14674 17.1779 3.0751C16.2777 3.00156 15.1132 3 13.4 3Z" fill="#fff"></path>
-                            </g>
-                        </svg>
-                    </a>
+                <div>
+                    <ul>
+                        <b class="text-white">Trending flowers</b>
+                        <li><a href="">Roses</a></li>
+                        <li><a href="">Lilies</a></li>
+                        <li><a href="">Gerberas</a></li>
+                        <li><a href="">Hydrangeas</a></li>
+                        <li><a href="">Sunflowers</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <ul>
+                        <b class="text-white">Events & Occasions</b>
+                        <li><a href="">Happy Birthday</a></li>
+                        <li><a href="">Love</a></li>
+                        <li><a href="">Woman's Day</a></li>
+                        <li><a href="">Funeral</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <ul>
+                        <b class="text-white">Company</b>
+                        <li><a href="">About us</a></li>
+                        <li><a href="">Contact us</a></li>
+                        <li><a href="">Frequently Asked Questions</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <ul>
+                        <b class="text-white">Why <i>us</i>?</b>
+                        <li><a href="">Our magic</a></li>
+                        <li><a href="">Customer Reviews</a></li>
+                        <li><a href="">Blog</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <ul>
+                        <b class="text-white">Policies</b>
+                        <li><a href="">Condition of purchase</a></li>
+                        <li><a href="">Privacy and Legal</a></li>
+                        <li><a href="">Sitemap</a></li>
+                    </ul>
                 </div>
             </div>
+        </div>
+
+        <div class="font-bold disabled" style="margin: 6rem 0 2rem 0">
+            Privacy  |  Changelog
+        </div>
+        <div class="text-sm mt-lg-5 w-full py-4" style="border-top: 1px solid gray">
+            © 2020 Your Company, Inc. All rights reserved.
         </div>
     </footer>
+
 </body>
 </html>
 

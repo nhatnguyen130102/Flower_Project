@@ -13,10 +13,18 @@ namespace Flower_ViewModels
         public string? LastName { get; set; }
         public string? FirstName { get; set; }
         public string? Address { get; set; }
+        public string? City { get; set; }
+        public string? Street { get; set; }
+        public string? Ward { get; set; }
+        public string? District { get; set; }
+
+        public int? ID_CustomerType { get; set; }
         public string? Phone { get; set; }
         public string? Email { get; set; }
         public int? ID_Shop { get; set; }
         public string? ID_Role { get; set; }
+        public double? Spend { get; set; }
+
 
         //[Required(ErrorMessage = "Current password is required.")]
         [DataType(DataType.Password)]
@@ -26,6 +34,7 @@ namespace Flower_ViewModels
         //[Required(ErrorMessage = "New password is required.")]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]
+        [RegularExpression(@"^[a-zA-Z0-9!@#$%^&*()?/>.<,:;'\\|}\]{[_~`+=-]+$", ErrorMessage = "Invalid password format")]
         [Display(Name = "New Password")]
         public string? NewPassword { get; set; }
 

@@ -5,7 +5,107 @@
     ViewData["Title"] = "Log in";
 }
 
-<div class="row justify-center">
+<section class="grid h-[720px] grid-cols-7">
+    <div class="relative col-span-4 h-full bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1602705316288-2db08a4708db?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')">
+        <div class="md:text-md mx-auto mt-80 w-5/6 flex-wrap space-y-5 rounded-lg bg-black bg-opacity-10 p-5 text-sm text-white backdrop-blur-sm">
+            <div class="text-3xl font-semibold">Sarah Hanna</div>
+            <div class="text-xs font-medium">username@gmail.com</div>
+            <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis veniam nesciunt, aliquid distinctio quo eligendi rem dignissimos voluptatum voluptas eius, placeat quaerat sit assumenda accusantium atque quisquam, unde earum molestiae?</div>
+            <div class="flex w-full justify-end gap-2 pt-5">
+                <div class="h-[1px] w-10 rounded-full bg-white"></div>
+                <div class="h-[1px] w-10 rounded-full bg-white bg-opacity-50"></div>
+                <div class="h-[1px] w-10 rounded-full bg-white bg-opacity-50"></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-span-3 space-y-6 px-12 py-8">
+        <div class="space-y-3">
+            <div class="text-2xl font-semibold">Login to your account</div>
+            <div class="text-sm text-gray-400">Greetings on your return! We kindly request you to enter your details.</div>
+        </div>
+
+        @* @{
+        if ((Model.ExternalLogins?.Count ?? 0) == 0)
+        {
+        <div>
+        <p>
+        There are no external authentication services configured. See this <a href="https://go.microsoft.com/fwlink/?LinkID=532715">
+        article
+        about setting up this ASP.NET application to support logging in via external services
+        </a>.
+        </p>
+        </div>
+        }
+        else
+        {
+        <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
+        <div>
+        <p>
+        @foreach (var provider in Model.ExternalLogins!)
+        {
+        <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
+        }
+        </p>
+        </div>
+        </form>
+        }
+        } *@
+
+
+        @* Login with other services *@
+        <div class="flex flex-wrap gap-4">
+            <a href="#" class="flex gap-2 rounded-full px-4 py-3 text-gray-600 outline outline-1 outline-gray-200 hover:bg-black hover:text-white" style="width: fit-content;">
+                <i class="fa-brands fa-facebook"></i>
+                <div class="whitespace-nowrap">Login with Facebook</div>
+            </a>
+            <a href="#" class="flex gap-2 rounded-full px-4 py-3 text-gray-600 outline outline-1 outline-gray-200 hover:bg-black hover:text-white" style="width: fit-content;">
+                <i class="fa-brands fa-google"></i>
+                <div class="whitespace-nowrap">Login with Google</div>
+            </a>
+        </div>
+
+        <form id="account" method="post">
+            <div class="grid grid-cols-3 items-center">
+                <hr />
+                <div class="text-center text-gray-600">Or</div>
+                <hr />
+            </div>
+            <div class="space-y-5">
+                <div>
+                    <label for="email" class="font-medium">Email</label><br />
+                    <input type="text" asp-for="Input.Email" class="my-2 w-full rounded-full px-4 py-3 placeholder-gray-300 outline outline-1 outline-gray-200" placeholder="Enter your email" />
+                </div>
+                <div>
+                    <div class="flex justify-between">
+                        <label for="password" class="font-medium">Password</label>
+                        @* <a href="#" class="text-green-900 hover:text-green-700 hover:underline">Forgot Password?</a> *@
+                        <a id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a>
+                    </div>
+                    <input asp-for="Input.Password" type="password" class="my-2 w-full rounded-full px-4 py-3 placeholder-gray-300 outline outline-1 outline-gray-200" placeholder="Enter your password" />
+                </div>
+            </div>
+            <div class="checkbox mb-3">
+                <label asp-for="Input.RememberMe" class="form-label">
+                    <input class="form-check-input" asp-for="Input.RememberMe" />
+                    @Html.DisplayNameFor(m => m.Input.RememberMe)
+                </label>
+            </div>
+            <div class="row-auto">
+                <button id="login-submit" type="submit" class="w-full rounded-full bg-green-900 py-3 text-white hover:bg-green-700">Login</button>
+            </div>
+        </form>
+        <div class="row flex justify-center gap-2">
+            <div>Don't have an account?</div>
+            <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl" class="text-green-900 hover:text-green-700 hover:underline">Register</a>
+        </div>
+        <div class="my-3">
+            <a id="resend-confirmation" asp-page="./ResendEmailConfirmation">Resend email confirmation</a>
+        </div>
+    </div>
+</section>
+
+
+@* <div class="row justify-center">
     <div class="col-md-4">
         <section class="p-8 shadown-lg">
             <form id="account" method="post">
@@ -75,7 +175,7 @@
             }
         </section>
     </div>
-</div>
+</div> *@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
