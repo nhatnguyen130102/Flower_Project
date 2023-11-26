@@ -1,0 +1,18 @@
+﻿@{
+    ViewData["Title"] = "removeOneRole";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>addRole</h1>
+@model Flower_Models.ApplicationUser
+
+<form asp-action="removeOneRole" method="post">
+
+    <input asp-for="Id" readonly />
+
+    <select name="role" asp-items="@ViewBag.RolesSelectList">
+        <option value="">Select Role</option>
+    </select>
+
+    <button type="submit">submit</button>
+</form>

@@ -134,5 +134,21 @@ namespace FlowerShop_Web.Controllers
             }
             return RedirectToAction("Index", "Home");
         }
+
+        public async Task<IActionResult> myOrder()
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if(user == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            var order = await _context.Bills.Where(x=>x.ID_Customer == user.Id).ToListAsync();
+
+            return View(order);
+        }
+
+
+     
     }
 }

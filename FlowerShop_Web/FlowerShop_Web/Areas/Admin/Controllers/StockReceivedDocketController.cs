@@ -1,5 +1,6 @@
 ﻿using Flower_Models;
 using Flower_Repository;
+using Flower_Services;
 using Flower_ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.HttpResults;
@@ -9,28 +10,31 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.DiaSymReader;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Client;
+using System.Reflection;
 
 namespace FlowerShop_Web.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize(Roles = "Manager")]
+    //[Authorize(Roles = "Manager")]
     public class StockReceivedDocketController : Controller
     {
         private readonly ApplicationDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly Import_ExportService _service;
 
-        public StockReceivedDocketController(ApplicationDbContext context, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, RoleManager<IdentityRole> roleManager)
+        public StockReceivedDocketController(ApplicationDbContext context, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, RoleManager<IdentityRole> roleManager, Import_ExportService service)
         {
             _context = context;
             _userManager = userManager;
             _signInManager = signInManager;
             _roleManager = roleManager;
+            _service = service;
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index()    
         {
             var user = await _userManager.GetUserAsync(User);
             if(user == null)
@@ -401,6 +405,38 @@ namespace FlowerShop_Web.Areas.Admin.Controllers
             var list = await _context.StockReceivedDocketDetails.Where(x => x.ID_StockReceivedDocket == id).ToListAsync();
 
             return View(list);
+        }
+
+
+
+        [HttpPost]
+        public async Task<IActionResult> ExportToExcel(int? id)
+        {
+            // Lấy dữ liệu từ service để xuất ra Excel
+            List<StockReceivedDocketDetails> listModel = await _context.StockReceivedDocketDetails.Where(x=>x.ID_StockReceivedDocket == id).ToListAsync();
+
+            // Tạo một danh sách mới từ VM
+            SRDDServiceVM model = new SRDDServiceVM();
+
+            // Lấy ra các thuộc tính có trong VM
+            PropertyInfo[] properties = model.GetType().GetProperties();
+
+            // Gán các thuộc tính vào mảng string
+            string[] colum = new string[properties.Length];
+            for (int i = 0; i < properties.Length; i++)
+            {
+                colum[i] = properties[i].Name;
+            }
+
+            // Tạo một tên tệp duy nhất dựa trên thời gian để tránh việc ghi đè tệp
+            DateTime today = DateTime.Now;
+            var fileName = $"SRDDExport_{today:yyyyMMddHHmmss}.xlsx";
+
+            // Xuất dữ liệu ra Excel với tên tệp duy nhất
+            _service.ExportToExcel(listModel, colum, fileName);
+
+            // Chuyển hướng đến trang Index của Recipe controller
+            return RedirectToAction("Index", "StockReceivedDocket");
         }
     }
 }

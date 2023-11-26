@@ -1,0 +1,20 @@
+﻿
+@{
+    ViewData["Title"] = "addBranch";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>addBranch</h1>
+
+@model Flower_Models.ApplicationUser
+
+<form asp-action="addBranch" method="post">
+
+    <input asp-for="Id" readonly />
+
+    <select name="Id_shop" asp-items="@ViewBag.Shop">
+        <option value="">Select Shop</option>
+    </select>
+
+    <button type="submit">submit</button>
+</form>
