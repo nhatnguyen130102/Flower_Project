@@ -130,6 +130,7 @@ namespace FlowerShop_Web.Controllers
                     BillStatus = false,
                     DeliveredStatus = false,
                     HandleStatus = false,
+                    Canceled = false,
                     Name = model.Name,
                     Phone = model.Phone,
                     Name_Order = model.Name_Order,
@@ -198,8 +199,6 @@ namespace FlowerShop_Web.Controllers
         {
 
             ViewBag.Voucher = new SelectList(_context.Vouchers.Where(x => x.StartedAt.Date <= DateTime.Now.Date && x.EndedAt.Date >= DateTime.Now.Date && x.IsActive == true), "ID_Voucher", "Code");
-
-
 
             var getUser = await _userManager.GetUserAsync(User);
             if (getUser == null)

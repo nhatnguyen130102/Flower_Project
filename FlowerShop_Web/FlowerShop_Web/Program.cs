@@ -23,7 +23,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddHttpClient();
 
 builder.Services.AddDistributedMemoryCache();
-builder.Services.AddScoped<RecipeService>();
+builder.Services.AddScoped<Import_ExportService>();
 builder.Services.AddSession(options =>
 {
     options.IdleTimeout = TimeSpan.FromMinutes(30); // Thời gian tồn tại của session

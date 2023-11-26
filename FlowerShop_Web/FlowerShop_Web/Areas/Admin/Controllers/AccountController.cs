@@ -1,14 +1,12 @@
-﻿using Flower_Models;
+﻿
+using Flower_Models;
 using Flower_Repository;
 using Flower_ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using System.Text.RegularExpressions;
 
 namespace FlowerShop_Web.Areas.Admin.Controllers
 {
@@ -153,39 +151,126 @@ namespace FlowerShop_Web.Areas.Admin.Controllers
             return View(model);
         }
 
-        // Thêm role mới 
+        // thêm role cho người dùng
         [HttpGet]
-        [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> addRole(string? id)
+        public async Task<IActionResult> addRole(string id)
         {
-            ViewBag.Role = new SelectList(_roleManager.Roles, "roleId", "roleName");
-            if (id == null)
-            {
-                return NotFound();
-            }
-
             var user = await _userManager.FindByIdAsync(id);
+            ViewBag.Role = new SelectList(_roleManager.Roles, "Name", "Name");
+            //ViewBag.User = new SelectList(_userManager.Users, "Id", "Id");
+            if (user == null)
+            {
+                return RedirectToAction("Index");
+            }
             return View(user);
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> addRole(ApplicationUser model, string role)
+        public async Task<IActionResult> addRole(string Id, string role)
         {
-            if (role == null)
+            var user = await _userManager.FindByIdAsync(Id);
+            if (user == null)
             {
-                return BadRequest();
+                return RedirectToAction("Index");
             }
-            var getRole = await _roleManager.FindByIdAsync(role);
-            if (getRole == null)
-            {
-                return NotFound();
-            }
-            await _userManager.AddToRoleAsync(model, getRole.Name);
+            await _userManager.AddToRoleAsync(user, role);
 
             return RedirectToAction("Index");
         }
+
+        public async Task<IActionResult> removeRole(string Id)
+        {
+            var user = await _userManager.FindByIdAsync(Id);
+            if (user == null)
+            {
+                return RedirectToAction("Index");
+            }
+            var oldRole = await _userManager.GetRolesAsync(user);
+            if (oldRole != null)
+            {
+                foreach (var item in oldRole)
+                {
+                    await _userManager.RemoveFromRoleAsync(user, item);
+                }
+            }
+
+            return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> removeOneRole(string Id)
+        {
+            var user = await _userManager.FindByIdAsync(Id);
+
+            var oleRole = await _userManager.GetRolesAsync(user);
+            if (oleRole != null)
+            {
+                ViewBag.RolesSelectList = new SelectList(oleRole);
+            }
+            else
+            {
+                return RedirectToAction("Index");
+            }
+
+            if (user == null)
+            {
+                return RedirectToAction("Index");
+            }
+            return View(user);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> removeOneRole(string Id, string role)
+        {
+            var user = await _userManager.FindByIdAsync(Id);
+            if (user == null)
+            {
+                return RedirectToAction("Index");
+            }
+
+            await _userManager.RemoveFromRoleAsync(user, role);
+
+            return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> addBranch(string Id)
+        {
+
+            var user = await _userManager.FindByIdAsync(Id);
+            if (user == null)
+            {
+                return RedirectToAction("Index");
+            }
+            ViewBag.Shop = new SelectList(_context.Shops, "ID_Shop", "Name_Shop");
+            return View(user);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> addBranch(string Id, string Id_shop)
+        {
+            int id = Convert.ToInt32(Id_shop);
+            var user = await _userManager.FindByIdAsync(Id);
+            if (user == null)
+            {
+                return RedirectToAction("Index");
+            }
+
+            if(user.ID_Shop != null)
+            {
+                user.ID_Shop = null;
+                _context.ApplicationUsers.Update(user);
+                _context.SaveChanges();
+            }
+
+            user.ID_Shop = id;
+
+            _context.ApplicationUsers.Update(user);
+            _context.SaveChanges();
+
+            return RedirectToAction("Index");
+        }
+
 
         //[HttpGet]
         //public async Task<IActionResult> EditAccount(string? id)

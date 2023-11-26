@@ -82,6 +82,10 @@
                     @Html.ActionLink("Edit", "CreateNext", new { id = item.ID_StockReceivedDocket  }) |
                     @Html.ActionLink("Details", "detailsSRDD", new { id = item.ID_StockReceivedDocket }) |
                     @Html.ActionLink("Delete", "Delete", new { id = item.ID_StockReceivedDocket  })
+                    <form method="post" asp-action="ExportToExcel" asp-controller="StockReceivedDocket" asp-route-id="@item.ID_StockReceivedDocket">
+                        <button type="submit">Export to Excel</button>
+                    </form>
+
                 </td>
             </tr>
         }

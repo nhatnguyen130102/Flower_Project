@@ -21,6 +21,7 @@ namespace Flower_Models
         public bool? BillStatus { get; set; }
         public bool? DeliveredStatus { get; set; }
         public bool? HandleStatus { get; set; }
+        public bool? Canceled { get; set; }
         public string Name { get; set; }
         public string Phone { get; set; }
         public string Name_Order { get; set; }

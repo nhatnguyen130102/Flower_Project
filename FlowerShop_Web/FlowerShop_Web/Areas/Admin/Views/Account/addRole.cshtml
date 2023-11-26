@@ -1,0 +1,18 @@
+﻿@{
+    ViewData["Title"] = "addRole";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>addRole</h1>
+@model Flower_Models.ApplicationUser
+
+<form asp-action="addRole" method="post">
+    
+    <input asp-for="Id" readonly/>
+
+    <select name="role" asp-items="@ViewBag.Role">
+        <option value="">Select Role</option>
+    </select>
+
+    <button type="submit">submit</button>
+</form>

@@ -9,6 +9,7 @@
 @using Flower_Repository;
 @using Flower_ViewModels;
 @using Microsoft.AspNetCore.Identity;
+@using Microsoft.EntityFrameworkCore;
 <section>
     <div class="row mx-auto w-full bg-cover bg-center pt-12 md:items-center md:pt-0" style="max-width:1600px; height: 32rem; background-image: url('https://images.unsplash.com/photo-1561334251-b306baba437a?auto=format&fit=crop&q=80&w=1974&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');">
         <div class="container mx-auto">
@@ -89,9 +90,8 @@
                                         @if (_signInManager.IsSignedIn(User))
                                         {
                                             var getUser = await _userManager.GetUserAsync(User);
-                                            var getFavorite = _context.FavoriteProducts.Where(x => x.ID_Customer == getUser.Id).FirstOrDefault();
-                                            var getFavoriteDetails = _context.FavoriteProductDetails.Where(x => x.ID_Product == item.ID_Product).FirstOrDefault();
-                                            if (getFavoriteDetails == null)
+                                            var getFavorte = await _context.FavoriteProducts.Where(x => x.ID_Customer == getUser.Id).FirstOrDefaultAsync();
+                                            if(getFavorte == null)
                                             {
                                                 <a asp-action="addFavorite" asp-controller="FavoriteProduct" asp-route-id="@item.ID_Product">
                                                     <i class="fa-regular fa-heart hover:text-red-500"></i>
@@ -99,10 +99,21 @@
                                             }
                                             else
                                             {
-                                                <a asp-action="addFavorite" asp-controller="FavoriteProduct" asp-route-id="@item.ID_Product">
-                                                    <i class="fa-solid fa-heart hover:text-red-500" style="color: #fa0000;"></i>
-                                                </a>
+                                                var getFavoriteDetails = _context.FavoriteProductDetails.Where(x => x.ID_Product == item.ID_Product && x.ID_FavoriteProduct == getFavorte.ID_FavoriteProduct).FirstOrDefault();
+                                                if (getFavoriteDetails == null)
+                                                {
+                                                    <a asp-action="addFavorite" asp-controller="FavoriteProduct" asp-route-id="@item.ID_Product">
+                                                        <i class="fa-regular fa-heart hover:text-red-500"></i>
+                                                    </a>
+                                                }
+                                                else
+                                                {
+                                                    <a asp-action="addFavorite" asp-controller="FavoriteProduct" asp-route-id="@item.ID_Product">
+                                                        <i class="fa-solid fa-heart hover:text-red-500" style="color: #fa0000;"></i>
+                                                    </a>
+                                                }
                                             }
+
                                         }
                                         else
                                         {

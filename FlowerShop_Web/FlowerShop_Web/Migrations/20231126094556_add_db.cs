@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace FlowerShop_Web.Migrations
 {
     /// <inheritdoc />
-    public partial class update_applicationUser : Migration
+    public partial class add_db : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -280,11 +280,11 @@ namespace FlowerShop_Web.Migrations
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    City = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Street = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     District = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Street = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Ward = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    City = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ID_CustomerType = table.Column<int>(type: "int", nullable: true),
                     ID_Shop = table.Column<int>(type: "int", nullable: true),
                     Spend = table.Column<double>(type: "float", nullable: true),
@@ -524,6 +524,7 @@ namespace FlowerShop_Web.Migrations
                     BillStatus = table.Column<bool>(type: "bit", nullable: true),
                     DeliveredStatus = table.Column<bool>(type: "bit", nullable: true),
                     HandleStatus = table.Column<bool>(type: "bit", nullable: true),
+                    Canceled = table.Column<bool>(type: "bit", nullable: true),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Phone = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Name_Order = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -731,8 +732,8 @@ namespace FlowerShop_Web.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "c2323ada-6784-4f60-b82e-19a42a191607", null, "Admin", "ADMIN" },
-                    { "d13cba36-b87b-4973-bd39-f957dae44fd9", null, "Manager", "MANAGER" }
+                    { "6c3edabf-7062-44d9-9329-0625e1f9513b", null, "Manager", "MANAGER" },
+                    { "cd24ff99-3ec3-434f-b45b-3935b0847efc", null, "Admin", "ADMIN" }
                 });
 
             migrationBuilder.InsertData(
@@ -740,8 +741,8 @@ namespace FlowerShop_Web.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "Address", "City", "ConcurrencyStamp", "District", "Email", "EmailConfirmed", "FirstName", "ID_CustomerType", "ID_Shop", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "Spend", "Street", "TwoFactorEnabled", "UserName", "Ward" },
                 values: new object[,]
                 {
-                    { "5e6c873d-f2b0-41ad-b277-4185c669beca", 0, null, null, "42496daf-0530-487f-a36a-4a206834ac99", null, "user2@hotmail.com", true, null, null, null, null, false, null, "USER2@HOTMAIL.COM", "USER2@HOTMAIL.COM", "AQAAAAIAAYagAAAAEKwsm1I0bYz4JJMfOR+GeSoEOLffWWs4f09vuwzMR/b0pvW1jZOQhk6emdxGDOhS8w==", null, false, "feefd2e2-edb7-4ec9-9188-1b75d4e733f9", null, null, false, "user2@hotmail.com", null },
-                    { "da84006e-21ff-452a-a6a3-d6d915e84a45", 0, null, null, "5b56e283-1fbd-4c83-957d-13cfc052e8b2", null, "user3@hotmail.com", true, null, null, null, null, false, null, "USER3@HOTMAIL.COM", "USER3@HOTMAIL.COM", "AQAAAAIAAYagAAAAEMmdNfHUrwY5RojGKhcrJrovkBBPxT98CkxImkup5vvbkSELxAs/v/ZEsHGncTgSsQ==", null, false, "901ac421-521b-431e-9e93-e259f21ff32c", null, null, false, "user3@hotmail.com", null }
+                    { "04936b57-13a8-4e8f-9ba9-52bc106f1814", 0, null, null, "ba70c274-869d-4d37-83ac-b8b06e659bfe", null, "user3@hotmail.com", true, null, null, null, null, false, null, "USER3@HOTMAIL.COM", "USER3@HOTMAIL.COM", "AQAAAAIAAYagAAAAEOz8UCmycH306oxzu8XTGGb51tmIg4qJYuxwmh2ScP67EZAWpfZI0AwY2N2HaAulaQ==", null, false, "35439fb2-dee1-4ccf-a255-40a74d5ac49f", null, null, false, "user3@hotmail.com", null },
+                    { "6bfb28d4-feb5-4bd5-bf1c-008770aa65da", 0, null, null, "42dba41f-e4a6-4fe2-ae88-a5a9693d9291", null, "user2@hotmail.com", true, null, null, null, null, false, null, "USER2@HOTMAIL.COM", "USER2@HOTMAIL.COM", "AQAAAAIAAYagAAAAEFMxbZfyI9q8dj6esl4y1AAp0yZp+34dvQuXmwgvG/YzLgsOg2xIDmsErhkzAWyO3A==", null, false, "930c8b55-bbea-4d23-90f9-f726a445d303", null, null, false, "user2@hotmail.com", null }
                 });
 
             migrationBuilder.InsertData(
@@ -749,8 +750,8 @@ namespace FlowerShop_Web.Migrations
                 columns: new[] { "RoleId", "UserId" },
                 values: new object[,]
                 {
-                    { "d13cba36-b87b-4973-bd39-f957dae44fd9", "5e6c873d-f2b0-41ad-b277-4185c669beca" },
-                    { "c2323ada-6784-4f60-b82e-19a42a191607", "da84006e-21ff-452a-a6a3-d6d915e84a45" }
+                    { "cd24ff99-3ec3-434f-b45b-3935b0847efc", "04936b57-13a8-4e8f-9ba9-52bc106f1814" },
+                    { "6c3edabf-7062-44d9-9329-0625e1f9513b", "6bfb28d4-feb5-4bd5-bf1c-008770aa65da" }
                 });
 
             migrationBuilder.CreateIndex(
