@@ -1,18 +1,11 @@
 ﻿using Flower_Models;
 using Flower_Repository;
 using Flower_ViewModels;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.Build.ObjectModelRemoting;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using Microsoft.Extensions.Caching.Memory;
-using Newtonsoft.Json;
-using System.Collections.Generic;
-using System.Net.WebSockets;
-using System.Text.Json.Nodes;
 
 namespace FlowerShop_Web.Controllers
 {
@@ -24,15 +17,15 @@ namespace FlowerShop_Web.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IMemoryCache _memoryCache;
-
-        public OrderController(ILogger<HomeController> logger, ApplicationDbContext context, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IMemoryCache memoryCache)
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        public OrderController(ILogger<HomeController> logger, ApplicationDbContext context, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IMemoryCache memoryCache, IHttpContextAccessor httpContextAccessor)
         {
             _logger = logger;
             _context = context;
             _userManager = userManager;
             _signInManager = signInManager;
             _memoryCache = memoryCache;
-
+            _httpContextAccessor = httpContextAccessor;
         }
         public async Task<IActionResult> Success(int? id)
         {
@@ -44,8 +37,10 @@ namespace FlowerShop_Web.Controllers
             return NotFound();
         }
 
+   
         public async Task<IActionResult> getInfoView()
         {
+            ViewData["PredefinedAddresses"] = await _context.Shops.Select(s => s.Address_Shop).ToListAsync();
             if (_signInManager.IsSignedIn(User))
             {
                 var getUser = await _userManager.GetUserAsync(User);
@@ -94,10 +89,24 @@ namespace FlowerShop_Web.Controllers
             }
         }
 
-        public async Task<IActionResult> getInfo(OrderVM model)
+        public async Task<IActionResult> getInfo(OrderVM model, string Shop)
         {
             if (_signInManager.IsSignedIn(User))
             {
+                int id_Shop = 3;
+
+                if(Shop != null)
+                {
+                    var getShop = await _context.Shops.Where(x => x.Address_Shop == Shop).FirstOrDefaultAsync();
+
+                    if (getShop != null)
+                    {
+                        id_Shop = getShop.ID_Shop;
+                    }
+                }
+
+             
+
                 // lấy thông tin user
                 var getUser = await _userManager.GetUserAsync(User);
                 if (getUser == null)
@@ -135,12 +144,10 @@ namespace FlowerShop_Web.Controllers
                     Phone = model.Phone,
                     Name_Order = model.Name_Order,
                     Phone_Order = model.Phone_Order,
-                    ID_Shop = 1,
+                    ID_Shop = id_Shop,
                     City = model.City,
                     Address = model.Address,
-                    Street = model.Street,
-                    District = model.District,
-                    Ward = model.Ward,
+                 
                 };
 
                 _memoryCache.Set("_tempBill", newBill, TimeSpan.FromMinutes(10));
@@ -149,6 +156,18 @@ namespace FlowerShop_Web.Controllers
             }
             else
             {
+                int id_Shop = 3;
+
+                if (Shop != null)
+                {
+                    var getShop = await _context.Shops.Where(x => x.Address_Shop == Shop).FirstOrDefaultAsync();
+
+                    if (getShop != null)
+                    {
+                        id_Shop = getShop.ID_Shop;
+                    }
+                }
+
                 var cart = _memoryCache.GetOrCreate("UserCart", entry =>
                 {
                     entry.SlidingExpiration = TimeSpan.FromMinutes(30);
@@ -180,12 +199,10 @@ namespace FlowerShop_Web.Controllers
                     Phone = model.Phone,
                     Name_Order = model.Name_Order,
                     Phone_Order = model.Phone_Order,
-                    ID_Shop = 1,
+                    ID_Shop = id_Shop,
                     City = model.City,
                     Address = model.Address,
-                    Street = model.Street,
-                    District = model.District,
-                    Ward = model.Ward,
+              
                 };
 
                 _memoryCache.Set("_tempBill", newBill, TimeSpan.FromMinutes(10));
@@ -278,9 +295,7 @@ namespace FlowerShop_Web.Controllers
                 ID_Shop = getBill.ID_Shop,
                 City = getBill.City,
                 Address = getBill.Address,
-                Street = getBill.Street,
-                District = getBill.District,
-                Ward = getBill.Ward,
+              
                 Message = getBill.Message,
             };
 

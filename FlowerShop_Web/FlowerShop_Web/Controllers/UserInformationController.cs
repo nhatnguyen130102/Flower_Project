@@ -37,10 +37,9 @@ namespace FlowerShop_Web.Controllers
                     FirstName = getUser.FirstName,
                     LastName = getUser.LastName,
                     Address = getUser.Address,
-                    Street = getUser.Street,
+                
                     City = getUser.City,
-                    Ward = getUser.Ward,
-                    District = getUser.District,
+                   
                     Phone = getUser.PhoneNumber,
                     Email = getUser.Email,
                     Spend = getUser.Spend,
@@ -72,10 +71,9 @@ namespace FlowerShop_Web.Controllers
                     getUser.LastName = model.LastName;
                     getUser.PhoneNumber = model.Phone;
                     getUser.Address = model.Address;
-                    getUser.Ward = model.Ward;
-                    getUser.District = model.District;
+                 
                     getUser.City = model.City;
-                    getUser.Street = model.Street;
+                   
 
                     _context.ApplicationUsers.Update(getUser);
                     _context.SaveChanges();

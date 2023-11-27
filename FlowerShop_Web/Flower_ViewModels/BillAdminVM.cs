@@ -26,9 +26,7 @@ namespace Flower_ViewModels
         public int ID_Shop { get; set; }
         public string City { get; set; }
         public string Address { get; set; }
-        public string Street { get; set; }
-        public string District { get; set; }
-        public string Ward { get; set; }
+     
         public string? Message { get; set; }
         public int? ShopFilter { get; set; }
 

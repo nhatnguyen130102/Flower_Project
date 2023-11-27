@@ -28,9 +28,7 @@ namespace Flower_ViewModels
         public string Name_Order { get; set; }
         public string Phone_Order { get; set; }
         public string? Code { get; set; }
-        public string Street { get; set; }
-        public string District { get; set; }
-        public string Ward { get; set; }
+      
 
         public List<CartDetails> CartDetails { get; set; }
     }
