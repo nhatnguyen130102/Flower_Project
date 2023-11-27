@@ -1,4 +1,5 @@
 ﻿@using Flower_Repository;
+@using Microsoft.Extensions.Caching.Memory;
 @model Flower_ViewModels.OrderVM
 
 @{
@@ -6,6 +7,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @inject ApplicationDbContext _context;
+@inject IMemoryCache _memoryCache;
 <h1>getInfoView</h1>
 <table class="table">
     <thead>
@@ -45,23 +47,25 @@
     <div>phone</div>
     <input asp-for="Phone" type="tel" />
     <div>City</div>
-    <input asp-for="City" type="text" />
+    <input id="City" asp-for="City" type="text" />
     <div>Address</div>
-    <input asp-for="Address" type="text" />
-    <div>Street</div>
-    <input asp-for="Street" type="text" />
-    <div>Ward</div>
-    <input asp-for="Ward" type="text" />
-    <div>District</div>
-    <input asp-for="District" type="text" />
+    <input id="Address" asp-for="Address" type="text" />
+   
     <div>Name_Order</div>
     <input asp-for="Name_Order" type="text" />
     <div>Phone_Order</div>
     <input asp-for="Phone_Order" type="tel" />
     <div>DeliveryAt</div>
     <input asp-for="DeliveredAt" type="date"  id="dateInput" min="" onchange="updateMinDate()"/>
+  
+    <input type="text" name="Shop" id="myInput" value="abc">
+    <p id="result"></p>
+    @*  <p id="closestAddress"></p> *@
     <button type="submit">Contiue</button>
+    <p onclick="compareAddresses()">Process Values</p>
+
 </form>
+
 
 <script>
     function updateMinDate(){
@@ -73,4 +77,132 @@
         document.getElementById('dateInput').min = formmatedDate;
     }
     updateMinDate();
+
+    const apiKey = '983SYjbBdUBVJ-oZPhXU6e2GSmspX2W_N9mTjY6s6OY'; // Thay thế bằng API key của bạn
+
+    // Danh sách các địa chỉ đã có sẵn
+    // const predefinedAddresses = [
+    //     '268 Đ Tô Hiến Thành, Phường 15, Quận 10, Thành phố Hồ Chí Minh, Vietnam',
+    //     'Đ. TL 08, Thạnh Lộc, Quận 12, Thành phố Hồ Chí Minh 71515, Vietnam',
+    //     '11 P. Lê Phụng Hiểu, French Quarter, Hoàn Kiếm, Hà Nội 100000, Vietnam',
+    // ];
+
+    const predefinedAddresses = @Html.Raw(Json.Serialize(ViewData["PredefinedAddresses"]));
+   
+    function compareAddresses() {
+       
+        var a = document.getElementById("Address").value;
+        var b = document.getElementById("Street").value;
+        var c = document.getElementById("Ward").value;
+        var d = document.getElementById("District").value;
+        var combinedValue = a + ", " + b + ", " + c + ", " + d;
+        // const inputAddress = document.getElementById('inputAddress').value;
+      
+        const inputAddress = combinedValue;
+        console.log(inputAddress);
+
+        // Kiểm tra xem người dùng đã nhập địa chỉ hay chưa
+        if (!inputAddress) {
+            document.getElementById('result').innerHTML = 'Vui lòng nhập địa chỉ.';
+            return;
+        }
+
+        // Chuyển địa chỉ nhập thành tọa độ sử dụng Here Geocoding API
+        geocodeAddress(apiKey, inputAddress)
+            .then(inputCoords => {
+                if (inputCoords) {
+                    // So sánh với tọa độ của các địa chỉ đã có sẵn
+                    const results = [];
+                    for (const predefinedAddress of predefinedAddresses) {
+                        geocodeAddress(apiKey, predefinedAddress)
+                            .then(predefinedCoords => {
+                                const distance = calculateHaversineDistance(inputCoords, predefinedCoords);
+                                results.push({ address: predefinedAddress, distance });
+                                if (results.length === predefinedAddresses.length) {
+                                    displayResults(results);
+                                    displayClosestAddress(results);
+
+                                }
+                            })
+                            .catch(error => {
+                                console.error('Lỗi:', error);
+                                document.getElementById('result').innerHTML = 'Có lỗi xảy ra khi so sánh địa chỉ.';
+                            });
+                    }
+                } else {
+                    document.getElementById('result').innerHTML = 'Không thể tìm thấy tọa độ cho địa chỉ nhập.';
+                }
+            })
+            .catch(error => {
+                console.error('Lỗi:', error);
+                document.getElementById('result').innerHTML = 'Có lỗi xảy ra khi tìm tọa độ.';
+            });
+    }
+
+    function geocodeAddress(apiKey, address) {
+        const apiUrl = `https://geocode.search.hereapi.com/v1/geocode?q=${encodeURIComponent(address)}&apiKey=${apiKey}`;
+
+        return fetch(apiUrl)
+            .then(response => response.json())
+            .then(data => {
+                if (data.items && data.items.length > 0) {
+                    return data.items[0].position;
+                } else {
+                    return null;
+                }
+            });
+    }
+
+    function calculateHaversineDistance(coords1, coords2) {
+        const R = 6371; // Bán kính trái đất (đơn vị: km)
+
+        const dLat = deg2rad(coords2.lat - coords1.lat);
+        const dLon = deg2rad(coords2.lng - coords1.lng);
+
+        const a =
+            Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+            Math.cos(deg2rad(coords1.lat)) * Math.cos(deg2rad(coords2.lat)) *
+            Math.sin(dLon / 2) * Math.sin(dLon / 2);
+
+        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+        const distance = R * c; // Khoảng cách (đơn vị: km)
+
+        return distance;
+    }
+
+    function deg2rad(deg) {
+        return deg * (Math.PI / 180);
+    }
+
+    function displayResults(results) {
+        // Sắp xếp kết quả theo khoảng cách tăng dần
+        results.sort((a, b) => a.distance - b.distance);
+
+        // Hiển thị kết quả
+        const resultElement = document.getElementById('result');
+        resultElement.innerHTML = '<strong>Kết quả so sánh:</strong><br>';
+
+        results.forEach(result => {
+            resultElement.innerHTML += `${result.address}: ${result.distance.toFixed(2)} km<br>`;
+        });
+    }
+
+    function displayClosestAddress(results) {
+        // Lấy địa chỉ gần nhất từ kết quả
+        const closestAddress = results[0].address;
+
+        // Hiển thị địa chỉ gần nhất
+        // const closestAddressElement = document.getElementById('closestAddress');
+        // closestAddressElement.innerHTML = `<strong>Địa chỉ gần nhất:</strong> ${closestAddress}`;
+
+        localStorage.setItem('Location', closestAddress);
+
+        var savedValue = localStorage.getItem('Location');
+
+        document.getElementById('myInput').value = savedValue;
+
+        console.log(closestAddress);
+       
+    }
 </script>
