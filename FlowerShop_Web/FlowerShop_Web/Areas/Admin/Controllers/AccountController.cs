@@ -31,7 +31,7 @@ namespace FlowerShop_Web.Areas.Admin.Controllers
         }
 
         // xem tất cả tài khoản
-        [Authorize(Roles = "Admin")]
+        
         public async Task<IActionResult> Index()
         {
             var list = await _userManager.Users.ToListAsync();
@@ -40,7 +40,7 @@ namespace FlowerShop_Web.Areas.Admin.Controllers
 
         // Thêm một tài khoản mới, cấp quyền cho tài khoản mới và chỉ định chi nhánh cho shop
         [HttpGet]
-        [Authorize(Roles = "Admin")]
+        
         public IActionResult Create()
         {
             ViewBag.Role = new SelectList(_roleManager.Roles, "Id", "Name");
@@ -51,7 +51,7 @@ namespace FlowerShop_Web.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Manager")]
+        
         public async Task<IActionResult> Create(AccoutManagerVM model)
         {
             if (ModelState.IsValid)

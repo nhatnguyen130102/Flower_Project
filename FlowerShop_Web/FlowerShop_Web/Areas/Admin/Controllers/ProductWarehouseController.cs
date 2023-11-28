@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 namespace FlowerShop_Web.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize(Roles = "Manager")]
+
     public class ProductWarehouseController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -43,7 +43,7 @@ namespace FlowerShop_Web.Areas.Admin.Controllers
             return View(item);
         }
 
-        [Authorize(Roles = "Manager")]
+ 
         [HttpGet]
         public IActionResult Create()
         {

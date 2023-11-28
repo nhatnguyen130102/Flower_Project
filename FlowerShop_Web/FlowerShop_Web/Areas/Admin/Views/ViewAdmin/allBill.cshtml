@@ -1,0 +1,107 @@
+﻿@model List<Flower_ViewModels.BillAdminVM>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Index</h1>
+
+@using (Html.BeginForm("allBill", "ViewAdmin", FormMethod.Get, new { id = "filterForm" }))
+{
+    <select name="id" id="id" asp-items="@ViewBag.Shop">
+        <option value="">Select Shop</option>
+        <option value="-1">All shop</option>
+    </select>
+
+@*     <button type="submit" class="btn btn-primary">Filter</button> *@
+}
+@if (!string.IsNullOrEmpty(ViewBag.SelectedShop))
+{
+    <div class="alert alert-info" role="alert">
+        Selected: @ViewBag.SelectedShop
+    </div>
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                ID Bill
+            </th>
+            <th>
+                ID Shop
+            </th>
+            <th>
+                ID Customer
+            </th>
+            <th>
+                Create At
+            </th>
+            <th>
+                Delevery At
+            </th>
+            <th>
+                Bill Status
+            </th>
+            <th>
+                Handle Status
+            </th>
+            <th>
+                Delivery Status
+            </th>
+            <th>Name</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ID_Bill)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ID_Shop)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ID_Customer)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreatedAt)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DeliveredAt)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BillStatus)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.HandleStatus)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DeliveredStatus)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $("#id").change(function () {
+            $("#filterForm").submit();
+        });
+    });
+</script>

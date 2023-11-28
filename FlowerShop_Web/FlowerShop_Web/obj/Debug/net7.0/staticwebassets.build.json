@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "zwL/sZ9uphZadvW0dCeuNTUAaAZm/eeNzWx4bY9VbvI=",
+  "Hash": "jFkSFJncy5C1l5NvNoWnde/I1JZUGj1vIb8Sw4gJ2yQ=",
   "Source": "FlowerShop_Web",
   "BasePath": "_content/FlowerShop_Web",
   "Mode": "Default",
@@ -3024,6 +3024,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\css\\site.css"
+    },
+    {
+      "Identity": "E:\\Document\\VS\\New_Project_1\\FlowerShop_Web\\FlowerShop_Web\\wwwroot\\css\\StyleSheet.css",
+      "SourceId": "FlowerShop_Web",
+      "SourceType": "Discovered",
+      "ContentRoot": "E:\\Document\\VS\\New_Project_1\\FlowerShop_Web\\FlowerShop_Web\\wwwroot\\",
+      "BasePath": "_content/FlowerShop_Web",
+      "RelativePath": "css/StyleSheet.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\StyleSheet.css"
     },
     {
       "Identity": "E:\\Document\\VS\\New_Project_1\\FlowerShop_Web\\FlowerShop_Web\\wwwroot\\dist\\css\\adminlte.css",

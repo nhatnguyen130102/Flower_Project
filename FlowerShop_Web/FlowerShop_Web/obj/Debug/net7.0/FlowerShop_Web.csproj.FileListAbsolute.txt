@@ -614,3 +614,4 @@ E:\Document\VS\New_Project_1\FlowerShop_Web\FlowerShop_Web\bin\Debug\net7.0\Syst
 E:\Document\VS\New_Project_1\FlowerShop_Web\FlowerShop_Web\bin\Debug\net7.0\runtimes\win\lib\net7.0\Microsoft.Win32.SystemEvents.dll
 E:\Document\VS\New_Project_1\FlowerShop_Web\FlowerShop_Web\bin\Debug\net7.0\runtimes\win\lib\net7.0\System.Drawing.Common.dll
 E:\Document\VS\New_Project_1\FlowerShop_Web\FlowerShop_Web\bin\Debug\net7.0\runtimes\win\lib\net7.0\System.Security.Cryptography.Pkcs.dll
+E:\Document\VS\New_Project_1\FlowerShop_Web\FlowerShop_Web\bin\Debug\net7.0\RestSharp.dll

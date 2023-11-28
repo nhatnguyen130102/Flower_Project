@@ -1,0 +1,66 @@
+﻿
+@{
+    ViewData["Title"] = "allSRD";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+@model List<Flower_ViewModels.SRDAdminVM>
+
+@using (Html.BeginForm("allSRD", "ViewAdmin", FormMethod.Get, new { id = "filterForm" }))
+{
+    <select name="id" id="id" asp-items="@ViewBag.Shop">
+        <option value="">Select Shop</option>
+        <option value="-1">All shop</option>
+    </select>
+
+    @*     <button type="submit" class="btn btn-primary">Filter</button> *@
+}
+@if (!string.IsNullOrEmpty(ViewBag.SelectedShop))
+{
+    <div class="alert alert-info" role="alert">
+        Selected: @ViewBag.SelectedShop
+    </div>
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID Stock Received Docket</th>
+            <th>ID Shop</th>
+            <th>Created At</th>
+            <th>Is Active</th>
+            <th>Received</th>
+            <th>Received At</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.ID_StockReceivedDocket)</td>
+                <td>@Html.DisplayFor(modelItem => item.ID_Shop)</td>
+                <td>@Html.DisplayFor(modelItem => item.CreatedAt)</td>
+                <td>@Html.DisplayFor(modelItem => item.IsActive)</td>
+                <td>@Html.DisplayFor(modelItem => item.Received)</td>
+                <td>@Html.DisplayFor(modelItem => item.ReceivedAt)</td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $("#id").change(function () {
+            $("#filterForm").submit();
+        });
+    });
+</script>
