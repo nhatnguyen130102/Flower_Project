@@ -9,7 +9,7 @@ using NuGet.Packaging.Signing;
 namespace FlowerShop_Web.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize(Roles = "Manager")]
+    
 
     public class BillController : Controller
     {
@@ -148,7 +148,7 @@ namespace FlowerShop_Web.Areas.Admin.Controllers
             return RedirectToAction("Index");
         }
 
-        [Authorize(Roles = "Manager")]
+        
         public async Task<IActionResult> handleStatus(int? id)
         {
             if (id == null)
@@ -169,7 +169,7 @@ namespace FlowerShop_Web.Areas.Admin.Controllers
             return RedirectToAction("Index");
         }
 
-        [Authorize(Roles = "Manager")]
+        
         public async Task<IActionResult> deliveredStatus(int? id)
         {
             if (id == null)
@@ -215,6 +215,7 @@ namespace FlowerShop_Web.Areas.Admin.Controllers
             _context.SaveChanges();
             return RedirectToAction("Index");
         }
+
 
     }
 }

@@ -9,7 +9,7 @@ using NuGet.Protocol;
 namespace FlowerShop_Web.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize(Roles = "Manager")]
+    
     public class StockReceivedDocketDetailsController : Controller
     {
         private readonly ApplicationDbContext _context;

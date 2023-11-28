@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 namespace FlowerShop_Web.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize(Roles = "Admin")]
+   
     public class RoleController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -51,7 +51,7 @@ namespace FlowerShop_Web.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(string? id)
         {
-            if(id == null)
+            if (id == null)
             {
                 return NotFound();
             }

@@ -1,0 +1,56 @@
+﻿@model IEnumerable<Flower_Models.BillDetails>
+
+@{
+    ViewData["Title"] = "billDetail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>billDetail</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ID_Bill)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ID_Product)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Product_Quantity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Total)
+            </th>
+           
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ID_Bill)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ID_Product)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Product_Quantity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Total)
+            </td>
+          
+        </tr>
+}
+    </tbody>
+</table>

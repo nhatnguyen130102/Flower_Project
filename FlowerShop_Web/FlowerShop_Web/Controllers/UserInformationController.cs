@@ -4,6 +4,7 @@ using Flower_ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Net.WebSockets;
 
 namespace FlowerShop_Web.Controllers
 {
@@ -37,9 +38,9 @@ namespace FlowerShop_Web.Controllers
                     FirstName = getUser.FirstName,
                     LastName = getUser.LastName,
                     Address = getUser.Address,
-                
+
                     City = getUser.City,
-                   
+
                     Phone = getUser.PhoneNumber,
                     Email = getUser.Email,
                     Spend = getUser.Spend,
@@ -66,14 +67,14 @@ namespace FlowerShop_Web.Controllers
                         return RedirectToAction("Index", "UserInformation");
                     }
 
-                    
+
                     getUser.FirstName = model.FirstName;
                     getUser.LastName = model.LastName;
                     getUser.PhoneNumber = model.Phone;
                     getUser.Address = model.Address;
-                 
+
                     getUser.City = model.City;
-                   
+
 
                     _context.ApplicationUsers.Update(getUser);
                     _context.SaveChanges();
@@ -136,17 +137,55 @@ namespace FlowerShop_Web.Controllers
         public async Task<IActionResult> myOrder()
         {
             var user = await _userManager.GetUserAsync(User);
-            if(user == null)
+            if (user == null)
             {
                 return RedirectToAction("Index", "Home");
             }
 
-            var order = await _context.Bills.Where(x=>x.ID_Customer == user.Id).ToListAsync();
+            var order = await _context.Bills.Where(x => x.ID_Customer == user.Id).ToListAsync();
 
             return View(order);
         }
 
 
-     
+        public async Task<IActionResult> cancelOrder(int? id)
+        {
+            if (id == null)
+            {
+                return RedirectToAction("myOrder");
+            }
+            var getBill = await _context.Bills.Where(x => x.ID_Bill == id).FirstOrDefaultAsync();
+            if (getBill == null)
+            {
+                return RedirectToAction("myOrder");
+            }
+            if (getBill.Canceled == true || getBill.Canceled != false || getBill.BillStatus == true || getBill.HandleStatus == true)
+            {
+                return RedirectToAction("myOrder");
+            }
+            getBill.Canceled = true;
+
+            _context.Bills.Update(getBill);
+            _context.SaveChanges();
+
+            return RedirectToAction("myOrder");
+        }
+
+
+        public async Task<IActionResult> billDetail(int? id)
+        {
+            if (id == null)
+            {
+                return RedirectToAction("myOrder");
+            }
+
+            var getBillDetail = await _context.BillDetails.Where(x=>x.ID_Bill == id).ToListAsync();
+            if (getBillDetail == null)
+            {
+                return RedirectToAction("myOrder");
+            }
+
+            return View(getBillDetail);
+        }
     }
 }

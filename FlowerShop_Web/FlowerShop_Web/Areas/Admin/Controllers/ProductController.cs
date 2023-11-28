@@ -98,7 +98,7 @@ namespace FlowerShop_Web.Areas.Admin.Controllers
             return View(model);
         }
 
-        [Authorize(Roles = "Admin")]
+        
         [HttpGet]
         public async Task<IActionResult> Edit(int? id)
         {
@@ -214,7 +214,7 @@ namespace FlowerShop_Web.Areas.Admin.Controllers
             return View(item);
         }
 
-        [Authorize(Roles = "Admin")]
+        
         [HttpGet]
         public async Task<IActionResult> Delete(int? id)
         {
@@ -245,7 +245,7 @@ namespace FlowerShop_Web.Areas.Admin.Controllers
             return RedirectToAction("Index");
         }
 
-        [Authorize(Roles = "Admin")]
+        
         public async Task<IActionResult> isActive(int? id)
         {
             if (id == null)

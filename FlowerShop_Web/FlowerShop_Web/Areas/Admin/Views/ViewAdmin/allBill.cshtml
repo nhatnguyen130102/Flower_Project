@@ -7,10 +7,11 @@
 
 <h1>Index</h1>
 
-@using (Html.BeginForm("Index", "BillAdmin", FormMethod.Get, new { id = "filterForm" }))
+@using (Html.BeginForm("allBill", "ViewAdmin", FormMethod.Get, new { id = "filterForm" }))
 {
     <select name="id" id="id" asp-items="@ViewBag.Shop">
         <option value="">Select Shop</option>
+        <option value="-1">All shop</option>
     </select>
 
 @*     <button type="submit" class="btn btn-primary">Filter</button> *@

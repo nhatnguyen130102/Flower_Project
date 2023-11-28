@@ -8,7 +8,6 @@ using Microsoft.EntityFrameworkCore;
 namespace FlowerShop_Web.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize(Roles = "Manager")]
     public class BillDetailsController : Controller
     {
         private readonly ApplicationDbContext _context;

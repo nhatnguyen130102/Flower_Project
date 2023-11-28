@@ -7,6 +7,9 @@
 
 @inject ApplicationDbContext _context;
 @using Flower_Repository;
+<header>
+    <link rel="stylesheet" type="text/css" href="/css/StyleSheet.css">
+</header>
 <body>
     <div class="mb-8 flex h-32 w-full justify-center bg-stone-100 md:mb-0 md:justify-end" style="background-image:url('https://i.pinimg.com/564x/23/3b/b6/233bb616530879e6e2725491be4f4ff4.jpg')">
         <img src="https://i.pinimg.com/564x/50/a2/41/50a2415a5c2bdc190c2ebb356fd54ddc.jpg" alt="" class="h-40 w-40 m-8 rounded-full border border-black object-cover md:me-24 lg:me-40" />
@@ -56,7 +59,26 @@
                                         <p class="text-sm text-gray-600">@item.Product_Quantity x $@pro.Price_Product</p>
                                         <h4 class="font-medium">$@item.Total</h4>
                                     </div>
+                                    @if (placed.Canceled == true || placed.Canceled != false || placed.BillStatus == true || placed.HandleStatus == true)
+                                    {
+                                        <div>
+
+                                            <a asp-action="cancelOrder" asp-controller="UserInformation" asp-route-id="@placed.ID_Bill"> <button disabled class="button-28" role="button"> Cancel </button> </a>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div>
+
+                                            <a asp-action="cancelOrder" asp-controller="UserInformation" asp-route-id="@placed.ID_Bill">   <button class="button-28" role="button">Cancel </button></a>
+                                        </div>
+                                    }
+                                    <div>
+                                        <a asp-action="billDetail" asp-controller="UserInformation" asp-route-id="@placed.ID_Bill">  <button class="button-28" role="button"> Detail </button> </a>
+
+                                    </div>
                                 </div>
+
                                 <hr />
                             }
                         </div>

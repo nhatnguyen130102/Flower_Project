@@ -1,0 +1,66 @@
+﻿
+@{
+    ViewData["Title"] = "allMaterialWH";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+@model List<Flower_ViewModels.MaterialWHAdminVM>
+
+@using (Html.BeginForm("allMaterialWH", "ViewAdmin", FormMethod.Get, new { id = "filterForm" }))
+{
+    <select name="id" id="id" asp-items="@ViewBag.Shop">
+        <option value="">Select Shop</option>
+        <option value="-1">All shop</option>
+    </select>
+
+    @*     <button type="submit" class="btn btn-primary">Filter</button> *@
+}
+@if (!string.IsNullOrEmpty(ViewBag.SelectedShop))
+{
+    <div class="alert alert-info" role="alert">
+        Selected: @ViewBag.SelectedShop
+    </div>
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>ID_Shop</th>
+            <th>ID_Material</th>
+            <th>InStock_Quantity</th>
+            <th>Sold_Quantity</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.ID)</td>
+                <td>@Html.DisplayFor(modelItem => item.ID_Shop)</td>
+                <td>@Html.DisplayFor(modelItem => item.ID_Material)</td>
+                <td>@Html.DisplayFor(modelItem => item.InStock_Quantity)</td>
+                <td>@Html.DisplayFor(modelItem => item.Sold_Quantity)</td>
+
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $("#id").change(function () {
+            $("#filterForm").submit();
+        });
+    });
+</script>
+
