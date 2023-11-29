@@ -2,17 +2,21 @@
 
 @{
     ViewData["Title"] = "Index";
-    Layout ="~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
 
 <h1>Index</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+<form asp-action="listBill">
+    <p>
+        <input name="list" type="text" id="result">
+    </p>
+    <button type="submit">handle</button>
+</form>
 <table class="table">
     <thead>
         <tr>
+            <th></th>
             <th>
                 @Html.DisplayNameFor(model => model.ID_Bill)
             </th>
@@ -52,7 +56,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.Address)
             </th>
-          
+
             <th>
                 @Html.DisplayNameFor(model => model.Message)
             </th>
@@ -69,51 +73,67 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
-        {
+        <form id="checkboxForm" onsubmit="submitForm(event)">
+            @foreach (var item in Model)
+            {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.ID_Bill)
+                        @if (item.BillStatus == false)
+                        {
+                        <label>
+                            <input type="checkbox" name="item" value="@item.ID_Bill">
+                        </label>
+                        }
+                        else
+                        {
+                        <label>
+                            <input disabled checked type="checkbox">
+                        </label>
+                        }
+
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.ID_Customer)
+                        @Html.DisplayFor(modelItem => item.ID_Bill)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.ID_Voucher)
+                        @Html.DisplayFor(modelItem => item.ID_Customer)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Total_Bill)
+                        @Html.DisplayFor(modelItem => item.ID_Voucher)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Subtotal)
+                        @Html.DisplayFor(modelItem => item.Total_Bill)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.CreatedAt)
+                        @Html.DisplayFor(modelItem => item.Subtotal)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.DeliveredAt)
+                        @Html.DisplayFor(modelItem => item.CreatedAt)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Name)
+                        @Html.DisplayFor(modelItem => item.DeliveredAt)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Phone)
+                        @Html.DisplayFor(modelItem => item.Name)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Name_Order)
+                        @Html.DisplayFor(modelItem => item.Phone)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Phone_Order)
+                        @Html.DisplayFor(modelItem => item.Name_Order)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.City)
+                        @Html.DisplayFor(modelItem => item.Phone_Order)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Address)
+                        @Html.DisplayFor(modelItem => item.City)
                 </td>
-             
                 <td>
-                    @Html.DisplayFor(modelItem => item.Message)
+                        @Html.DisplayFor(modelItem => item.Address)
+                </td>
+
+                <td>
+                        @Html.DisplayFor(modelItem => item.Message)
                 </td>
                 <td>
 
@@ -128,11 +148,31 @@
                     <a asp-action="handleStatus" asp-controller="Bill" asp-route-id="@item.ID_Bill">@item.HandleStatus</a>
                 </td>
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.ID_Bill }) |
-                    @Html.ActionLink("Details", "Details", new {id = item.ID_Bill }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.ID_Bill })
+                        @Html.ActionLink("Edit", "Edit", new { id = item.ID_Bill }) |
+                        @Html.ActionLink("Details", "billDetail", new {id = item.ID_Bill }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.ID_Bill })
                 </td>
             </tr>
-        }
+            }
+        <button type="submit">CheckBox</button>
+        </form>
     </tbody>
 </table>
+<script>
+    function submitForm(event) {
+        event.preventDefault();
+
+        // Lấy danh sách các checkbox được chọn
+        var checkboxes = document.getElementsByName("item");
+        var selectedItems = [];
+
+        checkboxes.forEach(function (checkbox) {
+            if (checkbox.checked) {
+                selectedItems.push(checkbox.value);
+            }
+        });
+        document.getElementById('result').value = selectedItems;
+        // Hiển thị danh sách các item được chọn
+
+    }
+</script>

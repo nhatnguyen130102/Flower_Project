@@ -58,7 +58,7 @@ namespace FlowerShop_Web.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (Img_Product != null)
+                if (Img_Product != null )
                 {
 
                     var webRootPath = _hostingEnvironment.WebRootPath;
@@ -191,6 +191,13 @@ namespace FlowerShop_Web.Areas.Admin.Controllers
                         _context.SaveChanges();
                     }
 
+                    //var item = await _context.Products.Where(x => x.ID_Product == newPro.ID_Product).FirstOrDefaultAsync();
+                    //if(item.Img_Product == null)
+                    //{
+                    //    item.Img_Product = model.Img_Product;
+                    //    _context.Products.Update(item);
+                    //    _context.SaveChanges();
+                    //}
 
                 }
                 catch (DbUpdateConcurrencyException)

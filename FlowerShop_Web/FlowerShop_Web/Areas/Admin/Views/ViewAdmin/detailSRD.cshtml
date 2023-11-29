@@ -1,43 +1,45 @@
-﻿@model Flower_Models.StockReceivedDocketDetails
+﻿@model IEnumerable<Flower_Models.StockReceivedDocketDetails>
 
 @{
     ViewData["Title"] = "detailSRD";
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h1>detailSRD</h1>
-
-<div>
-    <h4>StockReceivedDocketDetails</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ID)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ID)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ID_StockReceivedDocket)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ID_StockReceivedDocket)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ID_Material)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ID_Material)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.StockReceived_Quantity)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.StockReceived_Quantity)
-        </dd>
-    </dl>
-</div>
-<div>
-    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
-    <a asp-action="Index">Back to List</a>
-</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ID_StockReceivedDocket)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ID_Material)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StockReceived_Quantity)
+            </th>
+           
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ID_StockReceivedDocket)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ID_Material)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StockReceived_Quantity)
+            </td>
+           
+        </tr>
+}
+    </tbody>
+</table>

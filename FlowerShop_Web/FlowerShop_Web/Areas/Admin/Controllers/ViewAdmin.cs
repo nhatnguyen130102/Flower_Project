@@ -202,5 +202,35 @@ namespace FlowerShop_Web.Areas.Admin.Controllers
 
             return View(detail);
         }
+
+        public async Task<IActionResult> isActive(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var getSRD = await _context.StockReceivedDockets.Where(x => x.ID_StockReceivedDocket == id).FirstOrDefaultAsync();
+            if (getSRD == null)
+            {
+                return NotFound();
+            }
+
+            if (getSRD.IsActive == false)
+            {
+                getSRD.IsActive = true;
+                getSRD.CreatedAt = DateTime.Now;
+            }
+            else
+            {
+                getSRD.IsActive = false;
+                getSRD.CreatedAt = null;
+            }
+
+            _context.StockReceivedDockets.Update(getSRD);
+            _context.SaveChanges();
+
+            return RedirectToAction("allSRD","ViewAdmin");
+        }
     }
 }

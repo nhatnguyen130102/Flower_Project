@@ -1,28 +1,34 @@
 ﻿using Flower_Models;
 using Flower_Repository;
+using Flower_Services;
+using Flower_ViewModels;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SQLitePCL;
+using System.Reflection;
 
 namespace FlowerShop_Web.Areas.Admin.Controllers
 {
-    [Area("Admin")] 
+    [Area("Admin")]
     public class PostController : Controller
     {
+        private readonly Import_ExportService _service;
         private readonly ApplicationDbContext _context;
 
-        public PostController(ApplicationDbContext context)
+        public PostController(ApplicationDbContext context, Import_ExportService service)
         {
             _context = context;
+            _service = service;
         }
 
         [Authorize(Roles = "Admin,Manager")]
         [HttpGet]
         public IActionResult Index()
         {
-            var item = _context.Posts.Include(x=>x.Category).ToList();
+            var item = _context.Posts.Include(x => x.Category).ToList();
             return View(item);
         }
 
@@ -131,5 +137,80 @@ namespace FlowerShop_Web.Areas.Admin.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction("Index");
         }
+
+        [HttpPost]
+        public async Task<IActionResult> ExportToExcel()
+        {
+            // Lấy dữ liệu từ service để xuất ra Excel
+            List<Post> listModel = await _context.Posts.ToListAsync();
+
+            // Tạo một danh sách mới từ VM
+            PostServiceVM model = new PostServiceVM();
+
+            // Lấy ra các thuộc tính có trong VM
+            PropertyInfo[] properties = model.GetType().GetProperties();
+
+            // Gán các thuộc tính vào mảng string
+            string[] colum = new string[properties.Length];
+            for (int i = 0; i < properties.Length; i++)
+            {
+                colum[i] = properties[i].Name;
+            }
+
+            // Tạo một tên tệp duy nhất dựa trên thời gian để tránh việc ghi đè tệp
+            DateTime today = DateTime.Now;
+            var fileName = $"PostExport_{today:yyyyMMddHHmmss}.xlsx";
+
+            // Xuất dữ liệu ra Excel với tên tệp duy nhất
+            _service.ExportToExcel(listModel, colum, fileName);
+
+            // Chuyển hướng đến trang Index của Recipe controller
+            return RedirectToAction("Index", "Post");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ImportExcel(IFormFile file)
+        {
+            if (file == null || file.Length <= 0)
+            {
+                return BadRequest("File not selected");
+            }
+
+            List<Post> listModel = await _context.Posts.ToListAsync();
+
+            // Tạo một danh sách mới từ VM
+            PostServiceVM model = new PostServiceVM();
+
+            // Lấy ra các thuộc tính có trong VM
+            PropertyInfo[] properties = model.GetType().GetProperties();
+
+            string[] columnHeaders = new string[properties.Length];
+            for (int i = 0; i < properties.Length; i++)
+            {
+                columnHeaders[i] = properties[i].Name;
+            }
+
+            List<Post> list = _service.ImportFromExcel<Post>(file.OpenReadStream(), columnHeaders);
+
+            // Xử lý dữ liệu (lưu vào cơ sở dữ liệu, xử lý logic khác, ...)
+            foreach (var item in list)
+            {
+                var post = new Post()
+                {
+                    ID_Category = item.ID_Category,
+                    Title = item.Title,
+                    Content = item.Content,
+                    CreatedAt = item.CreatedAt,
+                    CreatedBy = item.CreatedBy,
+                    ViewCount = item.ViewCount,
+                };
+
+                _context.Posts.Add(post);
+                _context.SaveChanges();
+            }
+
+            return RedirectToAction("Index", "Post");
+        }
+
     }
 }

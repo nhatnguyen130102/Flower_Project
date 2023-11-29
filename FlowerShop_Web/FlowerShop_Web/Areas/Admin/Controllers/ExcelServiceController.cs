@@ -70,20 +70,20 @@ namespace FlowerShop_Web.Areas.Admin.Controllers
 
 
 
-        [HttpPost]
-        public IActionResult ImportFromExcel()
-        {
-            // Nhập dữ liệu từ file Excel và lưu vào database hoặc thực hiện các xử lý khác
-            List<Recipe> importedRecipes = _service.ImportFromExcel("Recipes.xlsx");
+        //[HttpPost]
+        //public IActionResult ImportFromExcel()
+        //{
+        //    // Nhập dữ liệu từ file Excel và lưu vào database hoặc thực hiện các xử lý khác
+        //    List<Recipe> importedRecipes = _service.ImportFromExcel("Recipes.xlsx");
 
-            // Thực hiện xử lý với dữ liệu nhập khẩu (ví dụ: lưu vào database)
-            foreach (var recipe in importedRecipes)
-            {
-                _service.AddRecipe(recipe);
-            }
+        //    // Thực hiện xử lý với dữ liệu nhập khẩu (ví dụ: lưu vào database)
+        //    foreach (var recipe in importedRecipes)
+        //    {
+        //        _service.AddRecipe(recipe);
+        //    }
 
-            return RedirectToAction("Index","Recipe");
-        }
+        //    return RedirectToAction("Index","Recipe");
+        //}
 
 
     }

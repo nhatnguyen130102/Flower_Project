@@ -15,69 +15,77 @@
         </div>
 
         @* @{
-            if ((Model.ExternalLogins?.Count ?? 0) == 0)
-            {
-                <div>
-                    <p>
-                        There are no external authentication services configured. See this <a href="https://go.microsoft.com/fwlink/?LinkID=532715">
-                            article
-                            about setting up this ASP.NET application to support logging in via external services
-                        </a>.
-                    </p>
-                </div>
-            }
-            else
-            {
-                <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
-                    <div>
-                        <p>
-                            @foreach (var provider in Model.ExternalLogins!)
-                            {
-                                <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
-                            }
-                        </p>
-                    </div>
-                </form>
-            }
+        if ((Model.ExternalLogins?.Count ?? 0) == 0)
+        {
+        <div>
+        <p>
+        There are no external authentication services configured. See this <a href="https://go.microsoft.com/fwlink/?LinkID=532715">
+        article
+        about setting up this ASP.NET application to support logging in via external services
+        </a>.
+        </p>
+        </div>
+        }
+        else
+        {
+        <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
+        <div>
+        <p>
+        @foreach (var provider in Model.ExternalLogins!)
+        {
+        <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
+        }
+        </p>
+        </div>
+        </form>
+        }
         } *@
 
         @* Use another services *@
-        <div class="flex flex-wrap gap-4">
-            <a href="#" class="flex gap-2 rounded-full px-4 py-3 text-gray-600 outline outline-1 outline-gray-200 hover:bg-black hover:text-white" style="width: fit-content;">
-                <i class="fa-brands fa-facebook"></i>
-                <div class="whitespace-nowrap">Login with Facebook</div>
-            </a>
-            <a href="#" class="flex gap-2 rounded-full px-4 py-3 text-gray-600 outline outline-1 outline-gray-200 hover:bg-black hover:text-white" style="width: fit-content;">
-                <i class="fa-brands fa-google"></i>
-                <div class="whitespace-nowrap">Login with Google</div>
-            </a>
-        </div>
-
-        <div class="grid grid-cols-3 items-center">
-            <hr />
-            <div class="text-center text-gray-600">Or</div>
-            <hr />
-        </div>
-        <div class="space-y-5">
-            <div>
-                <label asp-for="Input.Email" class="font-medium">Email</label></br>
-                <input asp-for="Input.Email" class="my-2 w-full rounded-full px-4 py-3 placeholder-gray-300 outline outline-1 outline-gray-200" placeholder="Enter your email" autocomplete="username" aria-required="true" placeholder="name@example.com" />
-                <span asp-validation-for="Input.Email" class="text-danger"></span>
+        <form asp-route="Register" method="post">
+            <div class="flex flex-wrap gap-4">
+                <a href="#" class="flex gap-2 rounded-full px-4 py-3 text-gray-600 outline outline-1 outline-gray-200 hover:bg-black hover:text-white" style="width: fit-content;">
+                    <i class="fa-brands fa-facebook"></i>
+                    <div class="whitespace-nowrap">Login with Facebook</div>
+                </a>
+                <a href="#" class="flex gap-2 rounded-full px-4 py-3 text-gray-600 outline outline-1 outline-gray-200 hover:bg-black hover:text-white" style="width: fit-content;">
+                    <i class="fa-brands fa-google"></i>
+                    <div class="whitespace-nowrap">Login with Google</div>
+                </a>
             </div>
-            <div>
 
-                <label asp-for="Input.Password" class="font-medium">Password</label>
-                <input asp-for="Input.Password" class="my-2 w-full rounded-full px-4 py-3 placeholder-gray-300 outline outline-1 outline-gray-200" placeholder="Enter your password" autocomplete="new-password" aria-required="true" placeholder="password" />
-                <span asp-validation-for="Input.Password" class="text-danger"></span>
+            <div class="grid grid-cols-3 items-center">
+                <hr />
+                <div class="text-center text-gray-600">Or</div>
+                <hr />
             </div>
-        </div>
-        <div class="row-auto">
-            <button class="w-full rounded-full bg-pink-700 py-3 text-white hover:bg-pink-600">Register</button>
-        </div>
-        <div class="row flex justify-center gap-2">
-            <div>Have an account?</div>
-            <a href="#" class="text-pink-900 hover:text-pink-600 hover:underline">Login</a>
-        </div>
+            <div class="space-y-5">
+                <div>
+                    <label asp-for="Input.Email" class="font-medium">Email</label></br>
+                    <input asp-for="Input.Email" class="my-2 w-full rounded-full px-4 py-3 placeholder-gray-300 outline outline-1 outline-gray-200" placeholder="Enter your email" autocomplete="username" aria-required="true" placeholder="name@example.com" />
+                    <span asp-validation-for="Input.Email" class="text-danger"></span>
+                </div>
+                <div>
+
+                    <label asp-for="Input.Password" class="font-medium">Password</label>
+                    <input asp-for="Input.Password" class="my-2 w-full rounded-full px-4 py-3 placeholder-gray-300 outline outline-1 outline-gray-200" placeholder="Enter your password" autocomplete="new-password" aria-required="true" placeholder="password" />
+                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+                </div>
+                <div>
+
+                    <label asp-for="Input.ConfirmPassword" class="font-medium">Password</label>
+                    <input asp-for="Input.ConfirmPassword" class="my-2 w-full rounded-full px-4 py-3 placeholder-gray-300 outline outline-1 outline-gray-200" placeholder="Enter your password" autocomplete="new-password" aria-required="true" placeholder="password" />
+                    <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row-auto">
+                <button class="w-full rounded-full bg-pink-700 py-3 text-white hover:bg-pink-600">Register</button>
+            </div>
+            <div class="row flex justify-center gap-2">
+                <div>Have an account?</div>
+                <a href="#" class="text-pink-900 hover:text-pink-600 hover:underline">Login</a>
+            </div>
+        </form>
     </div>
 </section>
 
