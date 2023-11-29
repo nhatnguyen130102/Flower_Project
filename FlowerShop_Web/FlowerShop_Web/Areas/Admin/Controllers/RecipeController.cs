@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Connections.Features;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Logging;
 using System.Net.WebSockets;
 using System.Reflection;
 
@@ -241,6 +242,63 @@ namespace FlowerShop_Web.Areas.Admin.Controllers
 
             // Chuyển hướng đến trang Index của Recipe controller
             return RedirectToAction("Index", "Recipe");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ImportExcel(IFormFile file)
+        {
+            if (file == null || file.Length <= 0)
+            {
+                return BadRequest("File not selected");
+            }
+
+            List<Recipe> listModel = await _context.Recipes.ToListAsync();
+
+            // Tạo một danh sách mới từ VM
+            RecipeServiceVM model = new RecipeServiceVM();
+
+            // Lấy ra các thuộc tính có trong VM
+            PropertyInfo[] properties = model.GetType().GetProperties();
+
+            string[] columnHeaders = new string[properties.Length];
+            for (int i = 0; i < properties.Length; i++)
+            {
+                columnHeaders[i] = properties[i].Name;
+            }
+
+            List<Recipe> list = _service.ImportFromExcel<Recipe>(file.OpenReadStream(), columnHeaders);
+
+            // Xử lý dữ liệu (lưu vào cơ sở dữ liệu, xử lý logic khác, ...)
+            foreach (var item in list)
+            {
+                updateQuantity(item.ID_Product, item.ID_Material, item.Material_Quantity);
+            }
+
+            return RedirectToAction("Index", "Recipe");
+        }
+
+        public void updateQuantity(int pro, int material, int quantity)
+        {
+            var item =  _context.Recipes.Where(x => x.ID_Product == pro && x.ID_Material == material).FirstOrDefault();
+            if (item != null)
+            {
+                item.Material_Quantity += quantity;
+
+                _context.Recipes.Update(item);
+                _context.SaveChanges();
+            }
+            else
+            {
+                Recipe recipe = new Recipe()
+                {
+                    ID_Product = item.ID_Product,
+                    ID_Material = item.ID_Material,
+                    Material_Quantity = item.Material_Quantity,
+                };
+
+                 _context.Recipes.Add(recipe);
+                 _context.SaveChanges();
+            }
         }
     }
 }

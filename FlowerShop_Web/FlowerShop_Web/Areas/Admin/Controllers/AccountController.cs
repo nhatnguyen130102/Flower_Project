@@ -31,7 +31,7 @@ namespace FlowerShop_Web.Areas.Admin.Controllers
         }
 
         // xem tất cả tài khoản
-        
+
         public async Task<IActionResult> Index()
         {
             var list = await _userManager.Users.ToListAsync();
@@ -40,7 +40,7 @@ namespace FlowerShop_Web.Areas.Admin.Controllers
 
         // Thêm một tài khoản mới, cấp quyền cho tài khoản mới và chỉ định chi nhánh cho shop
         [HttpGet]
-        
+
         public IActionResult Create()
         {
             ViewBag.Role = new SelectList(_roleManager.Roles, "Id", "Name");
@@ -51,8 +51,8 @@ namespace FlowerShop_Web.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        
-        public async Task<IActionResult> Create(AccoutManagerVM model)
+
+        public async Task<IActionResult> Create(AdminCreateAccountVM model)
         {
             if (ModelState.IsValid)
             {
@@ -67,23 +67,29 @@ namespace FlowerShop_Web.Areas.Admin.Controllers
                     EmailConfirmed = true,
                 };
 
-                var result = await _userManager.CreateAsync(user, model.NewPassword);
+              
+
+                if (model.NewPassword == null)
+                {
+                    return View("Create", model);
+                }
+
+                await _userManager.CreateAsync(user, model.NewPassword);
+
+                if (model.ID_Role == null)
+                {
+                    return View("Create", model);
+                }
 
                 var role = await _roleManager.FindByIdAsync(model.ID_Role);
 
-                await _userManager.AddToRoleAsync(user, role.Name);
-
-                if (result.Succeeded)
+                if (role == null)
                 {
-                    return RedirectToAction("Index");
-                }
-                else
-                {
-                    // Xử lý khi có lỗi xảy ra
-                    ModelState.AddModelError(string.Empty, "The current password is incorrect or the new password is invalid.");
-
                     return View("Create", model);
                 }
+
+                await _userManager.AddToRoleAsync(user, role.Name);
+
             }
             return View(model);
         }
@@ -256,7 +262,7 @@ namespace FlowerShop_Web.Areas.Admin.Controllers
                 return RedirectToAction("Index");
             }
 
-            if(user.ID_Shop != null)
+            if (user.ID_Shop != null)
             {
                 user.ID_Shop = null;
                 _context.ApplicationUsers.Update(user);

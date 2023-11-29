@@ -1,13 +1,7 @@
 ﻿using Flower_Models;
 using Flower_Repository;
-using Microsoft.EntityFrameworkCore;
 using OfficeOpenXml;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+using Flower_Services;
 
 namespace Flower_Services
 {
@@ -19,38 +13,6 @@ namespace Flower_Services
         {
             _context = context;
         }
-
-        //public void ExportToExcel(List<Recipe> data)
-        //{
-            
-        //    using (var package = new ExcelPackage())
-        //    {
-        //        DateTime today = DateTime.Now;
-        //        var name = "Export" + today;
-
-        //        var worksheet = package.Workbook.Worksheets.Add(name.ToString());
-
-        //        // Tiêu đề cột
-        //        worksheet.Cells[1, 1].Value = "ID_Recipe";
-        //        worksheet.Cells[1, 2].Value = "ID_Product";
-        //        worksheet.Cells[1, 3].Value = "ID_Material";
-        //        worksheet.Cells[1, 4].Value = "Material_Quantity";
-        //        // Thêm dữ liệu từ danh sách
-        //        for (int i = 0; i < data.Count; i++)
-        //        {
-        //            worksheet.Cells[i + 2, 1].Value = data[i].ID_Recipe;
-        //            worksheet.Cells[i + 2, 2].Value = data[i].ID_Product;
-        //            worksheet.Cells[i + 2, 3].Value = data[i].ID_Material;
-        //            worksheet.Cells[i + 2, 4].Value = data[i].Material_Quantity;
-        //        }
-
-        //        string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-        //        string filePath = Path.Combine(desktopPath, "Sheet1.xlsx");
-        //        FileInfo excelFile = new FileInfo(filePath);
-        //        package.SaveAs(excelFile);
-        //    }
-        //}
-
 
         public void ExportToExcel<T>(List<T> data, string[] columnHeaders, string fileName)
         {
@@ -80,30 +42,39 @@ namespace Flower_Services
                 package.SaveAs(excelFile);
             }
         }
-
-
-        public List<Recipe> ImportFromExcel(string filePath)
+        public List<T> ImportFromExcel<T>(Stream stream, string[] columnHeaders)
         {
-            List<Recipe> data = new List<Recipe>();
+            List<T> dataList = new List<T>();
 
-            using (var package = new ExcelPackage(new FileInfo(filePath)))
+            using (var package = new ExcelPackage(stream))
             {
                 var worksheet = package.Workbook.Worksheets[0];
+                int rowCount = worksheet.Dimension.Rows;
 
-                // Bắt đầu đọc từ dòng thứ 2 (vì dòng đầu là tiêu đề cột)
-                int row = 2;
-                while (worksheet.Cells[row, 1].Value != null)
+                for (int row = 2; row <= rowCount; row++)
                 {
-                    Recipe item = new Recipe
-                    {
-                        //ID_Recipe = Convert.ToInt32(worksheet.Cells[row, 1].Value),
-                        ID_Product = Convert.ToInt32(worksheet.Cells[row, 2].Value),
-                        ID_Material = Convert.ToInt32(worksheet.Cells[row, 3].Value),
-                        Material_Quantity = Convert.ToInt32(worksheet.Cells[row, 4].Value)
-                    };
+                    T data = ReadRowData<T>(worksheet, row, columnHeaders);
+                    dataList.Add(data);
+                }
+            }
 
-                    data.Add(item);
-                    row++;
+            return dataList;
+        }
+
+        private T ReadRowData<T>(ExcelWorksheet worksheet, int row, string[] columnHeaders)
+        {
+            T data = Activator.CreateInstance<T>();
+
+            for (int j = 0; j < columnHeaders.Length; j++)
+            {
+                var property = typeof(T).GetProperty(columnHeaders[j]);
+                if (property != null)
+                {
+                    var cellValue = worksheet.Cells[row, j + 1].Value;
+                    if (cellValue != null)
+                    {
+                        property.SetValue(data, Convert.ChangeType(cellValue, property.PropertyType));
+                    }
                 }
             }
 
@@ -115,9 +86,9 @@ namespace Flower_Services
             return _context.Recipes.ToList();
         }
 
-        public void AddRecipe(Recipe recipe)
+        public void AddEntity<TEntity>(TEntity entity) where TEntity : class
         {
-            _context.Recipes.Add(recipe);
+            _context.Set<TEntity>().Add(entity);
             _context.SaveChanges();
         }
     }

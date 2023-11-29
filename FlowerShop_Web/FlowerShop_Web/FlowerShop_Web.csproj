@@ -38,6 +38,7 @@
     <Folder Include="wwwroot\images\products\" />
     <Folder Include="wwwroot\images\others\" />
     <Folder Include="wwwroot\images\news\" />
+    <Folder Include="wwwroot\images\products\Subtle Freshness\" />
   </ItemGroup>
 
   <ItemGroup>

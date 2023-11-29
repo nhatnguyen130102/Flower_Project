@@ -16,7 +16,7 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"),
-        x => x.MigrationsAssembly("FlowerShop_Web")));
+        x => x.MigrationsAssembly("FlowerShop_Web"))) ;
 
 //builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
 //    .AddEntityFrameworkStores<ApplicationDbContext>();
@@ -33,7 +33,7 @@ builder.Services.AddSession(options =>
 });
 // Identity
 builder.Services.
-    AddIdentity<ApplicationUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true).
+    AddIdentity<ApplicationUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = false).
     AddEntityFrameworkStores<ApplicationDbContext>().
     AddDefaultUI().
     AddDefaultTokenProviders();

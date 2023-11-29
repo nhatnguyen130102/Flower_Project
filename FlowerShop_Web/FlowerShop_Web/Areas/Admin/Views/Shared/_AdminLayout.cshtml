@@ -29,11 +29,11 @@
     <link rel="stylesheet" href="~/plugins/daterangepicker/daterangepicker.css">
     <!-- summernote -->
     <link rel="stylesheet" href="~/plugins/summernote/summernote-bs4.min.css">
-  @*   <script src="https://api.mapbox.com/mapbox-gl-js/v2.7.0/mapbox-gl.js"></script>
+    @*   <script src="https://api.mapbox.com/mapbox-gl-js/v2.7.0/mapbox-gl.js"></script>
     <script src="https://unpkg.com/turf/turf@7.0.0/turf.min.js"></script>
     <link href="https://api.mapbox.com/mapbox-gl-js/v2.7.0/mapbox-gl.css" rel="stylesheet" />
 
- *@
+    *@
 
     <link rel="stylesheet" href="https://unpkg.com/tailwindcss@2.2.19/dist/tailwind.min.css" />
 
@@ -90,9 +90,9 @@
                 </li>
 
                 <li class="nav-item">
-                    <a asp-action="Edit" asp-controller="Account" asp-area="Admin" class="inline-block no-underline hover:text-black">
-                        <span>Hello @UserManager.GetUserName(User)</span>
-                    </a>
+
+                    <span>Hello @UserManager.GetUserName(User)</span>
+
                 </li>
                 <li class="nav-item">
                     <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">

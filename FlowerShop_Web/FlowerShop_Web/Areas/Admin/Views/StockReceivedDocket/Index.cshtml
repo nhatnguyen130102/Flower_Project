@@ -50,18 +50,9 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.CreatedAt)
                 </td>
-                @if (item.Received == false)
-                {
-                    <td>
-                        <a asp-action="isActive" asp-controller="StockReceivedDocket" asp-route-id="@item.ID_StockReceivedDocket">@item.IsActive</a>
-                    </td>
-                }
-                else
-                {
-                    <td>
-                        @item.IsActive
-                    </td>
-                }
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsActive)
+                </td>
 
                 @if (item.IsActive == true)
                 {
