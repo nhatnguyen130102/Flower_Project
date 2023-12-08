@@ -55,7 +55,9 @@ namespace Flower_Repository
         public DbSet<FavoriteProductDetails> FavoriteProductDetails { get; set; }
         public DbSet<ManagerUserProduct> ManagerUserProducts { get; set; }
 
-
+        // Chat
+        public DbSet<Room> Rooms { get; set; }
+        public DbSet<Message> Messages { get; set; }
 
 
         //private static void SeedRoles(ModelBuilder builder)

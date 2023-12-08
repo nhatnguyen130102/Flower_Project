@@ -59,8 +59,9 @@
             </div>
             <nav class="inline-block">
                 <ul class="items-center justify-between text-base md:flex md:pt-0 gap-8">
-                    <li><a class="inline-block no-underline hover:border-b-2 hover:border-black hover:text-black py-2" href="#">About</a></li>
+                    <li><a class="inline-block no-underline hover:border-b-2 hover:border-black hover:text-black py-2" asp-action="Index" asp-area="Admin" asp-controller="Home">About</a></li>
                     <li><a class="inline-block no-underline hover:border-b-2 hover:border-black hover:text-black py-2" asp-action="Post" asp-controller="Post">News</a></li>
+                    <li><a class="inline-block no-underline hover:border-b-2 hover:border-black hover:text-black py-2" asp-action="Index" asp-controller="Chat">Chat</a></li>
                     @if (_signInManager.IsSignedIn(User))
                     {
                         <li><a class="inline-block no-underline hover:border-b-2 hover:border-black hover:text-black py-2" asp-action="CartView" asp-controller="Cart">Cart</a></li>
