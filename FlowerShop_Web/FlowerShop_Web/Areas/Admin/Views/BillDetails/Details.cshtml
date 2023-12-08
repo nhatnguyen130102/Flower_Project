@@ -48,6 +48,8 @@
     </dl>
 </div>
 <div>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ID_Bill }) |
-    <a asp-action="Index">Back to List</a>
+    <button>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.ID_Bill })
+    </button>
+    <button> <a asp-action="Index"> <i class="fa-solid fa-arrow-rotate-left"></i> <span class="ps-4">Back</span> </a> </button>
 </div>

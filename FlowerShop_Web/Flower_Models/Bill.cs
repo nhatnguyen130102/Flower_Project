@@ -27,8 +27,8 @@ namespace Flower_Models
         public string Name_Order { get; set; }
         public string Phone_Order { get; set; }
         public int ID_Shop { get; set; }
-        public string City { get; set; }
-        public string Address { get; set; }
+        public string? City { get; set; }
+        public string? Address { get; set; }
         //public bool? PaymentType { get; set; }
         //public bool? PaymentStatus { get; set; }
         public string? Message { get; set; }

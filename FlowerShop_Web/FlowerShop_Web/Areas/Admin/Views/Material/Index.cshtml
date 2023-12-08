@@ -5,21 +5,19 @@
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h1>Index</h1>
+<h1>Material</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
 @using (Html.BeginForm("Index", "Material", FormMethod.Get))
 {
-    <div class="form-group">
-        <label>Searching</label>
-        <input name="filter" class="form-control" />
+    <div class="flex space-x-4 items-center mt-4">
+        <label class="w-20">Searching</label>
+        <input name="filter" class="form-control w-full" />
+        <button type="submit" class="">Filter</button>
     </div>
-    <button type="submit" class="btn btn-primary">Filter</button>
 }
 
-<table class="table">
+<div class="tbl-container">
+    <table>
     <thead>
         <tr>
             <th>
@@ -71,12 +69,26 @@
                 <td>
                     <img src="\@Html.DisplayFor(modelItem => item.Img_Material)" style="width: 100px; height: 100px;" class="object-fit-cover">
                 </td>
-                <td>
+               @* <td>
                     @Html.ActionLink("Edit", "Edit", new { id = item.ID_Material}) |
                     @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
                     @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-                </td>
+                </td>*@
+                    <td>
+                        <a href="@Url.Action("Edit", "Material", new { id = item.ID_Material })">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                        </a>
+
+                        <a href="@Url.Action("Details", "Material", new { id = item.ID_Material })">
+                            <i class="fa-solid fa-circle-info"></i>
+                        </a>
+
+                        <a href="@Url.Action("Delete", "Material", new { id = item.ID_Material })">
+                            <i class="fa-solid fa-trash-can"></i>
+                        </a>
+                    </td>
             </tr>
         }
     </tbody>
 </table>
+</div>

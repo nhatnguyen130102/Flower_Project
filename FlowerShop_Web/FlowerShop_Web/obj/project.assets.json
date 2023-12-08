@@ -4619,6 +4619,22 @@
           "lib/net7.0/X.PagedList.dll": {}
         }
       },
+      "DesignPattern/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v7.0",
+        "dependencies": {
+          "Flower_Models": "1.0.0",
+          "Flower_Repository": "1.0.0",
+          "Flower_Services": "1.0.0",
+          "Flower_ViewModels": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/DesignPattern.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/DesignPattern.dll": {}
+        }
+      },
       "Flower_Models/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v7.0",
@@ -4680,6 +4696,8 @@
         "framework": ".NETCoreApp,Version=v7.0",
         "dependencies": {
           "Flower_Models": "1.0.0",
+          "Flower_Repository": "1.0.0",
+          "Flower_Services": "1.0.0",
           "Microsoft.AspNetCore.Session": "2.2.0",
           "Microsoft.Extensions.Caching.Memory": "8.0.0"
         },
@@ -13026,6 +13044,11 @@
         "x.pagedlist.nuspec"
       ]
     },
+    "DesignPattern/1.0.0": {
+      "type": "project",
+      "path": "../DesignPattern/DesignPattern.csproj",
+      "msbuildProject": "../DesignPattern/DesignPattern.csproj"
+    },
     "Flower_Models/1.0.0": {
       "type": "project",
       "path": "../Flower_Models/Flower_Models.csproj",
@@ -13049,6 +13072,7 @@
   },
   "projectFileDependencyGroups": {
     "net7.0": [
+      "DesignPattern >= 1.0.0",
       "EPPlus >= 7.0.2",
       "Flower_Models >= 1.0.0",
       "Flower_Repository >= 1.0.0",
@@ -13094,6 +13118,9 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "projectReferences": {
+            "E:\\Document\\VS\\New_Project_1\\FlowerShop_Web\\DesignPattern\\DesignPattern.csproj": {
+              "projectPath": "E:\\Document\\VS\\New_Project_1\\FlowerShop_Web\\DesignPattern\\DesignPattern.csproj"
+            },
             "E:\\Document\\VS\\New_Project_1\\FlowerShop_Web\\Flower_Models\\Flower_Models.csproj": {
               "projectPath": "E:\\Document\\VS\\New_Project_1\\FlowerShop_Web\\Flower_Models\\Flower_Models.csproj"
             },

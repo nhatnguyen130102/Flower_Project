@@ -233,11 +233,14 @@ namespace FlowerShop_Web.Controllers
                 if (id_voucher != -1)
                 {
                     var getVoucher = await _context.Vouchers.Where(x => x.ID_Voucher == id_voucher).FirstOrDefaultAsync();
-                    var discount = getBill.Subtotal * (1 - getVoucher.Discount / 100);
+                    if(getBill.Subtotal >= getVoucher.MinimumAmount)
+                    {
+                        var discount = getBill.Subtotal * (1 - getVoucher.Discount / 100);
 
-                    _memoryCache.Set("_tempVoucher", getVoucher, TimeSpan.FromMinutes(10));
+                        _memoryCache.Set("_tempVoucher", getVoucher, TimeSpan.FromMinutes(10));
 
-                    ViewBag.Discount = discount;
+                        ViewBag.Discount = discount;
+                    }
                 }
             }
             if (getBill != null)
@@ -297,7 +300,6 @@ namespace FlowerShop_Web.Controllers
                 ID_Shop = getBill.ID_Shop,
                 City = getBill.City,
                 Address = getBill.Address,
-              
                 Message = getBill.Message,
             };
 
@@ -425,7 +427,7 @@ namespace FlowerShop_Web.Controllers
             _memoryCache.Remove("_tempBill");
             _memoryCache.Remove("_tempVoucher");
 
-            return RedirectToAction("successView", "Order");
+            return RedirectToAction("Success", "Order", new {id = newBill.ID_Bill });
         }
 
         public IActionResult successView()

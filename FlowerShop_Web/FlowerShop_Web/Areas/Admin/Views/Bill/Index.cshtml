@@ -11,7 +11,7 @@
     <p>
         <input name="list" type="text" id="result">
     </p>
-    <button type="submit">handle</button>
+    <button type="submit">Handle</button>
 </form>
 <table class="table">
     <thead>
@@ -147,10 +147,23 @@
 
                     <a asp-action="handleStatus" asp-controller="Bill" asp-route-id="@item.ID_Bill">@item.HandleStatus</a>
                 </td>
-                <td>
+                @* <td>
                         @Html.ActionLink("Edit", "Edit", new { id = item.ID_Bill }) |
                         @Html.ActionLink("Details", "billDetail", new {id = item.ID_Bill }) |
                         @Html.ActionLink("Delete", "Delete", new { id = item.ID_Bill })
+                </td> *@
+                <td>
+                    <a href="@Url.Action("Edit", "Bill", new { id = item.ID_Bill })">
+                        <i class="fa-solid fa-pen-to-square"></i>
+                    </a>
+
+                    <a href="@Url.Action("billDetail", "Bill", new { id = item.ID_Bill })">
+                        <i class="fa-solid fa-circle-info"></i>
+                    </a>
+
+                    <a href="@Url.Action("Delete", "Bill", new { id = item.ID_Bill })">
+                        <i class="fa-solid fa-trash-can"></i>
+                    </a>
                 </td>
             </tr>
             }

@@ -1,5 +1,7 @@
-﻿using Flower_Models;
+﻿using DesignPattern;
+using Flower_Models;
 using Flower_Repository;
+using Flower_Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -37,8 +39,8 @@ namespace FlowerShop_Web.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                await _context.Categories.AddAsync(model);
-                await _context.SaveChangesAsync();
+                PostService postService = new PostProxyPattern(model);
+                postService.AddPost();
                 return RedirectToAction("Index");
             }
             return BadRequest(model);
@@ -62,20 +64,8 @@ namespace FlowerShop_Web.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                try
-                {
-                    var item = new Category()
-                    {
-                       ID_Category = model.ID_Category,  
-                       Name_Category = model.Name_Category,
-                    };
-                    _context.Update(item);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    throw;
-                }
+                PostService postService = new PostProxyPattern(model);
+                postService.AddPost();
                 return RedirectToAction("Index");
             }
             return View(model);
@@ -111,17 +101,15 @@ namespace FlowerShop_Web.Areas.Admin.Controllers
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int? id)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var item = await _context.Categories.FindAsync(id);
-            if (item == null)
+            if (ModelState.IsValid)
             {
-                return NotFound();
+                PostService postService = new PostProxyPattern(id);
+                postService.RemovePost();
+                return RedirectToAction("Index");
             }
-
-            _context.Categories.Remove(item);
-            await _context.SaveChangesAsync();
-            return RedirectToAction("Index");
+            return View(id);
         }
     }
 }

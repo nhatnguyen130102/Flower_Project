@@ -1,13 +1,13 @@
-﻿using Flower_Models;
+﻿using DesignPattern;
+using Flower_Models;
 using Flower_Repository;
 using Flower_Services;
 using Flower_ViewModels;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using SQLitePCL;
+using Microsoft.Extensions.Caching.Memory;
 using System.Reflection;
 
 namespace FlowerShop_Web.Areas.Admin.Controllers
@@ -17,11 +17,15 @@ namespace FlowerShop_Web.Areas.Admin.Controllers
     {
         private readonly Import_ExportService _service;
         private readonly ApplicationDbContext _context;
+        private readonly IMemoryCache _memoryCache;
+        private readonly MementoPattern _careTaker;
 
-        public PostController(ApplicationDbContext context, Import_ExportService service)
+        public PostController(ApplicationDbContext context, Import_ExportService service, IMemoryCache memoryCache , MementoPattern careTacker )
         {
             _context = context;
             _service = service;
+            _memoryCache = memoryCache;
+            _careTaker = careTacker;
         }
 
         [Authorize(Roles = "Admin,Manager")]
@@ -58,6 +62,7 @@ namespace FlowerShop_Web.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(int? id)
         {
+            ViewBag.Category = new SelectList(_context.Categories,"ID_Category","Name_Category");
             var item = await _context.Posts.FindAsync(id);
             if (item == null)
             {
@@ -67,29 +72,61 @@ namespace FlowerShop_Web.Areas.Admin.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Post model)
+        public async Task<IActionResult> Edit(Post model, string submit)
         {
             if (ModelState.IsValid)
             {
-                try
+                var item = new Post()
                 {
-                    var item = new Post()
+                    ID_Post = model.ID_Post,
+                    Title = model.Title,
+                    ID_Category = model.ID_Category,
+                    CreatedAt = model.CreatedAt,
+                    CreatedBy = model.CreatedBy,
+                    ViewCount = model.ViewCount,
+                    Content = model.Content
+                };
+
+
+                if (submit.ToString() == "Save")
+                {
+                    _context.Entry(item).State = EntityState.Modified;
+                    _context.SaveChanges();
+                }
+                if (submit.ToString() == "Redo")
+                {
+                    var memento = _memoryCache.Get<Post>("Memento2");
+                    if(memento == null) {
+                        return RedirectToAction("Index");
+                    }
+                    Memento _item = new Memento()
                     {
-                        ID_Post = model.ID_Post,
-                        Title = model.Title,
-                        ID_Category = model.ID_Category,
-                        CreatedAt = model.CreatedAt,
-                        CreatedBy = model.CreatedBy,
-                        ViewCount = model.ViewCount,
-                        Content = model.Content
+                        ID_Post = memento.ID_Post,
+                        Title = memento.Title,
+                        ID_Category = memento.ID_Category,
+                        CreatedAt = memento.CreatedAt,
+                        CreatedBy = memento.CreatedBy,
+                        ViewCount = memento.ViewCount,
+                        Content = memento.Content
                     };
-                    _context.Update(item);
-                    await _context.SaveChangesAsync();
+                    _careTaker.StorePost = _item;
+
+                    item.RestorePost(_careTaker.StorePost);
+
+                    _context.Entry(_item).State = EntityState.Modified;
+                    _context.SaveChanges();
                 }
-                catch (DbUpdateConcurrencyException)
+                if(submit.ToString() == "SaveTage")
                 {
-                    throw;
+                    Post post = new Post();
+                    post = item.ShallowCopy();
+                    post = item.DeepCopy();
+                    Post itemOlder = _context.Posts.Where(x=>x.ID_Post == post.ID_Post).FirstOrDefault();
+                    _memoryCache.Set("Memento2", itemOlder, TimeSpan.FromDays(30));
+                    _careTaker.StorePost = itemOlder.CreateStored(itemOlder);
+                    _careTaker.BackUpToCache(_careTaker.StorePost);
                 }
+
                 return RedirectToAction("Index");
             }
             return View(model);

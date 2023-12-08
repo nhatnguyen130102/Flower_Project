@@ -114,33 +114,33 @@ namespace FlowerShop_Web.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "8fa270ce-0586-4065-82df-21bf966636b3",
+                            Id = "1ec8c500-6a4d-4538-924a-021b12106e22",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "1e35ac6e-6fe5-4965-b000-1625b9f2d60e",
+                            ConcurrencyStamp = "30e0b9de-c8f1-4d68-b4cb-a8d8b4a57967",
                             Email = "user2@hotmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "USER2@HOTMAIL.COM",
                             NormalizedUserName = "USER2@HOTMAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEMzWyX59vMIDm39+OI4riDpfvJYUUzyJEwSETlkgzF7o4OGxIePpYbtROQu33pdqkA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEFhWHQnsw4mLCP/csJnL6UEZ/hIO6MhqYg5U3c9LgyeFky3QYJIlo3S7/pdA8XVvgg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "ab6dd929-eda8-4450-a029-39af1bed3716",
+                            SecurityStamp = "840acfcb-cbfa-4057-ae94-752021ce58e2",
                             TwoFactorEnabled = false,
                             UserName = "user2@hotmail.com"
                         },
                         new
                         {
-                            Id = "0675e63e-9598-4cba-adaa-668344609d9c",
+                            Id = "d8f8ea0b-e600-4f5a-aa38-77c1af54c5b6",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "84079ec7-7f7e-4d69-abb7-4a44a8ec39f3",
+                            ConcurrencyStamp = "7be70806-b61d-4c12-b8f0-4fd2d6cb0d0b",
                             Email = "user3@hotmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "USER3@HOTMAIL.COM",
                             NormalizedUserName = "USER3@HOTMAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEOa28X8ccj2d/VE5JJou48oNhaqU4OZQLzEUNhMxrJEzj8b06+LnFSerwseizjfQLQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEHy8ERIaPTH5zd/MpbO99g9PhH+LrBabtAkBTEmMulfOB7ijOIfqmZeplKJXmb6n4g==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "71f097da-092c-45ae-8467-b0e61721ad97",
+                            SecurityStamp = "dc7c2253-6d49-4f27-83a2-64e3b56b5c09",
                             TwoFactorEnabled = false,
                             UserName = "user3@hotmail.com"
                         });
@@ -155,7 +155,6 @@ namespace FlowerShop_Web.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID_Bill"));
 
                     b.Property<string>("Address")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool?>("BillStatus")
@@ -165,7 +164,6 @@ namespace FlowerShop_Web.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("City")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedAt")
@@ -857,13 +855,13 @@ namespace FlowerShop_Web.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "29ceee2a-e04b-4923-ad9d-5e7f8caa48ed",
+                            Id = "1767b1e9-9a84-4e60-b685-4c84f2b80b44",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "2ada5c26-d2a3-4f7f-8e5d-4bc09d79a556",
+                            Id = "d9792d19-4d78-45a5-bf0c-12ceeed1f5e4",
                             Name = "Manager",
                             NormalizedName = "MANAGER"
                         });
@@ -958,13 +956,13 @@ namespace FlowerShop_Web.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = "8fa270ce-0586-4065-82df-21bf966636b3",
-                            RoleId = "2ada5c26-d2a3-4f7f-8e5d-4bc09d79a556"
+                            UserId = "1ec8c500-6a4d-4538-924a-021b12106e22",
+                            RoleId = "d9792d19-4d78-45a5-bf0c-12ceeed1f5e4"
                         },
                         new
                         {
-                            UserId = "0675e63e-9598-4cba-adaa-668344609d9c",
-                            RoleId = "29ceee2a-e04b-4923-ad9d-5e7f8caa48ed"
+                            UserId = "d8f8ea0b-e600-4f5a-aa38-77c1af54c5b6",
+                            RoleId = "1767b1e9-9a84-4e60-b685-4c84f2b80b44"
                         });
                 });
 

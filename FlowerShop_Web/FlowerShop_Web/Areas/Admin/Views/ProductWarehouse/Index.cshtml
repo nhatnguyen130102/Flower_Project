@@ -5,56 +5,69 @@
     Layout ="~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h1>Index</h1>
+<h1>Product Warehouse</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.ID)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ID_Shop)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ID_Product)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.InStock_Quantity)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Sold_Quantity)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.ID)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ID_Shop)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ID_Product)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.InStock_Quantity)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Sold_Quantity)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<div class="tbl-container">
+    <table>
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.ID)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ID_Shop)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ID_Product)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.InStock_Quantity)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Sold_Quantity)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ID)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ID_Shop)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ID_Product)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.InStock_Quantity)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Sold_Quantity)
+                    </td>
+                    @*<td>
+                        @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                        @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                        @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                    </td>*@
+                    <td>
+                        <a href="@Url.Action("Edit", "", new { @*id = item.ID_Material*@ })">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                        </a>
+
+                        <a href="@Url.Action("Details", "", new { @*id = item.ID_Material*@ })">
+                            <i class="fa-solid fa-circle-info"></i>
+                        </a>
+
+                        <a href="@Url.Action("Delete", "", new {@* id = item.ID_Material *@})">
+                            <i class="fa-solid fa-trash-can"></i>
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

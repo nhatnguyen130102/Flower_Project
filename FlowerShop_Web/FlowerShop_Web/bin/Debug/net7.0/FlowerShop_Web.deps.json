@@ -8,6 +8,7 @@
     ".NETCoreApp,Version=v7.0": {
       "FlowerShop_Web/1.0.0": {
         "dependencies": {
+          "DesignPattern": "1.0.0",
           "EPPlus": "7.0.2",
           "Flower_Models": "1.0.0",
           "Flower_Repository": "1.0.0",
@@ -3014,6 +3015,17 @@
           }
         }
       },
+      "DesignPattern/1.0.0": {
+        "dependencies": {
+          "Flower_Models": "1.0.0",
+          "Flower_Repository": "1.0.0",
+          "Flower_Services": "1.0.0",
+          "Flower_ViewModels": "1.0.0"
+        },
+        "runtime": {
+          "DesignPattern.dll": {}
+        }
+      },
       "Flower_Models/1.0.0": {
         "dependencies": {
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "7.0.13",
@@ -3058,6 +3070,8 @@
       "Flower_ViewModels/1.0.0": {
         "dependencies": {
           "Flower_Models": "1.0.0",
+          "Flower_Repository": "1.0.0",
+          "Flower_Services": "1.0.0",
           "Microsoft.AspNetCore.Session": "2.2.0",
           "Microsoft.Extensions.Caching.Memory": "8.0.0"
         },
@@ -4906,6 +4920,11 @@
       "sha512": "sha512-ZA1WcyNviMUhivCgwKAm/5/YsNP3Yf/n81SzrPaHSJOcFzavA9MrXTT8M+ZX4fvHwLCL1bY6BPXvwZF5pRtgTg==",
       "path": "x.pagedlist/8.4.7",
       "hashPath": "x.pagedlist.8.4.7.nupkg.sha512"
+    },
+    "DesignPattern/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
     },
     "Flower_Models/1.0.0": {
       "type": "project",

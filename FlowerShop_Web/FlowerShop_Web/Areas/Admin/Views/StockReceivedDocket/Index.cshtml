@@ -5,13 +5,10 @@
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h1>Index</h1>
-<p>
+<h1>Stock Received Docket</h1>
+<button>
     <a asp-action="CreateSRD">CreateSRD</a>
-</p>
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+</button>
 <table class="table">
     <thead>
         <tr>
@@ -70,13 +67,26 @@
                     @Html.DisplayFor(modelItem => item.ReceivedAt)
                 </td>
                 <td>
+@* 
                     @Html.ActionLink("Edit", "CreateNext", new { id = item.ID_StockReceivedDocket  }) |
                     @Html.ActionLink("Details", "detailsSRDD", new { id = item.ID_StockReceivedDocket }) |
                     @Html.ActionLink("Delete", "Delete", new { id = item.ID_StockReceivedDocket  })
+ *@
+                    <a href="@Url.Action("CreateNext", "StockReceivedDocket", new { id = item.ID_StockReceivedDocket })">
+                        <i class="fa-solid fa-pen-to-square"></i>
+                    </a>
+
+                    <a href="@Url.Action("detailsSRDD", "StockReceivedDocket", new { id = item.ID_StockReceivedDocket })">
+                        <i class="fa-solid fa-circle-info"></i>
+                    </a>
+
+                    <a href="@Url.Action("Delete", "StockReceivedDocket", new { id = item.ID_StockReceivedDocket })">
+                        <i class="fa-solid fa-trash-can"></i>
+                    </a>
+
                     <form method="post" asp-action="ExportToExcel" asp-controller="StockReceivedDocket" asp-route-id="@item.ID_StockReceivedDocket">
                         <button type="submit">Export to Excel</button>
                     </form>
-
                 </td>
             </tr>
         }
