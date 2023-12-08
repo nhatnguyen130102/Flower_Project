@@ -26,3 +26,17 @@ E:\Document\VS\FlowerShop_Web\Flower_Models\obj\Debug\net7.0\refint\Flower_Model
 E:\Document\VS\FlowerShop_Web\Flower_Models\obj\Debug\net7.0\Flower_Models.pdb
 E:\Document\VS\FlowerShop_Web\Flower_Models\obj\Debug\net7.0\Flower_Models.genruntimeconfig.cache
 E:\Document\VS\FlowerShop_Web\Flower_Models\obj\Debug\net7.0\ref\Flower_Models.dll
+C:\Users\GF\Documents\Nam_4\ecommerce\FW-6\Flower_Project\FlowerShop_Web\Flower_Models\bin\Debug\net7.0\Flower_Models.deps.json
+C:\Users\GF\Documents\Nam_4\ecommerce\FW-6\Flower_Project\FlowerShop_Web\Flower_Models\bin\Debug\net7.0\Flower_Models.runtimeconfig.json
+C:\Users\GF\Documents\Nam_4\ecommerce\FW-6\Flower_Project\FlowerShop_Web\Flower_Models\bin\Debug\net7.0\Flower_Models.dll
+C:\Users\GF\Documents\Nam_4\ecommerce\FW-6\Flower_Project\FlowerShop_Web\Flower_Models\bin\Debug\net7.0\Flower_Models.pdb
+C:\Users\GF\Documents\Nam_4\ecommerce\FW-6\Flower_Project\FlowerShop_Web\Flower_Models\obj\Debug\net7.0\Flower_Models.csproj.AssemblyReference.cache
+C:\Users\GF\Documents\Nam_4\ecommerce\FW-6\Flower_Project\FlowerShop_Web\Flower_Models\obj\Debug\net7.0\Flower_Models.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\GF\Documents\Nam_4\ecommerce\FW-6\Flower_Project\FlowerShop_Web\Flower_Models\obj\Debug\net7.0\Flower_Models.AssemblyInfoInputs.cache
+C:\Users\GF\Documents\Nam_4\ecommerce\FW-6\Flower_Project\FlowerShop_Web\Flower_Models\obj\Debug\net7.0\Flower_Models.AssemblyInfo.cs
+C:\Users\GF\Documents\Nam_4\ecommerce\FW-6\Flower_Project\FlowerShop_Web\Flower_Models\obj\Debug\net7.0\Flower_Models.csproj.CoreCompileInputs.cache
+C:\Users\GF\Documents\Nam_4\ecommerce\FW-6\Flower_Project\FlowerShop_Web\Flower_Models\obj\Debug\net7.0\Flower_Models.dll
+C:\Users\GF\Documents\Nam_4\ecommerce\FW-6\Flower_Project\FlowerShop_Web\Flower_Models\obj\Debug\net7.0\refint\Flower_Models.dll
+C:\Users\GF\Documents\Nam_4\ecommerce\FW-6\Flower_Project\FlowerShop_Web\Flower_Models\obj\Debug\net7.0\Flower_Models.pdb
+C:\Users\GF\Documents\Nam_4\ecommerce\FW-6\Flower_Project\FlowerShop_Web\Flower_Models\obj\Debug\net7.0\Flower_Models.genruntimeconfig.cache
+C:\Users\GF\Documents\Nam_4\ecommerce\FW-6\Flower_Project\FlowerShop_Web\Flower_Models\obj\Debug\net7.0\ref\Flower_Models.dll
