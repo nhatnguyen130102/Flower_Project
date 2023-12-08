@@ -1,4 +1,5 @@
-﻿using Flower_Models;
+﻿using DesignPattern;
+using Flower_Models;
 using Flower_Repository;
 using Flower_Services;
 using Flower_ViewModels;
@@ -11,6 +12,7 @@ using System.Drawing;
 using System.Reflection;
 using System.Security.Cryptography.Pkcs;
 
+
 namespace FlowerShop_Web.Areas.Admin.Controllers
 {
     [Area("Admin")]
@@ -19,12 +21,21 @@ namespace FlowerShop_Web.Areas.Admin.Controllers
         private readonly ApplicationDbContext _context;
         private readonly Import_ExportService _service;
         private readonly IWebHostEnvironment _hostingEnvironment;
+        //private readonly IFlowerService _flowerService;
 
-        public ProductController(ApplicationDbContext context, IWebHostEnvironment hostingEnvironment, Import_ExportService service)
+        //public ProductController(ApplicationDbContext context, IWebHostEnvironment hostingEnvironment, Import_ExportService service, IFlowerService flowerService )
+        //{
+        //    _context = context;
+        //    _hostingEnvironment = hostingEnvironment;
+        //    _service = service;
+        //    _flowerService = flowerService;
+        //}
+
+        public ProductController(ApplicationDbContext context, Import_ExportService service, IWebHostEnvironment hostingEnvironment)
         {
             _context = context;
-            _hostingEnvironment = hostingEnvironment;
             _service = service;
+            _hostingEnvironment = hostingEnvironment;
         }
 
         [Authorize(Roles = "Admin,Manager")]
@@ -307,5 +318,23 @@ namespace FlowerShop_Web.Areas.Admin.Controllers
             // Chuyển hướng đến trang Index của Recipe controller
             return RedirectToAction("Index", "Product");
         }
+
+      
+        //public async Task<IActionResult> addVoucer(int id)
+        //{
+        //    ViewBag.Voucher = new SelectList(_context.Vouchers,"ID_Voucher", "Code");
+        //    var item = _flowerService.GetFlowerById(id);
+        //    return View(item);
+        //}
+
+       
+        //public async Task<IActionResult> addVoucer2(int id)
+        //{
+
+        //    var flower = _flowerService.GetFlowerById(id);
+        //    // Hiển thị chi tiết hoa trong view
+        //    return View(flower);
+
+        //}
     }
 }

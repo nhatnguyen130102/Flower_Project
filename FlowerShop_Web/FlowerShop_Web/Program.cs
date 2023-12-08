@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Flower_Services;
+using DesignPattern;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,6 +25,13 @@ builder.Services.AddHttpClient();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddScoped<Import_ExportService>();
+builder.Services.AddScoped<MementoPattern>();
+
+// Sử dụng decorator để thêm tính năng khuyến mãi
+builder.Services.AddScoped<IFlowerService>(provider => new PromotionFlowerDecorator(provider.GetRequiredService<IFlowerService>()));
+// Thêm các dịch vụ khác...
+
+
 builder.Services.AddSession(options =>
 {
     options.IdleTimeout = TimeSpan.FromMinutes(30); // Thời gian tồn tại của session

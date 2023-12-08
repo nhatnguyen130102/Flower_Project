@@ -7,11 +7,6 @@
 
 <h1 class="fs-1 fw-bold p-2">Index</h1>
 
-<p class="p-2">
-    <a asp-action="Create">
-        <button class="btn btn-primary">Create New</button>
-    </a>
-</p>
 <table class="table text-center">
     <thead>
         <tr>
@@ -102,17 +97,22 @@
                     @Html.DisplayFor(modelItem => item.size)
                 </td>
                 <td>
+                    <a asp-action="CreateNext" asp-controller="Recipe" asp-route-id="@item.ID_Product">
+                        @*<button class="btn btn-danger my-1 w-100">Recipe</button>*@
+                        <i class="fa-solid fa-eye"></i>
+                    </a>
                     <a asp-action="Edit" asp-controller="Product" asp-route-id="@item.ID_Product">
-                        <button class="btn btn-primary my-1 w-100">Edit</button>
+                        @*<button class="btn btn-primary my-1 w-100">Edit</button>*@
+                        <i class="fa-solid fa-pen-to-square"></i>
                     </a>
                     <a asp-action="Details" asp-controller="Product" asp-route-id="@item.ID_Product">
-                        <button class="btn btn-dark my-1 w-100">Details</button>
+                        @*<button class="btn btn-dark my-1 w-100">Details</button>    *@
+                        <i class="fa-solid fa-circle-info"></i>
+
                     </a>
                     <a asp-action="Delete" asp-controller="Product" asp-route-id="@item.ID_Product">
-                        <button class="btn btn-danger my-1 w-100">Delete</button>
-                    </a>
-                    <a asp-action="CreateNext" asp-controller="Recipe" asp-route-id="@item.ID_Product">
-                        <button class="btn btn-danger my-1 w-100">Recipe</button>
+                        @*<button class="btn btn-danger my-1 w-100">Delete</button>*@
+                        <i class="fa-solid fa-trash-can"></i>
                     </a>
                 </td>
             </tr>

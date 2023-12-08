@@ -7,9 +7,6 @@
 
 <h1>Index</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
 <table class="table">
     <thead>
         <tr>
@@ -63,9 +60,15 @@
                     @Html.DisplayFor(modelItem => item.ViewCount)
                 </td>
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.ID_Post }) |
-                    @Html.ActionLink("Details", "Details", new {id = item.ID_Post }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.ID_Post })
+                    <a href="@Url.Action("Edit", "Post", new { id = item.ID_Post })">
+                        <i class="fa-solid fa-pen-to-square"></i>
+                    </a>
+                    <a href="@Url.Action("Details", "Post", new { id = item.ID_Post })">
+                        <i class="fa-solid fa-circle-info"></i>
+                    </a>
+                    <a href="@Url.Action("Delete", "Post", new { id = item.ID_Post })">
+                        <i class="fa-solid fa-trash-can"></i>
+                    </a>
                 </td>
             </tr>
         }

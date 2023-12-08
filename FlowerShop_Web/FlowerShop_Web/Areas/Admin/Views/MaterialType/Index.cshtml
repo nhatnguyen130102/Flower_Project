@@ -6,39 +6,52 @@
 }
 
 
-<h1>Index</h1>
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.ID_MaterialType)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Name_MaterialType)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
+<h1>Material Type</h1>
+
+<div class="tbl-container">
+    <table>
+        <thead>
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ID_MaterialType)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name_MaterialType)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.ID_MaterialType }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.ID_MaterialType }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.ID_MaterialType })
-                </td>
+                <th>
+                    @Html.DisplayNameFor(model => model.ID_MaterialType)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name_MaterialType)
+                </th>
+                <th></th>
             </tr>
-        }
-    </tbody>
-</table> 
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ID_MaterialType)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name_MaterialType)
+                    </td>
+                    @*<td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.ID_MaterialType }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.ID_MaterialType }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.ID_MaterialType })
+                    </td>*@
+                    <td>
+                        <a href="@Url.Action("Edit", "MaterialType", new { id = item.ID_MaterialType })">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                        </a>
+
+                        <a href="@Url.Action("Details", "MaterialType", new { id = item.ID_MaterialType })">
+                            <i class="fa-solid fa-circle-info"></i>
+                        </a>
+
+                        <a href="@Url.Action("Delete", "MaterialType", new { id = item.ID_MaterialType })">
+                            <i class="fa-solid fa-trash-can"></i>
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div> 
 

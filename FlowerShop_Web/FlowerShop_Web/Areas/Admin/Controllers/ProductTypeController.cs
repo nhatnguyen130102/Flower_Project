@@ -1,5 +1,7 @@
-﻿using Flower_Models;
+﻿using DesignPattern;
+using Flower_Models;
 using Flower_Repository;
+using Flower_Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -37,8 +39,8 @@ namespace FlowerShop_Web.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                await _context.ProductTypes.AddAsync(model);
-                await _context.SaveChangesAsync();
+                FlowerSingleton item = FlowerSingleton.GetInstance();
+                item.AddProductType(model);
                 return RedirectToAction("Index");
             }
             return View(model);
@@ -62,20 +64,8 @@ namespace FlowerShop_Web.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                try
-                {
-                    var item = new ProductType()
-                    {
-                        ID_ProductType = model.ID_ProductType,
-                        Name_ProductType = model.Name_ProductType,
-                    };
-                    _context.Update(item);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    throw;
-                }
+                FlowerSingleton item = FlowerSingleton.GetInstance();
+                item.EditProductType(model);
                 return RedirectToAction("Index");
             }
             return View(model);
@@ -112,14 +102,9 @@ namespace FlowerShop_Web.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int? id)
         {
-            var item = await _context.ProductTypes.FindAsync(id);
-            if (item == null)
-            {
-                return NotFound();
-            }
 
-            _context.ProductTypes.Remove(item);
-            await _context.SaveChangesAsync();
+            FlowerSingleton item = FlowerSingleton.GetInstance();
+            item.RemoveProductType(id);
             return RedirectToAction("Index");
         }
     }

@@ -28,3 +28,7 @@ E:\Document\VS\FlowerShop_Web\Flower_ViewModels\obj\Debug\net7.0\Flower_ViewMode
 E:\Document\VS\FlowerShop_Web\Flower_ViewModels\obj\Debug\net7.0\refint\Flower_ViewModels.dll
 E:\Document\VS\FlowerShop_Web\Flower_ViewModels\obj\Debug\net7.0\Flower_ViewModels.pdb
 E:\Document\VS\FlowerShop_Web\Flower_ViewModels\obj\Debug\net7.0\ref\Flower_ViewModels.dll
+E:\Document\VS\New_Project_1\FlowerShop_Web\Flower_ViewModels\bin\Debug\net7.0\Flower_Repository.dll
+E:\Document\VS\New_Project_1\FlowerShop_Web\Flower_ViewModels\bin\Debug\net7.0\Flower_Services.dll
+E:\Document\VS\New_Project_1\FlowerShop_Web\Flower_ViewModels\bin\Debug\net7.0\Flower_Repository.pdb
+E:\Document\VS\New_Project_1\FlowerShop_Web\Flower_ViewModels\bin\Debug\net7.0\Flower_Services.pdb
