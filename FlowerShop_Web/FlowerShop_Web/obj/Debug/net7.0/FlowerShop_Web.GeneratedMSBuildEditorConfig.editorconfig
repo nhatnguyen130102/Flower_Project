@@ -308,6 +308,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcUHJvZHVjdFdhcmVob3VzZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[E:/Document/VS/New_Project_1/FlowerShop_Web/FlowerShop_Web/Areas/Admin/Views/Product/addVoucher.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcUHJvZHVjdFxhZGRWb3VjaGVyLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [E:/Document/VS/New_Project_1/FlowerShop_Web/FlowerShop_Web/Areas/Admin/Views/Product/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcUHJvZHVjdFxDcmVhdGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
@@ -446,6 +450,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [E:/Document/VS/New_Project_1/FlowerShop_Web/FlowerShop_Web/Areas/Admin/Views/ViewAdmin/detailBill.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcVmlld0FkbWluXGRldGFpbEJpbGwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Document/VS/New_Project_1/FlowerShop_Web/FlowerShop_Web/Areas/Admin/Views/ViewAdmin/detailBill1.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcVmlld0FkbWluXGRldGFpbEJpbGwxLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [E:/Document/VS/New_Project_1/FlowerShop_Web/FlowerShop_Web/Areas/Admin/Views/ViewAdmin/detailSRD.cshtml]

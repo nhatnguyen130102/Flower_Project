@@ -37,17 +37,17 @@
                     <input asp-for="DeliveredAt" type="date" id="dateInput" min="" onchange="updateMinDate()" class="w-full rounded-sm border px-8 py-2" />
                 </div>
 
-                <input type="text" name="Shop" id="myInput" value="Closest Address" class="w-full rounded-sm border px-8 py-2">
-                <p id="result" readonly class="w-full rounded-sm border px-8 py-2"></p>
+                <input hidden type="text" name="Shop" id="myInput" value="Closest Address" class="w-full rounded-sm border px-8 py-2">
+               @*  <p id="result" readonly class="w-full rounded-sm border px-8 py-2"></p> *@
                 @*  <p id="closestAddress"></p> *@
-                <p onclick="compareAddresses()" class="px-4 py-2 rounded-sm border bg-black text-white w-fit text-center">Process Values</p>
+               @*  <p onclick="compareAddresses()" class="px-4 py-2 rounded-sm border bg-black text-white w-fit text-center">Process Values</p> *@
 
                 <div class="my-12 space-y-4">
                     <input type="checkbox" name="" id="accept-term" />
                     <label for="accept-term">By placing this order, I accept the <b>Terms and Conditions</b> of the purchase and the <b>Privacy Policy.</b> </label><br />
                     <p class="italic text-gray-600">On completing your purchase a confirmation page will open with the details of your order.</p>
                 </div>
-                <button type="submit" class="w-full rounded-sm border bg-black px-4 py-2 text-xl text-white hover:border-black hover:font-medium">
+                <button onclick="compareAddresses()" type="submit" class="w-full rounded-sm border bg-black px-4 py-2 text-xl text-white hover:border-black hover:font-medium">
                     Continue
                 </button>
             </form>
@@ -57,32 +57,50 @@
             <div class="space-y-6 rounded-sm p-12 pb-16 shadow-lg lg:p-8">
                 <h3 class="text-center text-xl"><b>Order Summary</b></h3>
                 <hr />
-                @foreach (var item in Model.CartDetails)
-                {
-                    <div>
-                        @{
-                            var pro = _context.Products.Where(x => x.ID_Product == item.ID_Product).FirstOrDefault();
-                            double total = 0.0;
-                        }
-                        <div class="flex h-auto w-full items-center justify-between space-x-10 text-gray-900 lg:space-x-4">
-                            <img src="\@pro.Img_Product" alt="" class="h-40 w-40 rounded-full object-cover lg:h-24 lg:w-24" />
-                            <div class="space-y-2 text-right lg:space-y-1">
-                                <h4 class="text-lg font-medium">@pro.Name_Product x @item.Product_Quantity</h4>
-                                <h5 class="text-xl font-medium">@pro.Price_Product x @item.Product_Quantity</h5>
-                            </div>
+                @{
+                    double total = 0.0;
+                    foreach (var item in Model.CartDetails)
+                    {
+                        <div>
+                            @{
+                                var pro = _context.Products.Where(x => x.ID_Product == item.ID_Product).FirstOrDefault();
+                                if (pro.isDiscontinued == true && pro.ID_FlashSale != null)
+                                {
+                                    var getFlashSale = _context.FlashSales.Where(x => x.ID_FlashSale == pro.ID_FlashSale).FirstOrDefault();
+                                    <div class="flex h-auto w-full items-center justify-between space-x-10 text-gray-900 lg:space-x-4">
+                                        <img src="\@pro.Img_Product" alt="" class="h-40 w-40 rounded-full object-cover lg:h-24 lg:w-24" />
+                                        <div class="space-y-2 text-right lg:space-y-1">
+                                            <h4 class="text-lg font-medium">@pro.Name_Product x @item.Product_Quantity</h4>
+                                            <h5 class="text-xl font-medium">@getFlashSale.Price_FlashSale x @item.Product_Quantity</h5>
+                                        </div>
+                                    </div>
+                                    total += getFlashSale.Price_FlashSale * item.Product_Quantity;
+                                }
+                                else
+                                {
+                                    <div class="flex h-auto w-full items-center justify-between space-x-10 text-gray-900 lg:space-x-4">
+                                        <img src="\@pro.Img_Product" alt="" class="h-40 w-40 rounded-full object-cover lg:h-24 lg:w-24" />
+                                        <div class="space-y-2 text-right lg:space-y-1">
+                                            <h4 class="text-lg font-medium">@pro.Name_Product x @item.Product_Quantity</h4>
+                                            <h5 class="text-xl font-medium">@pro.Price_Product x @item.Product_Quantity</h5>
+                                        </div>
+                                    </div>
+                                    total += pro.Price_Product * item.Product_Quantity;
+                                }
+
+
+                            }
                         </div>
-                        @{
-                            total += pro.Price_Product * item.Product_Quantity;
-                            ViewBag.Total = total;
-                        }
-                    </div>
+                    }
+                    ViewBag.Total = @total;
                 }
+         
                 <hr />
                 <div class="flex items-baseline justify-between">
                     <span class="text-xl">Total</span>
                     <h3 class="text-2xl">
                         <span>
-                            $ @ViewBag.Total
+                            $@ViewBag.Total
                         </span>
                     </h3>
                 </div>

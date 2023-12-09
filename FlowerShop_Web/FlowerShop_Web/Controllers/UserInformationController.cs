@@ -1,9 +1,14 @@
-﻿using Flower_Models;
+﻿using DesignPattern;
+using Flower_Models;
 using Flower_Repository;
+using Flower_Services;
 using Flower_ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System;
+using System.Linq;
 using System.Net.WebSockets;
 
 namespace FlowerShop_Web.Controllers
@@ -13,12 +18,15 @@ namespace FlowerShop_Web.Controllers
         private readonly ApplicationDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private FlowerShop flowerShop;
 
-        public UserInformationController(ApplicationDbContext context, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
+
+        public UserInformationController(ApplicationDbContext context, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, FlowerShop flowerShop)
         {
             _context = context;
             _userManager = userManager;
             _signInManager = signInManager;
+            this.flowerShop = flowerShop;
         }
 
         [HttpGet]
@@ -126,7 +134,45 @@ namespace FlowerShop_Web.Controllers
                 }
                 else
                 {
+                    var getItem = _context.Products.Where(x => x.isDiscontinued == true && x.ID_FlashSale != null).ToList();
+
                     var getFavoriteDetail = await _context.FavoriteProductDetails.Where(x => x.ID_FavoriteProduct == getFavorite.ID_FavoriteProduct).ToListAsync();
+                    //______________________________________________________________________
+
+                    var getFlashSale = await _context.Products.Where(x => x.ID_FlashSale != null && x.isDiscontinued == true).ToListAsync();
+
+                   
+                    if(getFlashSale != null)
+                    {
+                        string getPro = "";
+                        foreach (var item2 in getFlashSale)
+                        {
+                            foreach (var item3 in getFavoriteDetail)
+                            {
+                                if (item2.ID_Product == item3.ID_Product)
+                                {
+                                    getPro += item2.Name_Product + " | ";
+                                }
+                            }
+                        }
+
+                        Customer customer2 = new Customer();
+                        customer2.id = user.Id;
+                        customer2.lastName = user.LastName;
+                        customer2.firstName = user.FirstName;
+                        customer2.messages = getPro;
+
+                        flowerShop.RegisterObserver(customer2);
+
+                        flowerShop.NotifyObservers($"Xin chào {customer2.lastName} {customer2.firstName} có vài sản phẩm trong mục yêu thích đang được giảm giá: {customer2.messages} Bạn có muốn xem thử");
+
+                        string item = flowerShop.getMessages();
+
+                        TempData["Notification"] = item;
+
+                    }
+
+                   
 
                     return View(getFavoriteDetail);
                 }
@@ -187,5 +233,7 @@ namespace FlowerShop_Web.Controllers
 
             return View(getBillDetail);
         }
+
+       
     }
 }

@@ -1,8 +1,11 @@
 ﻿using Flower_Models;
 using Flower_Repository;
+using Flower_Services;
+using Flower_ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 
 namespace FlowerShop_Web.Areas.Admin.Controllers
 {
@@ -10,10 +13,13 @@ namespace FlowerShop_Web.Areas.Admin.Controllers
     public class VoucherController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly Import_ExportService _service;
 
-        public VoucherController(ApplicationDbContext context)
+
+        public VoucherController(ApplicationDbContext context, Import_ExportService service)
         {
             _context = context;
+            _service = service;
         }
 
         [Authorize(Roles = "Admin,Manager")]
@@ -129,5 +135,84 @@ namespace FlowerShop_Web.Areas.Admin.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction("Index");
         }
+
+        [HttpPost]
+        public async Task<IActionResult> ExportToExcel()
+        {
+            // Lấy dữ liệu từ service để xuất ra Excel
+            List<Voucher> listModel = await _context.Vouchers.ToListAsync();
+
+            // Tạo một danh sách mới từ VM
+            VoucherVM model = new VoucherVM();
+
+            // Lấy ra các thuộc tính có trong VM
+            PropertyInfo[] properties = model.GetType().GetProperties();
+
+            // Gán các thuộc tính vào mảng string
+            string[] colum = new string[properties.Length];
+            for (int i = 0; i < properties.Length; i++)
+            {
+                colum[i] = properties[i].Name;
+            }
+
+            // Tạo một tên tệp duy nhất dựa trên thời gian để tránh việc ghi đè tệp
+            DateTime today = DateTime.Now;
+            var fileName = $"VoucherExport_{today:yyyyMMddHHmmss}.xlsx";
+
+            // Xuất dữ liệu ra Excel với tên tệp duy nhất
+            _service.ExportToExcel(listModel, colum, fileName);
+
+            // Chuyển hướng đến trang Index của Recipe controller
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ImportExcel(IFormFile file)
+        {
+            if (file == null || file.Length <= 0)
+            {
+                return BadRequest("File not selected");
+            }
+
+            List<Voucher> listModel = await _context.Vouchers.ToListAsync();
+
+            // Tạo một danh sách mới từ VM
+            VoucherVM model = new VoucherVM();
+
+            // Lấy ra các thuộc tính có trong VM
+            PropertyInfo[] properties = model.GetType().GetProperties();
+
+            string[] columnHeaders = new string[properties.Length];
+            for (int i = 0; i < properties.Length; i++)
+            {
+                columnHeaders[i] = properties[i].Name;
+            }
+
+            List<Voucher> list = _service.ImportFromExcel<Voucher>(file.OpenReadStream(), columnHeaders);
+
+            // Xử lý dữ liệu (lưu vào cơ sở dữ liệu, xử lý logic khác, ...)
+            foreach (var item in list)
+            {
+                var item2 = new Voucher()
+                {
+                    Code = item.Code,
+                    Type = item.Type,
+                    Discount = item.Discount,
+                    StartedAt = item.StartedAt,
+
+                    EndedAt = item.EndedAt,
+                    Voucher_Quantity = item.Voucher_Quantity,
+                    MinimumAmount = item.MinimumAmount,
+                    IsActive = item.IsActive,
+
+                };
+
+                _context.Vouchers.Add(item2);
+                _context.SaveChanges();
+            }
+
+            return RedirectToAction("Index");
+        }
+
     }
 }

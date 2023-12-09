@@ -52,8 +52,6 @@ namespace Flower_Models
         public Post DeepCopy()
         {
             Post clone = (Post)this.MemberwiseClone();
-            clone.Category = new Category(Category.ID_Category);
-            clone.Title = string.Copy(Title);
             return clone;
         }
     }

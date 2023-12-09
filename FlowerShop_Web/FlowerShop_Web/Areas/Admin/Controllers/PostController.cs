@@ -95,25 +95,12 @@ namespace FlowerShop_Web.Areas.Admin.Controllers
                 }
                 if (submit.ToString() == "Redo")
                 {
-                    var memento = _memoryCache.Get<Post>("Memento2");
-                    if(memento == null) {
-                        return RedirectToAction("Index");
-                    }
-                    Memento _item = new Memento()
-                    {
-                        ID_Post = memento.ID_Post,
-                        Title = memento.Title,
-                        ID_Category = memento.ID_Category,
-                        CreatedAt = memento.CreatedAt,
-                        CreatedBy = memento.CreatedBy,
-                        ViewCount = memento.ViewCount,
-                        Content = memento.Content
-                    };
-                    _careTaker.StorePost = _item;
+                    var memento = _memoryCache.Get<Memento>("Memento");
+                    _careTaker.StorePost = memento;
 
                     item.RestorePost(_careTaker.StorePost);
 
-                    _context.Entry(_item).State = EntityState.Modified;
+                    _context.Entry(item).State = EntityState.Modified;
                     _context.SaveChanges();
                 }
                 if(submit.ToString() == "SaveTage")
@@ -122,7 +109,6 @@ namespace FlowerShop_Web.Areas.Admin.Controllers
                     post = item.ShallowCopy();
                     post = item.DeepCopy();
                     Post itemOlder = _context.Posts.Where(x=>x.ID_Post == post.ID_Post).FirstOrDefault();
-                    _memoryCache.Set("Memento2", itemOlder, TimeSpan.FromDays(30));
                     _careTaker.StorePost = itemOlder.CreateStored(itemOlder);
                     _careTaker.BackUpToCache(_careTaker.StorePost);
                 }

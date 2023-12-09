@@ -42,7 +42,7 @@ namespace Flower_Models
         public Occasion? Occasion { get; set; }
 
         // Mối quan hệ với FlashSale
-        [ForeignKey("ID_FlashSale")]
+        [ForeignKey("ID_FlashSale")] 
         public FlashSale? FlashSale { get; set; }
 
         // Mối quan hệ với ProductType

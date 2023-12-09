@@ -1,9 +1,12 @@
 ﻿using Flower_Models;
 using Flower_Repository;
+using Flower_Services;
+using Flower_ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 
 namespace FlowerShop_Web.Areas.Admin.Controllers
 {
@@ -14,11 +17,13 @@ namespace FlowerShop_Web.Areas.Admin.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly IWebHostEnvironment _hostingEnvironment;
+        private readonly Import_ExportService _service;
 
-        public MaterialController(ApplicationDbContext context, IWebHostEnvironment hostingEnvironment)
+        public MaterialController(ApplicationDbContext context, IWebHostEnvironment hostingEnvironment, Import_ExportService service)
         {
             _context = context;
             _hostingEnvironment = hostingEnvironment;
+            _service = service;
         }
 
         [Authorize(Roles = "Admin,Manager")]
@@ -233,6 +238,82 @@ namespace FlowerShop_Web.Areas.Admin.Controllers
 
             _context.Materials.Remove(item);
             await _context.SaveChangesAsync();
+            return RedirectToAction("Index");
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> ExportToExcel()
+        {
+            // Lấy dữ liệu từ service để xuất ra Excel
+            List<Material> listModel = await _context.Materials.ToListAsync();
+
+            // Tạo một danh sách mới từ VM
+            MaterialVM model = new MaterialVM();
+
+            // Lấy ra các thuộc tính có trong VM
+            PropertyInfo[] properties = model.GetType().GetProperties();
+
+            // Gán các thuộc tính vào mảng string
+            string[] colum = new string[properties.Length];
+            for (int i = 0; i < properties.Length; i++)
+            {
+                colum[i] = properties[i].Name;
+            }
+
+            // Tạo một tên tệp duy nhất dựa trên thời gian để tránh việc ghi đè tệp
+            DateTime today = DateTime.Now;
+            var fileName = $"MaterialExport_{today:yyyyMMddHHmmss}.xlsx";
+
+            // Xuất dữ liệu ra Excel với tên tệp duy nhất
+            _service.ExportToExcel(listModel, colum, fileName);
+
+            // Chuyển hướng đến trang Index của Recipe controller
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ImportExcel(IFormFile file)
+        {
+            if (file == null || file.Length <= 0)
+            {
+                return BadRequest("File not selected");
+            }
+
+            List<Material> listModel = await _context.Materials.ToListAsync();
+
+            // Tạo một danh sách mới từ VM
+            MaterialVM model = new MaterialVM();
+
+            // Lấy ra các thuộc tính có trong VM
+            PropertyInfo[] properties = model.GetType().GetProperties();
+
+            string[] columnHeaders = new string[properties.Length];
+            for (int i = 0; i < properties.Length; i++)
+            {
+                columnHeaders[i] = properties[i].Name;
+            }
+
+            List<Material> list = _service.ImportFromExcel<Material>(file.OpenReadStream(), columnHeaders);
+
+            // Xử lý dữ liệu (lưu vào cơ sở dữ liệu, xử lý logic khác, ...)
+            foreach (var item in list)
+            {
+                var item2 = new Material()
+                {
+                    ID_MaterialType = item.ID_MaterialType,
+                    Name_Material = item.Name_Material,
+                    ImportAt = item.ImportAt,
+                    EXP_Material = item.EXP_Material,
+                    Price_Material = item.Price_Material,
+                    Img_Material = item.Img_Material,
+
+                };
+
+                _context.Materials.Add(item2);
+                _context.SaveChanges();
+            }
+
             return RedirectToAction("Index");
         }
     }

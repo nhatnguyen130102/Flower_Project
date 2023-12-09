@@ -56,7 +56,7 @@
                     var AllBill = 0.0;
                     @foreach (var item in Model)
                     {
-                       
+
                         if (item.ID_Product != null)
                         {
                             <div class="flex h-36 w-full items-center space-x-12 border-b ps-8 text-lg text-gray-900 lg:space-x-12">
@@ -87,10 +87,23 @@
                                         </svg>
                                     </a>
                                 </div>
+
                                 @{
                                     var price = 0.0;
-                                    price = product.Price_Product * item.Product_Quantity;
+                                    var pro2 = _context.Products.Where(x => x.ID_Product == item.ID_Product).FirstOrDefault();
+                                    if (pro2.ID_FlashSale != null)
+                                    {
+                                        var getFlashSale = _context.FlashSales.Where(x => x.ID_FlashSale == pro2.ID_FlashSale).FirstOrDefault();
+                                        price = getFlashSale.Price_FlashSale * item.Product_Quantity;
+                                        AllBill += price;
+                                    }
+                                    else
+                                    {
+                                        price = product.Price_Product * item.Product_Quantity;
+                                        AllBill += price;
+                                    }
                                 }
+
                                 <span class="font-medium">$@price</span>
                                 <div>
                                     <a asp-action="RemoveItem" asp-controller="Cart" asp-route-id="@item.ID_Product">
@@ -100,10 +113,9 @@
                                     </a>
                                 </div>
                             </div>
-                            var pro = _context.Products.Where(x => x.ID_Product == item.ID_Product).FirstOrDefault();
-                            var Total = 0.0;
-                            Total = item.Product_Quantity * pro.Price_Product;
-                            AllBill += Total;
+                           
+                     @*        var pro = _context.Products.Where(x => x.ID_Product == item.ID_Product).FirstOrDefault();
+                            var Total = 0.0; *@
                         }
                         else
                         {
@@ -147,7 +159,7 @@
                     <h3 class="text-2xl font-medium">$@ViewBag.AllBill</h3>
                 </div>
                 @*  <a asp-action="Order" asp-controller="Home" asp-route-id="@((int)ViewData["ID_Cart"])"> <button class="w-full rounded-sm border bg-black px-4 py-2 text-white hover:border-black">Check out</button></a> *@
-        
+
                 <a asp-action="getInfoView" asp-controller="Order"> <button class="my-3 w-full rounded-sm border bg-black px-4 py-2 text-white hover:border-black">Check Out</button></a>
 
             </div>

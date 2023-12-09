@@ -114,6 +114,10 @@
                         @*<button class="btn btn-danger my-1 w-100">Delete</button>*@
                         <i class="fa-solid fa-trash-can"></i>
                     </a>
+                    <a asp-action="test2" asp-controller="Product" asp-route-id="@item.ID_Product">
+                        @*<button class="btn btn-danger my-1 w-100">Delete</button>*@
+                        <i class="fa-solid fa-trash-can"></i>
+                    </a>
                 </td>
             </tr>
         }
@@ -122,3 +126,12 @@
 <form method="post" asp-action="ExportToExcel" asp-controller="Product">
     <button type="submit">Export to Excel</button>
 </form>
+
+
+
+
+<form method="post" asp-action="ImportExcel" asp-controller="Product" enctype="multipart/form-data">
+    <input type="file" name="file" />
+    <button type="submit">Import from Excel</button>
+</form>
+

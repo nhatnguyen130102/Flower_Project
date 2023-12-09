@@ -1,4 +1,5 @@
-﻿using Flower_Models;
+﻿using DesignPattern;
+using Flower_Models;
 using Flower_Repository;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -11,12 +12,14 @@ namespace FlowerShop_Web.Controllers
         private readonly ApplicationDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
+ 
 
         public FavoriteProductController(ApplicationDbContext context, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
         {
             _context = context;
             _userManager = userManager;
             _signInManager = signInManager;
+            
         }
 
         public async Task<IActionResult> favoriteView()
@@ -140,5 +143,8 @@ namespace FlowerShop_Web.Controllers
             }
             return RedirectToAction("Index", "Home");
         }
+
+
+       
     }
 }

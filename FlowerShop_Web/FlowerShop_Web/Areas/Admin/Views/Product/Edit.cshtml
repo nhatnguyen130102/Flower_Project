@@ -49,12 +49,25 @@
                         <input class="form-check-input" asp-for="isAvailabled" /> @Html.DisplayNameFor(model => model.isAvailabled)
                     </label>
                 </div>
-                <div class="form-group form-check">
+             @*    <div class="form-group form-check">
                     <label class="form-check-label">
                         <input class="form-check-input" asp-for="isDiscontinued" /> @Html.DisplayNameFor(model => model.isDiscontinued)
                     </label>
+                </div> *@
+                <div class="form-group form-check">
+                    <label class="form-check-label">
+                        <input class="form-check-input" asp-for="isDiscontinued" id="isDiscontinuedCheckbox" />
+                        @Html.DisplayNameFor(model => model.isDiscontinued)
+                    </label>
                 </div>
-                <div class="form-group">
+                <div id="additionalInputDiv" class="form-group" style="display:none;">
+                    <label asp-for="ID_FlashSale" class="control-label"></label>
+                    <select asp-for="ID_FlashSale" class="form-control" asp-items="@ViewBag.FlashSales">
+                        <option value="">Select FlashSale</option>
+                    </select>
+                    <span asp-validation-for="ID_FlashSale" class="text-danger"></span>
+                </div>
+                <div  class="form-group">
                     <label asp-for="CreatedAt" class="control-label"></label>
                     <input asp-for="CreatedAt" class="form-control" />
                     <span asp-validation-for="CreatedAt" class="text-danger"></span>
@@ -67,15 +80,15 @@
                 <div class="form-group">
                     <label asp-for="ViewCount" class="control-label"></label>
                     <input asp-for="ViewCount" class="form-control" />
-                    <span asp-validation-for="ViewCount" class="text-danger"></span>
+                    <span asp-validation-for="ViewCount" class="text-danger"></span> 
                 </div>
-                <div class="form-group">
+              @*   <div class="form-group">
                     <label asp-for="ID_FlashSale" class="control-label"></label>
                     <select asp-for="ID_FlashSale" class="form-control" asp-items="@ViewBag.FlashSales">
                         <option value="">Select FlashSale</option>
                     </select>
                     <span asp-validation-for="ID_FlashSale" class="text-danger"></span>
-                </div>
+                </div> *@
                 <div class="form-group">
                     <label asp-for="ID_ProductType" class="control-label"></label>
                     <select asp-for="ID_ProductType" class="form-control" asp-items="@ViewBag.ProductTypes">
@@ -85,8 +98,8 @@
                 </div>
                 <div class="form-group">
                     <label asp-for="size" class="control-label"></label>
-                    <select asp-for="size" class="form-control" asp-items="@Html.GetEnumSelectList<size>()">
-                        <option>Select Size</option>
+                    <select asp-for="size" class="form-control" asp-items="ViewBag.Size">
+                        <option value="">Select Size</option>
                     </select>
                     <span asp-validation-for="size" class="text-danger"></span>
                 </div>
@@ -102,8 +115,25 @@
     <a asp-action="Index">Back to List</a>
 </div>
 
-@section Scripts {
+@* @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
+}
+ *@
+
+@section scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var checkbox = document.getElementById("isDiscontinuedCheckbox");
+            var additionalInputDiv = document.getElementById("additionalInputDiv");
+
+            checkbox.addEventListener("change", function () {
+                additionalInputDiv.style.display = checkbox.checked ? "block" : "none";
+            });
+        });
+    </script>
 }

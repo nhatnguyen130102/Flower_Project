@@ -1,4 +1,5 @@
-﻿using Flower_Models;
+﻿using DesignPattern;
+using Flower_Models;
 using Flower_Repository;
 using Flower_ViewModels;
 using Microsoft.AspNetCore.Identity;
@@ -18,7 +19,8 @@ namespace FlowerShop_Web.Controllers
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IMemoryCache _memoryCache;
         private readonly IHttpContextAccessor _httpContextAccessor;
-        public OrderController(ILogger<HomeController> logger, ApplicationDbContext context, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IMemoryCache memoryCache, IHttpContextAccessor httpContextAccessor)
+        private readonly Order _order;
+        public OrderController(ILogger<HomeController> logger, ApplicationDbContext context, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IMemoryCache memoryCache, IHttpContextAccessor httpContextAccessor, Order order)
         {
             _logger = logger;
             _context = context;
@@ -26,6 +28,7 @@ namespace FlowerShop_Web.Controllers
             _signInManager = signInManager;
             _memoryCache = memoryCache;
             _httpContextAccessor = httpContextAccessor;
+            _order = order;
         }
         public async Task<IActionResult> Success(int? id)
         {
@@ -124,8 +127,15 @@ namespace FlowerShop_Web.Controllers
                 foreach (var item in getCartDetail)
                 {
                     var getPro = await _context.Products.Where(x => x.ID_Product == item.ID_Product).FirstOrDefaultAsync();
-
-                    subTotal += getPro.Price_Product * item.Product_Quantity;
+                    if (getPro.ID_FlashSale != null && getPro.isDiscontinued == true)
+                    {
+                        var getFlashSale = await _context.FlashSales.Where(x => x.ID_FlashSale == getPro.ID_FlashSale).FirstOrDefaultAsync();
+                        subTotal += getFlashSale.Price_FlashSale * item.Product_Quantity;
+                    }
+                    else
+                    {
+                        subTotal += getPro.Price_Product * item.Product_Quantity;
+                    }
                 }
 
                 // tạo mới thông tin người dùng tcho bill
@@ -182,8 +192,15 @@ namespace FlowerShop_Web.Controllers
                 foreach (var item in cartDetails)
                 {
                     var getPro = await _context.Products.Where(x => x.ID_Product == item.ID_Product).FirstOrDefaultAsync();
-
-                    subTotal += getPro.Price_Product * item.Product_Quantity;
+                    if(getPro.ID_FlashSale != null && getPro.isDiscontinued == true)
+                    {
+                        var getFlashSale = await _context.FlashSales.Where(x => x.ID_FlashSale == getPro.ID_FlashSale).FirstOrDefaultAsync();
+                        subTotal += getFlashSale.Price_FlashSale * item.Product_Quantity;
+                    }
+                    else
+                    {
+                        subTotal += getPro.Price_Product * item.Product_Quantity;
+                    }
                 }
 
                 var newBill = new Bill()
@@ -274,6 +291,8 @@ namespace FlowerShop_Web.Controllers
 
         public async Task<IActionResult> saveInfo()
         {
+            
+
             var getCartDetail = _memoryCache.Get<List<CartDetails>>("_tempCartDetail");
 
             var getBill = _memoryCache.Get<Bill>("_tempBill");
@@ -281,6 +300,30 @@ namespace FlowerShop_Web.Controllers
             var getVoucher = _memoryCache.Get<Voucher>("_tempVoucher");
 
             var total = getBill.Subtotal;
+
+
+            // tạo đối tượng 
+            var _order = new Order()
+            {
+                ID_Customer = getBill.ID_Customer,
+                Total_Bill = total + 6.9,
+                Subtotal = total,
+                CreatedAt = getBill.CreatedAt,
+                DeliveredAt = getBill.DeliveredAt,
+                BillStatus = getBill.BillStatus,
+                DeliveredStatus = getBill.DeliveredStatus,
+                HandleStatus = getBill.HandleStatus,
+                Canceled = getBill.Canceled,
+                Name = getBill.Name,
+                Phone = getBill.Phone,
+                Name_Order = getBill.Name_Order,
+                Phone_Order = getBill.Phone_Order,
+                ID_Shop = getBill.ID_Shop,
+                City = getBill.City,
+                Address = getBill.Address,
+                Message = getBill.Message,
+            };
+
 
             var newBill = new Bill()
             {

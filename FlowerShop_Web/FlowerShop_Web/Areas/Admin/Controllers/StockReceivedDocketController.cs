@@ -407,8 +407,6 @@ namespace FlowerShop_Web.Areas.Admin.Controllers
             return View(list);
         }
 
-
-
         [HttpPost]
         public async Task<IActionResult> ExportToExcel(int? id)
         {
@@ -437,6 +435,50 @@ namespace FlowerShop_Web.Areas.Admin.Controllers
 
             // Chuyển hướng đến trang Index của Recipe controller
             return RedirectToAction("Index", "StockReceivedDocket");
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> ImportExcel(IFormFile file)
+        {
+            if (file == null || file.Length <= 0)
+            {
+                return BadRequest("File not selected");
+            }
+
+            List<StockReceivedDocketDetails> listModel = await _context.StockReceivedDocketDetails.ToListAsync();
+
+            // Tạo một danh sách mới từ VM
+            SRDDServiceVM model = new SRDDServiceVM();
+
+            // Lấy ra các thuộc tính có trong VM
+            PropertyInfo[] properties = model.GetType().GetProperties();
+
+            string[] columnHeaders = new string[properties.Length];
+            for (int i = 0; i < properties.Length; i++)
+            {
+                columnHeaders[i] = properties[i].Name;
+            }
+
+            List<StockReceivedDocketDetails> list = _service.ImportFromExcel<StockReceivedDocketDetails>(file.OpenReadStream(), columnHeaders);
+
+            // Xử lý dữ liệu (lưu vào cơ sở dữ liệu, xử lý logic khác, ...)
+            foreach (var item in list)
+            {
+                var item2 = new StockReceivedDocketDetails()
+                {
+                    ID_StockReceivedDocket = item.ID_StockReceivedDocket,
+                    ID_Material = item.ID_Material,
+                    StockReceived_Quantity = item.StockReceived_Quantity,
+                 
+
+                };
+
+                _context.StockReceivedDocketDetails.Add(item2);
+                _context.SaveChanges();
+            }
+
+            return RedirectToAction("Index");
         }
     }
 }

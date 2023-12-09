@@ -5,7 +5,13 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @inject ApplicationDbContext _context;
+@inject SignInManager<ApplicationUser> _signInManager;
+@inject UserManager<ApplicationUser> _userManager
+@using Flower_Models;
 @using Flower_Repository;
+@using Flower_ViewModels;
+@using Microsoft.AspNetCore.Identity;
+@using Microsoft.EntityFrameworkCore;
 
 <!DOCTYPE html>
 <html lang="en">
@@ -62,6 +68,22 @@
                 <button class="group min-w-fit rounded-lg border bg-gray-200 px-4 py-2" disabled>Sold out <span class="ms-2 text-blue-600">1</span></button>
             </div>
             <hr class="my-4 opacity-80" />
+            @* ____ *@
+
+            <div class="text-center">
+
+                @if (TempData["Notification"] != null)
+                {
+                    <div class="alert alert-success">
+                        @TempData["Notification"]
+                    </div>
+                }
+
+                <!-- Các nội dung khác của trang -->
+            </div>
+
+            @* ____ *@
+
             <div class="flex flex-wrap justify-items-start gap-12 pb-10 pe-2 lg:h-[720px] lg:overflow-auto">
                 @if (Model != null)
                 {
@@ -82,12 +104,24 @@
                                     <div class="px-1 pt-4 space-y-2 text-xl">
                                         <h4>@pro.Name_Product</h4>
                                         <div class="flex space-x-4 items-baseline">
-                                            <span class="font-medium">$@pro.Price_Product</span>
+                                            @if (pro.ID_FlashSale != null)
+                                            {
+                                                var flashsale = _context.FlashSales.Where(x => x.ID_FlashSale == pro.ID_FlashSale).FirstOrDefault();
+                                                <span class="font-normal">$@flashsale.Price_FlashSale</span>
+                                                <span class="justify-self-end text-gray-400 line-through">$@pro.Price_Product</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="font-normal">$@pro.Price_Product</span>
+                                            }
+
+                                        @*     <span class="font-medium">$@pro.Price_Product</span> *@
                                             <!-- <span class="justify-self-end text-gray-400 line-through text-base">$12.99</span> -->
                                         </div>
                                     </div>
                                 </div>
                             </a>
+
                         </div>
                     }
                 }

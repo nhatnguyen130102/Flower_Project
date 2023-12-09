@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SQLitePCL;
 using System.Drawing;
+using System.Net.WebSockets;
 using System.Reflection;
 using System.Security.Cryptography.Pkcs;
 
@@ -21,21 +22,14 @@ namespace FlowerShop_Web.Areas.Admin.Controllers
         private readonly ApplicationDbContext _context;
         private readonly Import_ExportService _service;
         private readonly IWebHostEnvironment _hostingEnvironment;
-        //private readonly IFlowerService _flowerService;
-
-        //public ProductController(ApplicationDbContext context, IWebHostEnvironment hostingEnvironment, Import_ExportService service, IFlowerService flowerService )
-        //{
-        //    _context = context;
-        //    _hostingEnvironment = hostingEnvironment;
-        //    _service = service;
-        //    _flowerService = flowerService;
-        //}
 
         public ProductController(ApplicationDbContext context, Import_ExportService service, IWebHostEnvironment hostingEnvironment)
         {
             _context = context;
             _service = service;
             _hostingEnvironment = hostingEnvironment;
+
+
         }
 
         [Authorize(Roles = "Admin,Manager")]
@@ -69,7 +63,7 @@ namespace FlowerShop_Web.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (Img_Product != null )
+                if (Img_Product != null)
                 {
 
                     var webRootPath = _hostingEnvironment.WebRootPath;
@@ -109,13 +103,19 @@ namespace FlowerShop_Web.Areas.Admin.Controllers
             return View(model);
         }
 
-        
+
         [HttpGet]
         public async Task<IActionResult> Edit(int? id)
         {
             ViewBag.ProductTypes = new SelectList(_context.ProductTypes, "ID_ProductType", "Name_ProductType");
-            ViewBag.FlashSales = new SelectList(_context.FlashSales, "ID_FlashSale");
+            ViewBag.FlashSales = new SelectList(_context.FlashSales, "ID_FlashSale", "Price_FlashSale");
             ViewBag.Occasions = new SelectList(_context.Occasions, "ID_Occasion", "Name_Occasion");
+            ViewBag.Size = new List<SelectListItem>
+            {
+                new SelectListItem { Value = "Classic", Text = "Classic" },
+                new SelectListItem { Value = "Premium", Text = "Premium" },
+                new SelectListItem { Value = "Deluxe", Text = "Deluxe" },
+            };
             var item = await _context.Products.FindAsync(id);
             if (item == null)
             {
@@ -232,7 +232,7 @@ namespace FlowerShop_Web.Areas.Admin.Controllers
             return View(item);
         }
 
-        
+
         [HttpGet]
         public async Task<IActionResult> Delete(int? id)
         {
@@ -263,7 +263,7 @@ namespace FlowerShop_Web.Areas.Admin.Controllers
             return RedirectToAction("Index");
         }
 
-        
+
         public async Task<IActionResult> isActive(int? id)
         {
             if (id == null)
@@ -271,7 +271,7 @@ namespace FlowerShop_Web.Areas.Admin.Controllers
                 return NotFound();
             }
             var getPro = await _context.Products.FindAsync(id);
-    
+
             if (getPro.isAvailabled == false)
             {
                 getPro.isAvailabled = true;
@@ -288,6 +288,59 @@ namespace FlowerShop_Web.Areas.Admin.Controllers
             }
             return RedirectToAction("Index");
         }
+
+
+        [HttpPost]
+        public async Task<IActionResult> ImportExcel(IFormFile file)
+        {
+            if (file == null || file.Length <= 0)
+            {
+                return BadRequest("File not selected");
+            }
+
+            List<Product> listModel = await _context.Products.ToListAsync();
+
+            // Tạo một danh sách mới từ VM
+            ProductVM model = new ProductVM();
+
+            // Lấy ra các thuộc tính có trong VM
+            PropertyInfo[] properties = model.GetType().GetProperties();
+
+            string[] columnHeaders = new string[properties.Length];
+            for (int i = 0; i < properties.Length; i++)
+            {
+                columnHeaders[i] = properties[i].Name;
+            }
+
+            List<Product> list = _service.ImportFromExcel<Product>(file.OpenReadStream(), columnHeaders);
+
+            // Xử lý dữ liệu (lưu vào cơ sở dữ liệu, xử lý logic khác, ...)
+            foreach (var item in list)
+            {
+                var post = new Product()
+                {
+                    ID_Occasion = item.ID_Occasion,
+                    Name_Product = item.Name_Product,
+                    Price_Product = item.Price_Product,
+                    Img_Product = item.Img_Product,
+                    isAvailabled = item.isAvailabled,
+                    isDiscontinued = item.isDiscontinued,
+
+                    CreatedAt = item.CreatedAt,
+                    Rating = item.Rating,
+                    ViewCount = item.ViewCount,
+                    ID_FlashSale = item.ID_FlashSale,
+                    ID_ProductType = item.ID_ProductType,
+                    size = item.size,
+                };
+
+                _context.Products.Add(post);
+                _context.SaveChanges();
+            }
+
+            return RedirectToAction("Index", "Post");
+        }
+
 
         [HttpPost]
         public async Task<IActionResult> ExportToExcel()
@@ -319,22 +372,45 @@ namespace FlowerShop_Web.Areas.Admin.Controllers
             return RedirectToAction("Index", "Product");
         }
 
-      
-        //public async Task<IActionResult> addVoucer(int id)
-        //{
-        //    ViewBag.Voucher = new SelectList(_context.Vouchers,"ID_Voucher", "Code");
-        //    var item = _flowerService.GetFlowerById(id);
-        //    return View(item);
-        //}
+        [HttpGet]
+        public async Task<IActionResult> addVoucher(int? id)
+        {
+            ViewBag.FlashSale = new SelectList(_context.FlashSales, "ID_FlashSale", "Price_FlashSale");
 
-       
-        //public async Task<IActionResult> addVoucer2(int id)
-        //{
+            if (id == null)
+            {
+                return RedirectToAction("Index");
+            }
 
-        //    var flower = _flowerService.GetFlowerById(id);
-        //    // Hiển thị chi tiết hoa trong view
-        //    return View(flower);
+            var item = await _context.Products.Where(x => x.ID_Product == id).FirstOrDefaultAsync();
 
-        //}
+            return View(item);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> addVoucher(int id, int? idFlashSale)
+        {
+            if (ModelState.IsValid)
+            {
+                if (idFlashSale == null || id == null)
+                {
+                    return RedirectToAction("Index");
+                }
+
+                var item = await _context.Products.Where(x => x.ID_Product == id).FirstOrDefaultAsync();
+
+                var flashSale = await _context.FlashSales.Where(x => x.ID_FlashSale == idFlashSale).FirstOrDefaultAsync();
+
+                item.ID_FlashSale = flashSale.ID_FlashSale;
+                item.Price_Product = item.Price_Product - flashSale.Price_FlashSale;
+
+                _context.Update(item);
+                _context.SaveChanges();
+
+                return RedirectToAction("Index");
+            }
+
+            return View(id);
+        }
     }
 }
