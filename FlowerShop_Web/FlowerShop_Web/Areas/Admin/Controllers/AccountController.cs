@@ -277,22 +277,5 @@ namespace FlowerShop_Web.Areas.Admin.Controllers
             return RedirectToAction("Index");
         }
 
-
-        //[HttpGet]
-        //public async Task<IActionResult> EditAccount(string? id)
-        //{
-        //    if(id == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    var getUser = await _userManager.FindByIdAsync(id);
-        //    if (getUser == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    return View(getUser);
-        //}
-
-        //public async Task<IActionResult> EditAccout()
     }
 }

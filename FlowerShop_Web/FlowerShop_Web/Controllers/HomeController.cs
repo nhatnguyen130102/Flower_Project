@@ -14,6 +14,7 @@ using System.Net.WebSockets;
 using System.Net;
 using Microsoft.DotNet.Scaffolding.Shared.Messaging;
 using Microsoft.AspNetCore.Http.HttpResults;
+using DesignPattern;
 
 namespace FlowerShop_Web.Controllers
 {
@@ -23,19 +24,69 @@ namespace FlowerShop_Web.Controllers
         private readonly ApplicationDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private FlowerShop flowerShop;
 
-        public HomeController(ILogger<HomeController> logger, ApplicationDbContext context, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
+        public HomeController(ILogger<HomeController> logger, ApplicationDbContext context, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, FlowerShop flowerShop)
         {
             _logger = logger;
             _context = context;
             _userManager = userManager;
             _signInManager = signInManager;
-
+            this.flowerShop = flowerShop;
         }
 
 
-        public IActionResult Index(string? searching, string? id)
+        public async Task<IActionResult> Index(string? searching, string? id)
         {
+            if (_signInManager.IsSignedIn(User))
+            {
+                var user = await _userManager.GetUserAsync(User);
+                if (user != null)
+                {
+                    var getFavorite = await _context.FavoriteProducts.Where(x => x.ID_Customer == user.Id).FirstOrDefaultAsync();
+                    if (getFavorite != null)
+                    {
+                        var getItem = _context.Products.Where(x => x.isDiscontinued == true && x.ID_FlashSale != null).ToList();
+
+                        var getFavoriteDetail = await _context.FavoriteProductDetails.Where(x => x.ID_FavoriteProduct == getFavorite.ID_FavoriteProduct).ToListAsync();
+                        //______________________________________________________________________
+
+                        var getFlashSale = await _context.Products.Where(x => x.ID_FlashSale != null && x.isDiscontinued == true).ToListAsync();
+
+
+                        if (getFlashSale != null)
+                        {
+                            string getPro = "";
+                            foreach (var item2 in getFlashSale)
+                            {
+                                foreach (var item3 in getFavoriteDetail)
+                                {
+                                    if (item2.ID_Product == item3.ID_Product)
+                                    {
+                                        getPro += item2.Name_Product + " | ";
+                                    }
+                                }
+                            }
+
+                            Customer customer2 = new Customer();
+                            customer2.id = user.Id;
+                            customer2.lastName = user.LastName;
+                            customer2.firstName = user.FirstName;
+                            customer2.messages = getPro;
+
+                            flowerShop.RegisterObserver(customer2);
+
+                            flowerShop.NotifyObservers($"Xin chào {customer2.lastName} {customer2.firstName} có vài sản phẩm trong mục yêu thích đang được giảm giá: {customer2.messages} Bạn có muốn xem thử");
+
+                            string item = flowerShop.getMessages();
+
+                            TempData["Notification"] = item;
+                        }
+                    }
+                }
+            }
+
+            //_______________________________________________
             int? id_occation = !string.IsNullOrEmpty(id) ? int.Parse(id) : (int?)null;
             var query = _context.Products.Select(model => new Product()
             {
@@ -90,7 +141,7 @@ namespace FlowerShop_Web.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-    
+
         [HttpGet]
         public async Task<IActionResult> ProductDetails(int? id)
         {

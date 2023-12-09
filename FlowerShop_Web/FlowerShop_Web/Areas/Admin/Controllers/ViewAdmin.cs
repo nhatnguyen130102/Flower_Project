@@ -171,6 +171,21 @@ namespace FlowerShop_Web.Areas.Admin.Controllers
             return View(model);
         }
 
+        public async Task<IActionResult> detailBill1(int? id)
+        {
+            if (id == null)
+            {
+                return RedirectToAction("allBill");
+            }
+            var item = await _context.Bills.Where(x=>x.ID_Bill == id).FirstOrDefaultAsync();
+            if (item == null)
+            {
+                return RedirectToAction("allBill");
+            }
+
+            return View(item);
+        }
+
         public async Task<IActionResult> detailBill(int? id)
         {
             if (id == null)

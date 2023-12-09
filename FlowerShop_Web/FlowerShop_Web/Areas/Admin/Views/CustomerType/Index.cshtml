@@ -72,3 +72,15 @@
             </tbody>
     </table>
 </div>
+<form method="post" asp-action="ExportToExcel" asp-controller="CustomerType">
+    <button type="submit">Export to Excel</button>
+</form>
+
+
+
+
+<form method="post" asp-action="ImportExcel" asp-controller="CustomerType" enctype="multipart/form-data">
+    <input type="file" name="file" />
+    <button type="submit">Import from Excel</button>
+</form>
+

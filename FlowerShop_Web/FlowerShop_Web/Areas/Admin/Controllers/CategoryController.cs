@@ -2,9 +2,11 @@
 using Flower_Models;
 using Flower_Repository;
 using Flower_Services;
+using Flower_ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 
 namespace FlowerShop_Web.Areas.Admin.Controllers
 {
@@ -12,10 +14,12 @@ namespace FlowerShop_Web.Areas.Admin.Controllers
     public class CategoryController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly Import_ExportService _service;
 
-        public CategoryController(ApplicationDbContext context)
+        public CategoryController(ApplicationDbContext context, Import_ExportService service)
         {
             _context = context;
+            _service = service;
         }
 
         [HttpGet]
@@ -111,5 +115,78 @@ namespace FlowerShop_Web.Areas.Admin.Controllers
             }
             return View(id);
         }
+
+
+
+
+        [HttpPost]
+        public async Task<IActionResult> ExportToExcel()
+        {
+            // Lấy dữ liệu từ service để xuất ra Excel
+            List<Category> listModel = await _context.Categories.ToListAsync();
+
+            // Tạo một danh sách mới từ VM
+            CategoryVM model = new CategoryVM();
+
+            // Lấy ra các thuộc tính có trong VM
+            PropertyInfo[] properties = model.GetType().GetProperties();
+
+            // Gán các thuộc tính vào mảng string
+            string[] colum = new string[properties.Length];
+            for (int i = 0; i < properties.Length; i++)
+            {
+                colum[i] = properties[i].Name;
+            }
+
+            // Tạo một tên tệp duy nhất dựa trên thời gian để tránh việc ghi đè tệp
+            DateTime today = DateTime.Now;
+            var fileName = $"CategoryExport_{today:yyyyMMddHHmmss}.xlsx";
+
+            // Xuất dữ liệu ra Excel với tên tệp duy nhất
+            _service.ExportToExcel(listModel, colum, fileName);
+
+            // Chuyển hướng đến trang Index của Recipe controller
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ImportExcel(IFormFile file)
+        {
+            if (file == null || file.Length <= 0)
+            {
+                return BadRequest("File not selected");
+            }
+
+            List<Category> listModel = await _context.Categories.ToListAsync();
+
+            // Tạo một danh sách mới từ VM
+            PostServiceVM model = new PostServiceVM();
+
+            // Lấy ra các thuộc tính có trong VM
+            PropertyInfo[] properties = model.GetType().GetProperties();
+
+            string[] columnHeaders = new string[properties.Length];
+            for (int i = 0; i < properties.Length; i++)
+            {
+                columnHeaders[i] = properties[i].Name;
+            }
+
+            List<Category> list = _service.ImportFromExcel<Category>(file.OpenReadStream(), columnHeaders);
+
+            // Xử lý dữ liệu (lưu vào cơ sở dữ liệu, xử lý logic khác, ...)
+            foreach (var item in list)
+            {
+                var item2 = new Category()
+                {
+                    Name_Category = item.Name_Category,
+                };
+
+                _context.Categories.Add(item2);
+                _context.SaveChanges();
+            }
+
+            return RedirectToAction("Index");
+        }
+
     }
 }

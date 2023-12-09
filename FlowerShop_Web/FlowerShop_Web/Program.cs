@@ -17,7 +17,7 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"),
-        x => x.MigrationsAssembly("FlowerShop_Web"))) ;
+        x => x.MigrationsAssembly("FlowerShop_Web")));
 
 //builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
 //    .AddEntityFrameworkStores<ApplicationDbContext>();
@@ -26,10 +26,14 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddScoped<Import_ExportService>();
 builder.Services.AddScoped<MementoPattern>();
+builder.Services.AddScoped<FlowerShop>();
 
-// Sử dụng decorator để thêm tính năng khuyến mãi
-builder.Services.AddScoped<IFlowerService>(provider => new PromotionFlowerDecorator(provider.GetRequiredService<IFlowerService>()));
-// Thêm các dịch vụ khác...
+
+builder.Services.AddSignalR();
+
+
+builder.Services.AddMvc(); // Đăng ký MVC services
+
 
 
 builder.Services.AddSession(options =>
@@ -72,6 +76,7 @@ app.UseStaticFiles();
 app.UseMiddleware<AccessCounterMiddleware>();
 
 
+#pragma warning restore ASP0014 // Suggest using top level route registrations
 
 app.MapControllerRoute(
         name: "areaRoute",

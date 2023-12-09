@@ -1,4 +1,5 @@
-﻿using Elfie.Serialization;
+﻿using DesignPattern;
+using Elfie.Serialization;
 using Flower_Models;
 using Flower_Repository;
 using Microsoft.AspNetCore.Authorization;
@@ -20,14 +21,16 @@ namespace FlowerShop_Web.Areas.Admin.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly Order _order;
 
 
-        public BillController(ApplicationDbContext context, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, RoleManager<IdentityRole> roleManager)
+        public BillController(ApplicationDbContext context, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, RoleManager<IdentityRole> roleManager, Order order)
         {
             _context = context;
             _userManager = userManager;
             _signInManager = signInManager;
             _roleManager = roleManager;
+            _order = order;
         }
 
         // Xem danh sách Bill của cửa hàng
@@ -400,6 +403,24 @@ namespace FlowerShop_Web.Areas.Admin.Controllers
             };
 
             return View(bill);
+        }
+
+        public IActionResult ConfirmOrder()
+        {
+            _order.ConfirmOrder();
+            return View("Index", _order);
+        }
+
+        public IActionResult ShipOrder()
+        {
+            _order.ShipOrder();
+            return View("Index", _order);
+        }
+
+        public IActionResult CompleteOrder()
+        {
+            _order.CompleteOrder();
+            return View("Index", _order);
         }
     }
 }

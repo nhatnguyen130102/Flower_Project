@@ -50,3 +50,15 @@
     }
     </tbody>
 </table></div>
+<form method="post" asp-action="ExportToExcel" asp-controller="Occasion">
+    <button type="submit">Export to Excel</button>
+</form>
+
+
+
+
+<form method="post" asp-action="ImportExcel" asp-controller="Occasion" enctype="multipart/form-data">
+    <input type="file" name="file" />
+    <button type="submit">Import from Excel</button>
+</form>
+
