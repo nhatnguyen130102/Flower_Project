@@ -18,7 +18,8 @@ namespace FlowerShop_Web.Models.Pattern
     }
     public interface IPaymentStrategy 
     {
-        void ProcessPayment();
+        Task<string> ProcessPaymentAsync();
+        Task<ActionResult> ExecutePaymentAsync(string payerId, string token);
     }
 
     public class OnlinePaymentStrategy : IPaymentStrategy
@@ -48,7 +49,8 @@ namespace FlowerShop_Web.Models.Pattern
             _httpContextAccessor = httpContextAccessor;
             _configuration = configuration;
         }
-        public async Task<string> PaymentWithPaypalAsync()
+        
+        public async Task<string> ProcessPaymentAsync()
         {
             try
             {
@@ -289,9 +291,211 @@ namespace FlowerShop_Web.Models.Pattern
             }
         }
 
-        async void IPaymentStrategy.ProcessPayment()
+        //async void IPaymentStrategy.ProcessPayment()
+        //{
+        //    await PaymentWithPaypalAsync();
+        //}
+    }
+
+    public class CODPaymentStrategy : IPaymentStrategy
+    {
+        private readonly ILogger<CODPaymentStrategy> _logger;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly IMemoryCache _memoryCache;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly ApplicationDbContext _context;
+
+        public CODPaymentStrategy(
+            ApplicationDbContext context,
+            ILogger<CODPaymentStrategy> logger,
+            UserManager<ApplicationUser> userManager,
+            SignInManager<ApplicationUser> signInManager,
+            IHttpContextAccessor httpContextAccessor,
+            IMemoryCache memoryCache)
         {
-            await PaymentWithPaypalAsync();
+            _context = context;
+            _logger = logger;
+            _userManager = userManager;
+            _signInManager = signInManager;
+            _memoryCache = memoryCache;
+            _httpContextAccessor = httpContextAccessor;
+        }
+
+        public Task<ActionResult> ExecutePaymentAsync(string payerId, string token)
+        {
+            return (Task<ActionResult>)Task.CompletedTask;
+        }
+
+        public async Task<string> ProcessPaymentAsync()
+        {
+            return "";
+        }
+
+        public async Task<IActionResult> SaveInfoAsync()
+        {
+            try
+            {
+                var getCartDetail = _memoryCache.Get<List<CartDetails>>("_tempCartDetail");
+
+                var getBill = _memoryCache.Get<Bill>("_tempBill");
+
+                var getVoucher = _memoryCache.Get<Voucher>("_tempVoucher");
+
+                var total = getBill.Subtotal;
+
+                var newBill = new Bill()
+                {
+                    ID_Customer = getBill.ID_Customer,
+                    Total_Bill = total + 6.9,
+                    Subtotal = total,
+                    CreatedAt = getBill.CreatedAt,
+                    DeliveredAt = getBill.DeliveredAt,
+                    BillStatus = getBill.BillStatus,
+                    DeliveredStatus = getBill.DeliveredStatus,
+                    HandleStatus = getBill.HandleStatus,
+                    Canceled = getBill.Canceled,
+                    Name = getBill.Name,
+                    Phone = getBill.Phone,
+                    Name_Order = getBill.Name_Order,
+                    Phone_Order = getBill.Phone_Order,
+                    ID_Shop = getBill.ID_Shop,
+                    City = getBill.City,
+                    Address = getBill.Address,
+                    Message = getBill.Message,
+                };
+
+                await _context.Bills.AddAsync(newBill);
+                await _context.SaveChangesAsync();
+
+                if (_signInManager.IsSignedIn(_httpContextAccessor.HttpContext.User))
+                {
+                    var getUser = await _userManager.GetUserAsync(_httpContextAccessor.HttpContext.User);
+                    if (getUser == null)
+                    {
+                        return new NotFoundResult();
+                    }
+
+                    var getUserType = await _context.CustomerTypes.Where(x => x.ID_CustomerType == getUser.ID_CustomerType).FirstOrDefaultAsync();
+                    if (getUserType != null)
+                    {
+                        total = total * (1 - getUserType.Discount / 100);
+                        newBill.Subtotal = total;
+                        newBill.Total_Bill = total + 6.9;
+
+                        _context.Bills.Update(newBill);
+                        _context.SaveChanges();
+                    }
+
+                }
+
+                if (getVoucher != null)
+                {
+                    if (getVoucher.Type == "0")
+                    {
+                        total = total * (1 - getVoucher.Discount / 100);
+                    }
+                    else if (getVoucher.Type == "1")
+                    {
+                        total = total - getVoucher.Discount;
+                    }
+
+                    var voucher = await _context.Vouchers.Where(x => x.ID_Voucher == getVoucher.ID_Voucher).FirstOrDefaultAsync();
+
+                    voucher.Voucher_Quantity -= 1;
+
+                    _context.Vouchers.Update(voucher);
+                    _context.SaveChanges();
+
+                    newBill.ID_Voucher = getVoucher.ID_Voucher;
+                    newBill.Subtotal = total;
+                    newBill.Total_Bill = total + 6.9;
+
+                    _context.Bills.Update(newBill);
+                    _context.SaveChanges();
+                }
+
+                if (_signInManager.IsSignedIn(_httpContextAccessor.HttpContext.User))
+                {
+                    var getUser = await _userManager.GetUserAsync(_httpContextAccessor.HttpContext.User);
+                    if (getUser == null)
+                    {
+                        return new NotFoundResult();
+                    }
+
+                    getUser.Spend += newBill.Total_Bill;
+
+                    await _userManager.UpdateAsync(getUser);
+                    await _context.SaveChangesAsync();
+
+                    var getUserType = await _context.CustomerTypes.ToListAsync();
+                    foreach (var item in getUserType)
+                    {
+                        if ((getUser.Spend >= item.MinSpend && getUser.Spend < item.MaxSpend) || getUser.Spend >= item.MaxSpend)
+                        {
+                            getUser.ID_CustomerType = item.ID_CustomerType;
+                        }
+
+                        await _userManager.UpdateAsync(getUser);
+                        await _context.SaveChangesAsync();
+                    }
+                }
+
+                if (getCartDetail != null)
+                {
+                    foreach (var item in getCartDetail)
+                    {
+                        var getPro = await _context.Products.Where(x => x.ID_Product == item.ID_Product).FirstOrDefaultAsync();
+                        var newBillDetail = new BillDetails()
+                        {
+                            ID_Bill = newBill.ID_Bill,
+                            ID_Product = (int)item.ID_Product,
+                            Product_Quantity = item.Product_Quantity,
+                            Total = getPro.Price_Product * item.Product_Quantity
+                        };
+
+                        await _context.BillDetails.AddAsync(newBillDetail);
+                        await _context.SaveChangesAsync();
+                    }
+                }
+
+                if (_signInManager.IsSignedIn(_httpContextAccessor.HttpContext.User))
+                {
+
+
+                    var getUser = await _userManager.GetUserAsync(_httpContextAccessor.HttpContext.User);
+
+                    if (getUser == null)
+                    {
+                        return new NotFoundResult();
+                    }
+                    // lấy  cart
+                    var cart = await _context.Carts.Where(x => x.ID_Customer == getUser.Id).FirstOrDefaultAsync();
+
+                    // lấy cartdetail
+                    var cartDetail = await _context.CartDetails.Where(x => x.ID_Cart == cart.ID_Cart).ToListAsync();
+
+                    foreach (var item in cartDetail)
+                    {
+                        _context.CartDetails.Remove(item);
+                        _context.SaveChanges();
+                    }
+                }
+                else
+                {
+                    _memoryCache.Remove("UserCart");
+                }
+                _memoryCache.Remove("_tempCartDetail");
+                _memoryCache.Remove("_tempBill");
+                _memoryCache.Remove("_tempVoucher");
+                return new RedirectToActionResult("Success", "Order", new { id = newBill.ID_Bill }); // Return the appropriate result
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error in SaveInfoAsync (Cash on Delivery)");
+                return new JsonResult("PaymentFailed");
+            }
         }
     }
+
 }

@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Flower_Services;
 using DesignPattern;
 using FlowerShop_Web.Chat;
+using FlowerShop_Web.Models.Pattern;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -47,6 +48,11 @@ builder.Services.
     AddDefaultUI().
     AddDefaultTokenProviders();
 
+// Add PayPal-related services
+builder.Services.AddScoped<IPaymentStrategy, OnlinePaymentStrategy>();
+builder.Services.AddScoped<IPaymentStrategy, CODPaymentStrategy>();
+builder.Services.AddScoped<OnlinePaymentStrategy>();
+builder.Services.AddScoped<CODPaymentStrategy>();
 
 builder.Services.AddControllersWithViews();
 
