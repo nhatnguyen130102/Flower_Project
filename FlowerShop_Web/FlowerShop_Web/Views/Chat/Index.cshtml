@@ -1,0 +1,65 @@
+﻿@model IEnumerable<Flower_Models.Message>
+
+@{
+    ViewData["Title"] = "ChatUser";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@if (@ViewBag.Id != null)
+{
+    <h1>@ViewBag.Id</h1>
+
+}
+<h2>Chat</h2>
+@{
+    foreach (var mess in Model)
+    {
+        var userType = mess.UserType == Flower_Models.UserType.User ? ViewBag.nameUser : "Admin";
+        <li>@userType:</li>
+        <p>@mess.Content</p>
+    }
+}
+<div id="chatArea"></div>
+<div>
+    <br />
+    <textarea id="messageInput" placeholder="Type a message"></textarea>
+    <br />
+    <button id="sendButton">Send</button>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/3.1.12/signalr.min.js"></script>
+
+<script>
+    const connection = new signalR.HubConnectionBuilder()
+        .withUrl("/chatHub")
+        .build();
+
+    connection.start().catch(err => console.error(err.toString()));
+
+    document.getElementById("sendButton").addEventListener("click", function (event) {
+        //const user = document.getElementById("userInput").value;
+        const room = "@ViewBag.Id";
+        const message = document.getElementById("messageInput").value;
+        const user = "@ViewBag.nameUser";
+
+        /// kiểm tra id user và lấy idUser thay thế room
+
+        connection.invoke("JoinRoom", room).catch(err => console.error(err.toString())); // Tham gia vào phòng
+        //connection.invoke("SendMessage", user, message).catch(err => console.error(err.toString()));
+        connection.invoke("SendMessageToRoom", room, message, user).catch(function (err) {
+            return console.error(err.toString());
+        });
+        document.getElementById("messageInput").value = "";
+        event.preventDefault();
+    });
+
+    connection.on("ReceiveMessage", function (user, message) {
+        const chatArea = document.getElementById("chatArea");
+        const p = document.createElement("p");
+        p.textContent = `${user}: ${message}`;
+        //p.textContent = `User:  ${message}`;
+        chatArea.appendChild(p);
+    });
+</script>

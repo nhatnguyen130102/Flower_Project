@@ -28,7 +28,7 @@ builder.Services.AddScoped<Import_ExportService>();
 builder.Services.AddScoped<MementoPattern>();
 builder.Services.AddScoped<FlowerShop>();
 
-
+builder.Services.AddScoped<Order>();
 builder.Services.AddSignalR();
 
 

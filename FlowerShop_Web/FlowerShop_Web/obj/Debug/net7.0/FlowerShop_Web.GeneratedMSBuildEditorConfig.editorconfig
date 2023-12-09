@@ -128,6 +128,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcQ2F0ZWdvcnlcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[E:/Document/VS/New_Project_1/FlowerShop_Web/FlowerShop_Web/Areas/Admin/Views/ChatAdmin/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcQ2hhdEFkbWluXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [E:/Document/VS/New_Project_1/FlowerShop_Web/FlowerShop_Web/Areas/Admin/Views/CustomerType/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcQ3VzdG9tZXJUeXBlXENyZWF0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
@@ -656,6 +660,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2FydFxDYXJ0Vmlld0d1ZXN0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[E:/Document/VS/New_Project_1/FlowerShop_Web/FlowerShop_Web/Views/Chat/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2hhdFxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [E:/Document/VS/New_Project_1/FlowerShop_Web/FlowerShop_Web/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
@@ -690,6 +698,18 @@ build_metadata.AdditionalFiles.CssScope =
 
 [E:/Document/VS/New_Project_1/FlowerShop_Web/FlowerShop_Web/Views/Order/successView.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3JkZXJcc3VjY2Vzc1ZpZXcuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Document/VS/New_Project_1/FlowerShop_Web/FlowerShop_Web/Views/Payment/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGF5bWVudFxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Document/VS/New_Project_1/FlowerShop_Web/FlowerShop_Web/Views/Payment/PaymentFailed.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGF5bWVudFxQYXltZW50RmFpbGVkLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Document/VS/New_Project_1/FlowerShop_Web/FlowerShop_Web/Views/Payment/PaymentSuccess.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGF5bWVudFxQYXltZW50U3VjY2Vzcy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [E:/Document/VS/New_Project_1/FlowerShop_Web/FlowerShop_Web/Views/Post/Post.cshtml]

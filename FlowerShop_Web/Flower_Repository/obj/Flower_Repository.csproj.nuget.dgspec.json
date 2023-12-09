@@ -40,6 +40,10 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "dependencies": {
+            "Azure.Search.Documents": {
+              "target": "Package",
+              "version": "[11.5.1, )"
+            },
             "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
               "target": "Package",
               "version": "[7.0.13, )"
@@ -47,6 +51,10 @@
             "Microsoft.AspNetCore.Session": {
               "target": "Package",
               "version": "[2.2.0, )"
+            },
+            "Microsoft.Azure.Cosmos": {
+              "target": "Package",
+              "version": "[3.37.0, )"
             },
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
@@ -61,6 +69,14 @@
             "Microsoft.Extensions.Caching.Memory": {
               "target": "Package",
               "version": "[8.0.0, )"
+            },
+            "PayPal.Api": {
+              "target": "Package",
+              "version": "[1.0.6, )"
+            },
+            "PayPalCoreSDK": {
+              "target": "Package",
+              "version": "[1.7.1, )"
             },
             "X.PagedList": {
               "target": "Package",
@@ -127,6 +143,10 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "dependencies": {
+            "Azure.Search.Documents": {
+              "target": "Package",
+              "version": "[11.5.1, )"
+            },
             "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
               "target": "Package",
               "version": "[7.0.13, )"
@@ -138,6 +158,10 @@
             "Microsoft.AspNetCore.Session": {
               "target": "Package",
               "version": "[2.2.0, )"
+            },
+            "Microsoft.Azure.Cosmos": {
+              "target": "Package",
+              "version": "[3.37.0, )"
             },
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
@@ -152,6 +176,14 @@
             "Microsoft.Extensions.Caching.Memory": {
               "target": "Package",
               "version": "[8.0.0, )"
+            },
+            "PayPal.Api": {
+              "target": "Package",
+              "version": "[1.0.6, )"
+            },
+            "PayPalCoreSDK": {
+              "target": "Package",
+              "version": "[1.7.1, )"
             },
             "X.PagedList": {
               "target": "Package",
