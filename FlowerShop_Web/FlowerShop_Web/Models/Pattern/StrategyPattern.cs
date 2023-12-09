@@ -69,6 +69,7 @@ namespace FlowerShop_Web.Models.Pattern
 
                 var getVoucher = _memoryCache.Get<Voucher>("_tempVoucher");
                 var getCartDetail = _memoryCache.Get<List<CartDetails>>("_tempCartDetail");
+                var getBill = _memoryCache.Get<Bill>("_tempBill");
 
                 double sub_total = 0;
                 foreach (var item in getCartDetail)
@@ -76,15 +77,32 @@ namespace FlowerShop_Web.Models.Pattern
                     var product = _context.Products.FirstOrDefault(x => x.ID_Product == item.ID_Product);
                     if (product != null)
                     {
-                        sub_total += product.Price_Product * item.Product_Quantity;
-                        itemList.items.Add(new Item()
+                        var getFlashSale = await _context.FlashSales.Where(x=>x.ID_FlashSale == product.ID_FlashSale).FirstOrDefaultAsync();
+                        if(getFlashSale != null)
                         {
-                            name = product.Name_Product,
-                            currency = "USD",
-                            price = product.Price_Product.ToString(),
-                            quantity = item.Product_Quantity.ToString(),
-                            sku = "sku"
-                        });
+                            sub_total += getFlashSale.Price_FlashSale * item.Product_Quantity;
+                            itemList.items.Add(new Item()
+                            {
+                                name = product.Name_Product,
+                                currency = "USD",
+                                price = getFlashSale.Price_FlashSale.ToString(),
+                                quantity = item.Product_Quantity.ToString(),
+                                sku = "sku"
+                            });
+                        }
+                        else
+                        {
+                            sub_total += product.Price_Product * item.Product_Quantity;
+                            itemList.items.Add(new Item()
+                            {
+                                name = product.Name_Product,
+                                currency = "USD",
+                                price = product.Price_Product.ToString(),
+                                quantity = item.Product_Quantity.ToString(),
+                                sku = "sku"
+                            });
+                        }
+                      
                     }
                 }
 
@@ -274,6 +292,79 @@ namespace FlowerShop_Web.Models.Pattern
 
                     // Rest of your logic for vouchers, user updates, and clearing cache
                     // ...
+                    if (_signInManager.IsSignedIn(_httpContextAccessor.HttpContext.User))
+                    {
+                        var getUser = await _userManager.GetUserAsync(_httpContextAccessor.HttpContext.User);
+                        if (getUser == null)
+                        {
+                            return new ViewResult { ViewName = "PaymentFailed" };
+                        }
+
+                        getUser.Spend += newBill.Total_Bill;
+
+                        await _userManager.UpdateAsync(getUser);
+                        await _context.SaveChangesAsync();
+
+                        var getUserType = await _context.CustomerTypes.ToListAsync();
+                        foreach (var item in getUserType)
+                        {
+                            if ((getUser.Spend >= item.MinSpend && getUser.Spend < item.MaxSpend) || getUser.Spend >= item.MaxSpend)
+                            {
+                                getUser.ID_CustomerType = item.ID_CustomerType;
+                            }
+
+                            await _userManager.UpdateAsync(getUser);
+                            await _context.SaveChangesAsync();
+                        }
+                    }
+
+                    if (getCartDetail != null)
+                    {
+                        foreach (var item in getCartDetail)
+                        {
+                            var getPro = await _context.Products.Where(x => x.ID_Product == item.ID_Product).FirstOrDefaultAsync();
+                            var newBillDetail = new BillDetails()
+                            {
+                                ID_Bill = newBill.ID_Bill,
+                                ID_Product = (int)item.ID_Product,
+                                Product_Quantity = item.Product_Quantity,
+                                Total = getPro.Price_Product * item.Product_Quantity
+                            };
+
+                            await _context.BillDetails.AddAsync(newBillDetail);
+                            await _context.SaveChangesAsync();
+                        }
+                    }
+
+                    if (_signInManager.IsSignedIn(_httpContextAccessor.HttpContext.User))
+                    {
+
+
+                        var getUser = await _userManager.GetUserAsync(_httpContextAccessor.HttpContext.User);
+
+                        if (getUser == null)
+                        {
+                            return new ViewResult { ViewName = "PaymentFailed" };
+                        }
+                        // lấy  cart
+                        var cart = await _context.Carts.Where(x => x.ID_Customer == getUser.Id).FirstOrDefaultAsync();
+
+                        // lấy cartdetail
+                        var cartDetail = await _context.CartDetails.Where(x => x.ID_Cart == cart.ID_Cart).ToListAsync();
+
+                        foreach (var item in cartDetail)
+                        {
+                            _context.CartDetails.Remove(item);
+                            _context.SaveChanges();
+                        }
+                    }
+                    else
+                    {
+                        _memoryCache.Remove("UserCart");
+                    }
+                    _memoryCache.Remove("_tempCartDetail");
+                    _memoryCache.Remove("_tempBill");
+                    _memoryCache.Remove("_tempVoucher");
 
                     return new RedirectToActionResult("Success", "Order", new { id = newBill.ID_Bill });
                 }

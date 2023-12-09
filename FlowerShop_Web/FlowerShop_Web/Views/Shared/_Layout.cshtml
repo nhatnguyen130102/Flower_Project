@@ -63,6 +63,7 @@
                     <li><a class="inline-block no-underline hover:border-b-2 hover:border-black hover:text-black py-2" asp-action="Post" asp-controller="Post">News</a></li>
                     @if (_signInManager.IsSignedIn(User))
                     {
+                        <li><a class="inline-block no-underline hover:border-b-2 hover:border-black hover:text-black py-2" asp-action="Index" asp-controller="Chat">Chat</a></li>
                         <li><a class="inline-block no-underline hover:border-b-2 hover:border-black hover:text-black py-2" asp-action="CartView" asp-controller="Cart">Cart</a></li>
                         <li><a class="inline-block no-underline hover:border-b-2 hover:border-black hover:text-black py-2" asp-action="favoriteView" asp-controller="UserInformation">Wishlist</a></li>
                     }

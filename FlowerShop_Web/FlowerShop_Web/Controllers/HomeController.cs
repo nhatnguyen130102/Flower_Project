@@ -51,10 +51,11 @@ namespace FlowerShop_Web.Controllers
                         var getFavoriteDetail = await _context.FavoriteProductDetails.Where(x => x.ID_FavoriteProduct == getFavorite.ID_FavoriteProduct).ToListAsync();
                         //______________________________________________________________________
 
+                        var getFlashSale2 = await _context.Products.Where(x => x.ID_FlashSale != null && x.isDiscontinued == true).FirstOrDefaultAsync();
                         var getFlashSale = await _context.Products.Where(x => x.ID_FlashSale != null && x.isDiscontinued == true).ToListAsync();
 
 
-                        if (getFlashSale != null)
+                        if (getFlashSale2 != null)
                         {
                             string getPro = "";
                             foreach (var item2 in getFlashSale)
@@ -80,7 +81,12 @@ namespace FlowerShop_Web.Controllers
 
                             string item = flowerShop.getMessages();
 
-                            TempData["Notification"] = item;
+                            if(getPro != null && getPro != "")
+                            {
+                                TempData["Notification"] = item;
+                            }
+
+                            
                         }
                     }
                 }
