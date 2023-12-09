@@ -1,0 +1,108 @@
+﻿@using Flower_Repository;
+@model IEnumerable<Flower_Models.Room>
+@inject ApplicationDbContext _context;
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Chat Admin</h2>
+
+@if (ViewBag.room != null)
+{
+    <h1>@ViewBag.room</h1>
+}
+
+@{
+    var noResponseMess = ViewBag.noResponseMess as List<Flower_Models.Room>;
+    foreach (var item in Model)
+    {
+        var user = _context.ApplicationUsers.FirstOrDefault(x => x.Id == item.Id);
+        if (user != null)
+        {
+            //<a >@user.UserName</a>
+            if (noResponseMess.Contains(item))
+            {
+                <a style="color:red" href="@Url.Action("Index", "ChatAdmin", new {area = "Admin", idRoom = @user.Id })">@user.UserName</a>
+            }
+            else
+            {
+                <a href="@Url.Action("Index", "ChatAdmin", new {area = "Admin", idRoom = @user.Id })">@user.UserName</a>
+            }
+            // var listMess = _context.Messages.Where(x => x.IdRoom == item.Id).ToList();
+            // if(listMess != null)
+            // {
+            //     foreach(var mess in listMess)
+            //     {
+            //         var userType = mess.UserType == Flower_Models.UserType.User ? user.UserName : "Admin";
+            //         <li>@userType:</li>
+            //         <p>@mess.Content</p>
+            //     }
+            // }
+        }
+    }
+    if (ViewBag.listMess != null)
+    {
+        foreach (Flower_Models.Message mess in ViewBag.listMess)
+        {
+            var user = _context.ApplicationUsers.FirstOrDefault(x => x.Id == mess.IdRoom);
+            var userType = mess.UserType == Flower_Models.UserType.User ? user.UserName : "Admin";
+            <li>@userType:</li>
+            <p>@mess.Content</p>
+        }
+    }
+}
+<div id="chatArea"></div>
+<div>
+    <br />
+    <textarea id="messageInput" placeholder="Type a message"></textarea>
+
+    <br />
+    <button id="sendButton">Send</button>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/3.1.12/signalr.min.js"></script>
+
+
+<script>
+    const connection = new signalR.HubConnectionBuilder()
+        .withUrl("/chatHub")
+        .build();
+
+    connection.start().catch(err => console.error(err.toString()));
+
+    document.getElementById("sendButton").addEventListener("click", function (event) {
+        const user = "Admin";
+        // const room = document.getElementById("roomInput").value; // Lấy tên phòng từ input
+        const message = document.getElementById("messageInput").value;
+        var room = "abcae558-3f76-4098-8a69-c1c924a5aade";
+        console.log("@ViewBag.room");
+        console.log("helloooooooo");
+        if ("@ViewBag.room" != '') {
+            room = "@ViewBag.room";
+        }
+
+
+        /// kiểm tra id user và lấy idUser thay thế room
+        // khi click vào user trong danh sách chat, thì sẽ lấy cái idUser truyền vào room
+        connection.invoke("JoinRoom", room).catch(err => console.error(err.toString())); // Tham gia vào phòng
+        //connection.invoke("SendMessage", user, message).catch(err => console.error(err.toString()));
+        connection.invoke("SendMessageToRoom", room, message, "Admin").catch(function (err) {
+            return console.error(err.toString());
+        });
+        document.getElementById("messageInput").value = "";
+        event.preventDefault();
+    });
+
+    connection.on("ReceiveMessage", function (user, message) {
+        const chatArea = document.getElementById("chatArea");
+        const p = document.createElement("p");
+        p.textContent = `${user}: ${message}`;
+        //p.textContent = `Admin: ${message}`;
+
+        chatArea.appendChild(p);
+    });
+</script>
+

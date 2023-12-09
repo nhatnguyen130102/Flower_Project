@@ -302,27 +302,27 @@ namespace FlowerShop_Web.Controllers
             var total = getBill.Subtotal;
 
 
-            // tạo đối tượng 
-            var _order = new Order()
-            {
-                ID_Customer = getBill.ID_Customer,
-                Total_Bill = total + 6.9,
-                Subtotal = total,
-                CreatedAt = getBill.CreatedAt,
-                DeliveredAt = getBill.DeliveredAt,
-                BillStatus = getBill.BillStatus,
-                DeliveredStatus = getBill.DeliveredStatus,
-                HandleStatus = getBill.HandleStatus,
-                Canceled = getBill.Canceled,
-                Name = getBill.Name,
-                Phone = getBill.Phone,
-                Name_Order = getBill.Name_Order,
-                Phone_Order = getBill.Phone_Order,
-                ID_Shop = getBill.ID_Shop,
-                City = getBill.City,
-                Address = getBill.Address,
-                Message = getBill.Message,
-            };
+            //// tạo đối tượng 
+            //var _order = new Order()
+            //{
+            //    ID_Customer = getBill.ID_Customer,
+            //    Total_Bill = total + 6.9,
+            //    Subtotal = total,
+            //    CreatedAt = getBill.CreatedAt,
+            //    DeliveredAt = getBill.DeliveredAt,
+            //    BillStatus = getBill.BillStatus,
+            //    DeliveredStatus = getBill.DeliveredStatus,
+            //    HandleStatus = getBill.HandleStatus,
+            //    Canceled = getBill.Canceled,
+            //    Name = getBill.Name,
+            //    Phone = getBill.Phone,
+            //    Name_Order = getBill.Name_Order,
+            //    Phone_Order = getBill.Phone_Order,
+            //    ID_Shop = getBill.ID_Shop,
+            //    City = getBill.City,
+            //    Address = getBill.Address,
+            //    Message = getBill.Message,
+            //};
 
 
             var newBill = new Bill()

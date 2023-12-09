@@ -7,6 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Azure.Search.Documents" Version="11.5.1" />
+    <PackageReference Include="Microsoft.Azure.Cosmos" Version="3.37.0" />
+    <PackageReference Include="PayPal.Api" Version="1.0.6" />
+    <PackageReference Include="PayPalCoreSDK" Version="1.7.1" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Flower_Models\Flower_Models.csproj" />
     <ProjectReference Include="..\Flower_Repository\Flower_Repository.csproj" />
     <ProjectReference Include="..\Flower_Services\Flower_Services.csproj" />

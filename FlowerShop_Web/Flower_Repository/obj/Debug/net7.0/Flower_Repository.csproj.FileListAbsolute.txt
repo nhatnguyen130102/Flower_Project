@@ -32,3 +32,8 @@ E:\Document\VS\FlowerShop_Web\Flower_Repository\obj\Debug\net7.0\refint\Flower_R
 E:\Document\VS\FlowerShop_Web\Flower_Repository\obj\Debug\net7.0\Flower_Repository.pdb
 E:\Document\VS\FlowerShop_Web\Flower_Repository\obj\Debug\net7.0\Flower_Repository.genruntimeconfig.cache
 E:\Document\VS\FlowerShop_Web\Flower_Repository\obj\Debug\net7.0\ref\Flower_Repository.dll
+E:\Document\VS\New_Project_1\FlowerShop_Web\Flower_Repository\bin\Debug\net7.0\Microsoft.Azure.Cosmos.ServiceInterop.dll
+E:\Document\VS\New_Project_1\FlowerShop_Web\Flower_Repository\bin\Debug\net7.0\Cosmos.CRTCompat.dll
+E:\Document\VS\New_Project_1\FlowerShop_Web\Flower_Repository\bin\Debug\net7.0\msvcp140.dll
+E:\Document\VS\New_Project_1\FlowerShop_Web\Flower_Repository\bin\Debug\net7.0\vcruntime140.dll
+E:\Document\VS\New_Project_1\FlowerShop_Web\Flower_Repository\bin\Debug\net7.0\vcruntime140_1.dll
