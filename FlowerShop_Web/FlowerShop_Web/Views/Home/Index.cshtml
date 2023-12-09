@@ -73,7 +73,7 @@
 
             <div class="text-center">
 
-                @if (TempData["Notification"] != null)
+                @if (TempData["Notification"] != null && TempData["Notification"] != "-1")
                 {
                     <div class="alert alert-success">
                         @TempData["Notification"]  <a asp-action="favoriteView" asp-controller="UserInformation">(Xem ngay)</a>

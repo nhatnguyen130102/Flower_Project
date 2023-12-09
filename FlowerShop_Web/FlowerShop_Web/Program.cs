@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Flower_Services;
 using DesignPattern;
+using FlowerShop_Web.Models.Pattern;
+using FlowerShop_Web.Chat;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -32,6 +34,8 @@ builder.Services.AddScoped<Order>();
 builder.Services.AddSignalR();
 
 
+
+
 builder.Services.AddMvc(); // Đăng ký MVC services
 
 
@@ -51,6 +55,12 @@ builder.Services.
     AddDefaultTokenProviders();
 
 
+// Add PayPal-related services
+builder.Services.AddScoped<IPaymentStrategy, OnlinePaymentStrategy>();
+builder.Services.AddScoped<IPaymentStrategy, CODPaymentStrategy>();
+builder.Services.AddScoped<OnlinePaymentStrategy>();
+builder.Services.AddScoped<CODPaymentStrategy>();
+
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddSession();
@@ -58,6 +68,8 @@ builder.Services.AddDistributedMemoryCache();
 builder.Services.AddRazorPages();
 
 builder.Services.AddMemoryCache();
+
+builder.Services.AddSignalR();
 
 var app = builder.Build();
 
@@ -95,5 +107,7 @@ app.UseAuthorization();
 app.UseStaticFiles();
 
 app.MapRazorPages();
+
+app.MapHub<ChatHub>("/chathub");
 
 app.Run();

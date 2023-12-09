@@ -139,38 +139,38 @@ namespace FlowerShop_Web.Controllers
                     var getFavoriteDetail = await _context.FavoriteProductDetails.Where(x => x.ID_FavoriteProduct == getFavorite.ID_FavoriteProduct).ToListAsync();
                     //______________________________________________________________________
 
-                    var getFlashSale = await _context.Products.Where(x => x.ID_FlashSale != null && x.isDiscontinued == true).ToListAsync();
+                    //var getFlashSale = await _context.Products.Where(x => x.ID_FlashSale != null && x.isDiscontinued == true).ToListAsync();
 
                    
-                    if(getFlashSale != null)
-                    {
-                        string getPro = "";
-                        foreach (var item2 in getFlashSale)
-                        {
-                            foreach (var item3 in getFavoriteDetail)
-                            {
-                                if (item2.ID_Product == item3.ID_Product)
-                                {
-                                    getPro += item2.Name_Product + " | ";
-                                }
-                            }
-                        }
+                    //if(getFlashSale != null)
+                    //{
+                    //    string getPro = "";
+                    //    foreach (var item2 in getFlashSale)
+                    //    {
+                    //        foreach (var item3 in getFavoriteDetail)
+                    //        {
+                    //            if (item2.ID_Product == item3.ID_Product)
+                    //            {
+                    //                getPro += item2.Name_Product + " | ";
+                    //            }
+                    //        }
+                    //    }
 
-                        Customer customer2 = new Customer();
-                        customer2.id = user.Id;
-                        customer2.lastName = user.LastName;
-                        customer2.firstName = user.FirstName;
-                        customer2.messages = getPro;
+                    //    Customer customer2 = new Customer();
+                    //    customer2.id = user.Id;
+                    //    customer2.lastName = user.LastName;
+                    //    customer2.firstName = user.FirstName;
+                    //    customer2.messages = getPro;
 
-                        flowerShop.RegisterObserver(customer2);
+                    //    flowerShop.RegisterObserver(customer2);
 
-                        flowerShop.NotifyObservers($"Xin chào {customer2.lastName} {customer2.firstName} có vài sản phẩm trong mục yêu thích đang được giảm giá: {customer2.messages} Bạn có muốn xem thử");
+                    //    flowerShop.NotifyObservers($"Xin chào {customer2.lastName} {customer2.firstName} có vài sản phẩm trong mục yêu thích đang được giảm giá: {customer2.messages} Bạn có muốn xem thử");
 
-                        string item = flowerShop.getMessages();
+                    //    string item = flowerShop.getMessages();
 
-                        TempData["Notification"] = item;
+                    //    TempData["Notification"] = item;
 
-                    }
+                    //}
 
                    
 
