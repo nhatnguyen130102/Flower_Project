@@ -29,6 +29,9 @@ builder.Services.AddDistributedMemoryCache();
 builder.Services.AddScoped<Import_ExportService>();
 builder.Services.AddScoped<MementoPattern>();
 builder.Services.AddScoped<FlowerShop>();
+builder.Services.AddScoped<StatusOrderCommand>();
+builder.Services.AddScoped<DeliveredOrderCommand>();
+builder.Services.AddScoped<CompletedOrderCommand>();
 
 builder.Services.AddScoped<Order>();
 builder.Services.AddSignalR();

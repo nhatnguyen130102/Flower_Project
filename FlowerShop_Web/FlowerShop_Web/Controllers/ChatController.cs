@@ -47,7 +47,7 @@ namespace FlowerShop_Web.Controllers
                 _context.SaveChanges();
             }
 
-            var listMess = await _context.Messages.Where(x => x.IdRoom == room.Id).ToListAsync();
+            var listMess = await _context.Messages.Where(x => x.IdRoom == user.Id).ToListAsync();
 
             return View(listMess);
         }

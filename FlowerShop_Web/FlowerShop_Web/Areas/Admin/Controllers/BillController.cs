@@ -2,6 +2,7 @@
 using Elfie.Serialization;
 using Flower_Models;
 using Flower_Repository;
+using FlowerShop_Web.Models.Pattern;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -22,15 +23,22 @@ namespace FlowerShop_Web.Areas.Admin.Controllers
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly Order _order;
+        private readonly StatusOrderCommand _statusOrderCommand;
+        private readonly DeliveredOrderCommand _deliveredOrderCommand;
+        private readonly CompletedOrderCommand _completedOrderCommand;
 
 
-        public BillController(ApplicationDbContext context, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, RoleManager<IdentityRole> roleManager, Order order)
+        public BillController(ApplicationDbContext context, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, RoleManager<IdentityRole> roleManager, Order order, 
+            StatusOrderCommand statusOrderCommand, DeliveredOrderCommand deliveredOrderCommand, CompletedOrderCommand completedOrderCommand)
         {
             _context = context;
             _userManager = userManager;
             _signInManager = signInManager;
             _roleManager = roleManager;
             _order = order;
+            _statusOrderCommand = statusOrderCommand;
+            _deliveredOrderCommand = deliveredOrderCommand;
+            _completedOrderCommand = completedOrderCommand;
         }
 
         // Xem danh sách Bill của cửa hàng
@@ -161,16 +169,21 @@ namespace FlowerShop_Web.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            var item = await _context.Bills.FindAsync(id);
-            if (item == null)
-                return NotFound();
+            //var item = await _context.Bills.FindAsync(id);
+            //if (item == null)
+            //    return NotFound();
 
-            if (item.HandleStatus == true)
-                item.HandleStatus = false;
-            else
-                item.HandleStatus = true;
-            _context.Bills.Update(item);
-            _context.SaveChanges();
+            //if (item.HandleStatus == true)
+            //    item.HandleStatus = false;
+            //else
+            //    item.HandleStatus = true;
+            //_context.Bills.Update(item);
+            //_context.SaveChanges();
+            string check = _statusOrderCommand.Execute(id);
+            if (check == "Failed")
+            {
+                return NotFound();
+            }
 
             return RedirectToAction("Index");
         }
@@ -182,20 +195,25 @@ namespace FlowerShop_Web.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            var item = await _context.Bills.FindAsync(id);
-            if (item == null)
-                return NotFound();
-            if (item.DeliveredStatus == true)
-            {
-                item.DeliveredStatus = false;
-            }
-            else
-            {
-                item.DeliveredStatus = true;
+            //var item = await _context.Bills.FindAsync(id);
+            //if (item == null)
+            //    return NotFound();
+            //if (item.DeliveredStatus == true)
+            //{
+            //    item.DeliveredStatus = false;
+            //}
+            //else
+            //{
+            //    item.DeliveredStatus = true;
 
+            //}
+            //_context.Bills.Update(item);
+            //_context.SaveChanges();
+            string check = _deliveredOrderCommand.Execute(id);
+            if (check == "Failed")
+            {
+                return NotFound();
             }
-            _context.Bills.Update(item);
-            _context.SaveChanges();
 
             return RedirectToAction("Index");
         }
@@ -205,20 +223,25 @@ namespace FlowerShop_Web.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            var item = await _context.Bills.FindAsync(id);
-            if (item == null)
-                return NotFound();
-            if (item.BillStatus == true)
-            {
-                item.BillStatus = false;
-            }
-            else
-            {
-                item.BillStatus = true;
+            //var item = await _context.Bills.FindAsync(id);
+            //if (item == null)
+            //    return NotFound();
+            //if (item.BillStatus == true)
+            //{
+            //    item.BillStatus = false;
+            //}
+            //else
+            //{
+            //    item.BillStatus = true;
 
+            //}
+            //_context.Bills.Update(item);
+            //_context.SaveChanges();
+            string check = _completedOrderCommand.Execute(id);
+            if (check == "Failed")
+            {
+                return NotFound();
             }
-            _context.Bills.Update(item);
-            _context.SaveChanges();
             return RedirectToAction("Index");
         }
 
