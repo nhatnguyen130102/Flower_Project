@@ -78,7 +78,7 @@
                                                         <div class="grid grid-cols-5" style="justify-content: flex-start;display: flex;">
                                                             <div class="col-span-3"></div>
                                                             <div class="col-span-2">
-                                                                <div class="rounded-2xl border px-4 py-2 text-start">@mess.Content</div>
+                                                                <div class="rounded-2xl border px-4 py-2 text-start bg-green-700">@mess.Content</div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -88,12 +88,12 @@
                                                         <div class="font-semibold flex justify-end">
                                                             <button class="rounded-full bg-yellow-300 px-4 py-2 text-sm font-normal text-black" disabled>@userType</button>
                                                         </div>
-                                                        <div class="grid grid-cols-5">
-                                                            <div class="col-span-3"></div>
-                                                            <div class="col-span-2">
-                                                                <div class="rounded-2xl border px-4 py-2 text-start bg-green-700">@mess.Content</div>
-                                                            </div>
+                                                        <div class="grid grid-cols-5" style="justify-content: flex-end;display: flex;">
+                                                        <div class="col-span-3"></div>
+                                                        <div class="col-span-2">
+                                                            <div class="rounded-2xl border px-4 py-2 text-start bg-green-700">@mess.Content</div>
                                                         </div>
+                                                    </div>
                                                     </div>
                                 }
                                     }
@@ -170,27 +170,27 @@
             const chatArea = document.getElementById("chatArea");
             if (user == "Admin") {
                 chatArea.innerHTML += `<div class="row justify-between text-end">
-                                        <div class="space-y-4" style="justify-content: flex-start;display: flex;">
-                                                <div class="font-semibold flex justify-end"><button class="rounded-full bg-yellow-300 px-4 py-2 text-sm font-normal text-black" disabled>${user}</button></div>
-                                                    <div class="grid grid-cols-5"style="justify-content: flex-start;display: flex;">
-                                                <div class="col-span-3"></div>
-                                                <div class="col-span-2">
-                                                    <div class="rounded-2xl border px-4 py-2 text-start">
-                                                            ${message}
+                                    <div class="space-y-4">
+                                                    <div class="font-semibold flex justify-start"><button class="rounded-full bg-yellow-300 px-4 py-2 text-sm font-normal text-black" disabled>${user}</button></div>
+                                                        <div class="grid grid-cols-5" style="justify-content: flex-start;display: flex;">
+                                                    <div class="col-span-3"></div>
+                                                    <div class="col-span-2">
+                                                                <div class="rounded-2xl border px-4 py-2 text-start bg-green-700">
+                                                                ${message}
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            </div>
-                                </div>`
+                                                </div>
+                                    </div>`
             } else {
                 chatArea.innerHTML +=
                     `<div class="row justify-between text-end">
                         <div class="space-y-4">
                                         <div class="font-semibold flex justify-end"><button class="rounded-full bg-yellow-300 px-4 py-2 text-sm font-normal text-black" disabled>${user}</button></div>
-                                    <div class="grid grid-cols-5">
+                                            <div class="grid grid-cols-5" style="justify-content: flex-end;display: flex;">
                                         <div class="col-span-3"></div>
                                         <div class="col-span-2">
-                                            <div class="rounded-2xl border px-4 py-2 text-start">
+                                                    <div class="rounded-2xl border px-4 py-2 text-start bg-green-700">
                                                     ${message}
                                             </div>
                                         </div>
