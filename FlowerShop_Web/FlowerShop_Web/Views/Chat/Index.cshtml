@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@if (@ViewBag.Id != null)
+@* @if (@ViewBag.Id != null)
 {
     <h1>@ViewBag.Id</h1>
 
@@ -25,41 +25,144 @@
     <textarea id="messageInput" placeholder="Type a message"></textarea>
     <br />
     <button id="sendButton">Send</button>
-</div>
+</div> *@
+
+<style>
+
+</style>
+
+<div class="w-5/6 mx-auto mt-2 mb-20">
+    <div class="rounded-3xl text-white shadow-md" style="background-image:url(https://images.unsplash.com/photo-1513297887119-d46091b24bfa?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D); box-shadow: inset 5px -100px 120px 40px rgba(0, 0, 0, 0.9);">
+        <!-- top -->
+        <div class="row flex gap-2 border-b px-8 py-5">
+            <div class="h-4 w-4 rounded-full bg-red-600"></div>
+            <div class="h-4 w-4 rounded-full bg-yellow-300"></div>
+            <div class="h-4 w-4 rounded-full bg-green-500"></div>
+        </div>
+
+        <!-- body -->
+        <div id="chatScroll" class="web-scrollbar w-full px-8 py-6" style="height: 720px; scroll-behavior:smooth; -ms-overflow-style: none; overflow-y: scroll; ">
+            <!-- ------------------------------------------------------------------------------------------- -->
+
+            <!-- Admin-Message -->
+            <div class="row justify-between mb-10">
+                <div class="space-y-4">
+                    <div class="font-semibold">
+                        <button class="rounded-full bg-green-800 px-4 py-2 text-sm font-normal" disabled>admin@gmail.com</button>
+                    </div>
+                    <div class="grid grid-cols-5">
+                        <div class="col-span-2">
+                            <div class="rounded-2xl border px-4 py-2 text-start">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Necessitatibus quisquam eum architecto temporibus exercitationem. Fugit.</div>
+                        </div>
+                        <div class="col-span-3"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ------------------------------------------------------------------------------------------- -->
+            @{
+                foreach (var mess in Model)
+                {
+                    var userType = mess.UserType == Flower_Models.UserType.User ? ViewBag.nameUser : "Admin";
+
+                    if (mess.Content is null || mess.Content == ""){} else{
+                        <!-- User-Message -->
+                        <div class="row justify-between text-end mb-10">
+                            <div class="space-y-4">
+                                <div class="font-semibold flex justify-end"><button class="rounded-full bg-yellow-300 px-4 py-2 text-sm font-normal text-black" disabled>@userType</button></div>
+                                <div class="grid grid-cols-5">
+                                    <div class="col-span-3"></div>
+                                    <div class="col-span-2">
+                                        <div class="rounded-2xl border px-4 py-2 text-start">@mess.Content</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+            }
+            <!-- ------------------------------------------------------------------------------------------- -->
+            <div id="chatArea" class="space-y-10"></div>
+        </div>
+        <!-- bottom -->
+        <div class="row flex items-center justify-between px-8 pt-6 pb-10 gap-8">
+            <div class="rounded-full bg-white p-3 text-black">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-6 w-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 18.75a6 6 0 006-6v-1.5m-6 7.5a6 6 0 01-6-6v-1.5m6 7.5v3.75m-3.75 0h7.5M12 15.75a3 3 0 01-3-3V4.5a3 3 0 116 0v8.25a3 3 0 01-3 3z" />
+                </svg>
+            </div>
+
+            <input id="messageInput" type="text" class="w-full border-b rounded-full px-5 py-4 focus:outline-none text-black" placeholder="Type your message">
 
 
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/3.1.12/signalr.min.js"></script>
+            <div class="flex w-auto gap-6">
+                <button class="rounded-full bg-white p-3 text-black" id="sendButton">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-6 w-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
+                    </svg>
+                </button>
+                <div class="rounded-full bg-white p-3 text-black">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-6 w-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M18.375 12.739l-7.693 7.693a4.5 4.5 0 01-6.364-6.364l10.94-10.94A3 3 0 1119.5 7.372L8.552 18.32m.009-.01l-.01.01m5.699-9.941l-7.81 7.81a1.5 1.5 0 002.112 2.13" />
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </div>
 
-<script>
-    const connection = new signalR.HubConnectionBuilder()
-        .withUrl("/chatHub")
-        .build();
-
-    connection.start().catch(err => console.error(err.toString()));
-
-    document.getElementById("sendButton").addEventListener("click", function (event) {
-        //const user = document.getElementById("userInput").value;
-        const room = "@ViewBag.Id";
-        const message = document.getElementById("messageInput").value;
-        const user = "@ViewBag.nameUser";
-
-        /// kiểm tra id user và lấy idUser thay thế room
-
-        connection.invoke("JoinRoom", room).catch(err => console.error(err.toString())); // Tham gia vào phòng
-        //connection.invoke("SendMessage", user, message).catch(err => console.error(err.toString()));
-        connection.invoke("SendMessageToRoom", room, message, user).catch(function (err) {
-            return console.error(err.toString());
+    <script>
+        var btnSend = document.getElementById('sendButton');
+        var chatScroll = document.getElementById('chatScroll');
+        btnSend.addEventListener('click', function () {
+            chatScroll.scrollTop = chatScroll.scrollHeight;
         });
-        document.getElementById("messageInput").value = "";
-        event.preventDefault();
-    });
+    </script>
 
-    connection.on("ReceiveMessage", function (user, message) {
-        const chatArea = document.getElementById("chatArea");
-        const p = document.createElement("p");
-        p.textContent = `${user}: ${message}`;
-        //p.textContent = `User:  ${message}`;
-        chatArea.appendChild(p);
-    });
-</script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/3.1.12/signalr.min.js"></script>
+
+    <script>
+        const connection = new signalR.HubConnectionBuilder()
+            .withUrl("/chatHub")
+            .build();
+
+        connection.start().catch(err => console.error(err.toString()));
+
+        document.getElementById("sendButton").addEventListener("click", function (event) {
+            //const user = document.getElementById("userInput").value;
+            const room = "@ViewBag.Id";
+            const message = document.getElementById("messageInput").value;
+            const user = "@ViewBag.nameUser";
+
+            /// kiểm tra id user và lấy idUser thay thế room
+
+            connection.invoke("JoinRoom", room).catch(err => console.error(err.toString())); // Tham gia vào phòng
+            //connection.invoke("SendMessage", user, message).catch(err => console.error(err.toString()));
+            connection.invoke("SendMessageToRoom", room, message, user).catch(function (err) {
+                return console.error(err.toString());
+            });
+            document.getElementById("messageInput").value = "";
+            event.preventDefault();
+        });
+
+        connection.on("ReceiveMessage", function (user, message) {
+            const chatArea = document.getElementById("chatArea");
+            chatArea.innerHTML +=
+                `<div class="row justify-between text-end">
+                <div class="space-y-4">
+                                <div class="font-semibold flex justify-end"><button class="rounded-full bg-yellow-300 px-4 py-2 text-sm font-normal text-black" disabled>${user}</button></div>
+                            <div class="grid grid-cols-5">
+                                <div class="col-span-3"></div>
+                                <div class="col-span-2">
+                                    <div class="rounded-2xl border px-4 py-2 text-start">
+                                            ${message}
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                </div>`
+            // p.textContent = `${user}: ${message}`;
+            // chatArea.appendChild(p);
+        });
+    </script>
+</div>
