@@ -5,28 +5,6 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@* @if (@ViewBag.Id != null)
-{
-    <h1>@ViewBag.Id</h1>
-
-}
-<h2>Chat</h2>
-@{
-    foreach (var mess in Model)
-    {
-        var userType = mess.UserType == Flower_Models.UserType.User ? ViewBag.nameUser : "Admin";
-        <li>@userType:</li>
-        <p>@mess.Content</p>
-    }
-}
-<div id="chatArea"></div>
-<div>
-    <br />
-    <textarea id="messageInput" placeholder="Type a message"></textarea>
-    <br />
-    <button id="sendButton">Send</button>
-</div> *@
-
 
 <div class="w-5/6 mx-auto mt-2 mb-20">
     <div class="rounded-3xl text-white shadow-md" style="background-image:url(https://images.unsplash.com/photo-1513297887119-d46091b24bfa?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D); box-shadow: inset 5px -100px 120px 40px rgba(0, 0, 0, 0.9);">
@@ -62,11 +40,29 @@
                 {
                     var userType = mess.UserType == Flower_Models.UserType.User ? ViewBag.nameUser : "Admin";
 
-                    if (mess.Content is null || mess.Content == ""){} else{
-                            <!-- User-Message -->
-                            <div class="row justify-between text-end mb-10">
+                    <!-- User-Message -->
+                    <div class="row justify-between text-end mb-10">
+                        @{
+                            if (userType == "Admin")
+                            {
                                 <div class="space-y-4">
-                                    <div class="font-semibold flex justify-end"><button class="rounded-full bg-yellow-300 px-4 py-2 text-sm font-normal text-black" disabled>@userType</button></div>
+                                    <div class="font-semibold flex justify-end" style="justify-content: flex-start;display: flex;">
+                                        <button class="rounded-full bg-green-800 px-4 py-2 text-sm font-normal" disabled>@userType</button>
+                                    </div>
+                                    <div class="grid grid-cols-5" style="justify-content: flex-start;display: flex;">
+                                        <div class="col-span-3"></div>
+                                        <div class="col-span-2">
+                                            <div class="rounded-2xl border px-4 py-2 text-start">@mess.Content</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="space-y-4">
+                                    <div class="font-semibold flex justify-end">
+                                        <button class="rounded-full bg-yellow-300 px-4 py-2 text-sm font-normal text-black" disabled>@userType</button>
+                                    </div>
                                     <div class="grid grid-cols-5">
                                         <div class="col-span-3"></div>
                                         <div class="col-span-2">
@@ -74,8 +70,9 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                    }
+                            }
+                        }
+                    </div>
                 }
             }
             <!-- ------------------------------------------------------------------------------------------- -->
@@ -107,14 +104,6 @@
         </div>
     </div>
 </div>
-    <script>
-        var btnSend = document.getElementById('sendButton');
-        var chatScroll = document.getElementById('chatScroll');
-        btnSend.addEventListener('click', function () {
-            chatScroll.scrollTop = chatScroll.scrollHeight;
-        });
-    </script>
-
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/3.1.12/signalr.min.js"></script>
 
@@ -158,7 +147,12 @@
                             </div>
                             </div>
                 </div>`
-            // p.textContent = `${user}: ${message}`;
-            // chatArea.appendChild(p);
+
+
+        var scrollingDiv = $("#chatScroll");
+        function scrollToBottom() {
+            scrollingDiv.scrollTop(scrollingDiv[0].scrollHeight);
+        }
+        scrollToBottom();
         });
     </script>
