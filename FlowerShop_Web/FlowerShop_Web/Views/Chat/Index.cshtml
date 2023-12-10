@@ -27,9 +27,6 @@
     <button id="sendButton">Send</button>
 </div> *@
 
-<style>
-
-</style>
 
 <div class="w-5/6 mx-auto mt-2 mb-20">
     <div class="rounded-3xl text-white shadow-md" style="background-image:url(https://images.unsplash.com/photo-1513297887119-d46091b24bfa?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D); box-shadow: inset 5px -100px 120px 40px rgba(0, 0, 0, 0.9);">
@@ -66,18 +63,18 @@
                     var userType = mess.UserType == Flower_Models.UserType.User ? ViewBag.nameUser : "Admin";
 
                     if (mess.Content is null || mess.Content == ""){} else{
-                        <!-- User-Message -->
-                        <div class="row justify-between text-end mb-10">
-                            <div class="space-y-4">
-                                <div class="font-semibold flex justify-end"><button class="rounded-full bg-yellow-300 px-4 py-2 text-sm font-normal text-black" disabled>@userType</button></div>
-                                <div class="grid grid-cols-5">
-                                    <div class="col-span-3"></div>
-                                    <div class="col-span-2">
-                                        <div class="rounded-2xl border px-4 py-2 text-start">@mess.Content</div>
+                            <!-- User-Message -->
+                            <div class="row justify-between text-end mb-10">
+                                <div class="space-y-4">
+                                    <div class="font-semibold flex justify-end"><button class="rounded-full bg-yellow-300 px-4 py-2 text-sm font-normal text-black" disabled>@userType</button></div>
+                                    <div class="grid grid-cols-5">
+                                        <div class="col-span-3"></div>
+                                        <div class="col-span-2">
+                                            <div class="rounded-2xl border px-4 py-2 text-start">@mess.Content</div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
                     }
                 }
             }
@@ -109,7 +106,7 @@
             </div>
         </div>
     </div>
-
+</div>
     <script>
         var btnSend = document.getElementById('sendButton');
         var chatScroll = document.getElementById('chatScroll');
@@ -165,4 +162,3 @@
             // chatArea.appendChild(p);
         });
     </script>
-</div>
