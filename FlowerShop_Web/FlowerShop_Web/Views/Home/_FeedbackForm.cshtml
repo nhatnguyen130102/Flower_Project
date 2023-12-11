@@ -1,0 +1,54 @@
+﻿@model Flower_Models.Feedback
+
+<form asp-action="SubmitFeedback" asp-controller="Home" method="post">
+    <div>
+        <h2>Feedback Form</h2>
+
+        <div>
+            <label asp-for="Content">Enter your feedback:</label>
+            <textarea asp-for="Content" rows="4" cols="50"></textarea>
+        </div>
+
+        <div>
+            <p>Rate your experience:</p>
+            <span class="star" onclick="rate(1)">★</span>
+            <span class="star" onclick="rate(2)">★</span>
+            <span class="star" onclick="rate(3)">★</span>
+            <span class="star" onclick="rate(4)">★</span>
+            <span class="star" onclick="rate(5)">★</span>
+            <input type="hidden" id="hdnRating" name="Rate"asp-for="Rate" />
+        </div>
+
+        <button type="submit" onclick="return validateForm();">Submit feedback</button>
+    </div>
+</form>
+
+<script>
+    var selectedRating = 0;
+
+    function rate(rating) {
+        selectedRating = rating;
+        updateStars(rating);
+        document.getElementById('hdnRating').value = rating;
+    }
+
+    function updateStars(rating) {
+        for (var i = 1; i <= 5; i++) {
+            var star = document.getElementsByClassName('star')[i - 1];
+            if (i <= rating) {
+                star.innerHTML = '★';
+            } else {
+                star.innerHTML = '☆';
+            }
+        }
+    }
+
+    function validateForm() {
+        var feedback = document.getElementById('Content').value;
+        if (selectedRating === 0 || feedback.trim() === '') {
+            alert('Please provide feedback and rate your experience.');
+            return false;
+        }
+        return true;
+    }
+</script>

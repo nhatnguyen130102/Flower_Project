@@ -38,6 +38,13 @@
             <div class="h-4 w-4 rounded-full bg-red-600"></div>
             <div class="h-4 w-4 rounded-full bg-yellow-300"></div>
             <div class="h-4 w-4 rounded-full bg-green-500"></div>
+            <div>Admin</div>
+            @* @{
+                if(ViewBag.nameUser != null)
+                {
+                    <div>@ViewBag.nameUser</div>
+                }
+            } *@
         </div>
 
         <!-- body -->
@@ -45,7 +52,7 @@
             <!-- ------------------------------------------------------------------------------------------- -->
 
             <!-- Admin-Message -->
-            <div class="row justify-between mb-10">
+            <div class="row justify-between mb-5">
                 <div class="space-y-4">
                     <div class="font-semibold">
                         <button class="rounded-full bg-green-800 px-4 py-2 text-sm font-normal" disabled>admin@gmail.com</button>
@@ -67,27 +74,23 @@
 
                     if (mess.Content is null || mess.Content == ""){} else{
                                 <!-- User-Message -->
-                                <div class="row justify-between text-end mb-10">
+                                <div class="row justify-between text-end mb-5">
                                     @{
                                 if (userType == "Admin")
                                 {
                                                     <div class="space-y-4">
-                                                        <div class="font-semibold flex justify-end" style="justify-content: flex-start;display: flex;">
-                                                            <button class="rounded-full bg-yellow-300 px-4 py-2 text-sm font-normal text-black" disabled>@userType</button>
-                                                        </div>
+                                                        
                                                         <div class="grid grid-cols-5" style="justify-content: flex-start;display: flex;">
                                                             <div class="col-span-3"></div>
                                                             <div class="col-span-2">
-                                                                <div class="rounded-2xl border px-4 py-2 text-start bg-green-700">@mess.Content</div>
+                                                                <div class="rounded-2xl border px-4 py-2 text-start ">@mess.Content</div>
                                                             </div>
                                                         </div>
                                                     </div>
                                 } else
                                 {
                                                     <div class="space-y-4">
-                                                        <div class="font-semibold flex justify-end">
-                                                            <button class="rounded-full bg-yellow-300 px-4 py-2 text-sm font-normal text-black" disabled>@userType</button>
-                                                        </div>
+                                                        
                                                         <div class="grid grid-cols-5" style="justify-content: flex-end;display: flex;">
                                                         <div class="col-span-3"></div>
                                                         <div class="col-span-2">
@@ -169,24 +172,25 @@
         connection.on("ReceiveMessage", function (user, message) {
             const chatArea = document.getElementById("chatArea");
             if (user == "Admin") {
-                chatArea.innerHTML += `<div class="row justify-between text-end">
-                                    <div class="space-y-4">
-                                                    <div class="font-semibold flex justify-start"><button class="rounded-full bg-yellow-300 px-4 py-2 text-sm font-normal text-black" disabled>${user}</button></div>
+                chatArea.innerHTML += 
+                                    `<div class="row justify-between text-end">
+                                            <div class="space-y-4">
+                                                  
                                                         <div class="grid grid-cols-5" style="justify-content: flex-start;display: flex;">
-                                                    <div class="col-span-3"></div>
-                                                    <div class="col-span-2">
-                                                                <div class="rounded-2xl border px-4 py-2 text-start bg-green-700">
-                                                                ${message}
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                                             <div class="col-span-3"></div>
+                                                               <div class="col-span-2">
+                                                                    <div class="rounded-2xl border px-4 py-2 text-start ">
+                                                                     ${message}
+                                                                     </div>
+                                                               </div>
+                                                             </div>
                                                 </div>
                                     </div>`
             } else {
                 chatArea.innerHTML +=
                     `<div class="row justify-between text-end">
                         <div class="space-y-4">
-                                        <div class="font-semibold flex justify-end"><button class="rounded-full bg-yellow-300 px-4 py-2 text-sm font-normal text-black" disabled>${user}</button></div>
+   
                                             <div class="grid grid-cols-5" style="justify-content: flex-end;display: flex;">
                                         <div class="col-span-3"></div>
                                         <div class="col-span-2">

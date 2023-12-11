@@ -114,33 +114,33 @@ namespace FlowerShop_Web.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "9ec82931-6689-4d81-bcc8-fb85c6dfaad5",
+                            Id = "ff739ad0-a48b-47ff-9c5f-2aa71c4f7db6",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "63201776-e806-4072-8a4b-32ea52c706ad",
+                            ConcurrencyStamp = "5eea95b2-f135-46e0-a9a1-61ddeeff6821",
                             Email = "user2@hotmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "USER2@HOTMAIL.COM",
                             NormalizedUserName = "USER2@HOTMAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEGHb+Go8ZASPOQfF9FEr3eBL3Ii7ox1aY7HmstvsMzSQ2aXJizn5NTSgLyECIa66VA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEBSJMXM3tkIA2fDXHEv1mbNNtaIWzy2xrpTx+yCqPRYIOCPnL5aoyzUgk3dCtzv9Ig==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "59d828ba-09f1-4dd1-9343-ca3aefb81af3",
+                            SecurityStamp = "ea904957-707f-49b1-8e13-980b90ab3a36",
                             TwoFactorEnabled = false,
                             UserName = "user2@hotmail.com"
                         },
                         new
                         {
-                            Id = "09409e55-c163-46a8-9566-d4fec30f30e6",
+                            Id = "03be5608-7a8a-4961-8f6a-363e8de81ea3",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "9453d34e-0fdd-441b-b83f-5e6d1c4944c9",
+                            ConcurrencyStamp = "bc9cbe05-8425-4c6f-94ad-3e51f37d909f",
                             Email = "user3@hotmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "USER3@HOTMAIL.COM",
                             NormalizedUserName = "USER3@HOTMAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAENXDiYDRBskil30r5vqbW4JzqdiI9bxgpTgWezr/lSTlg4UiV+2xoQH2XQz62O0PKQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEBBKZ7luB7cx4af/5FUBiZTzU7sXT1+7AN+v+Bfz0hcSjtDJDMkjC/ORAS6ZaYo4FQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "7f95ca3f-fecc-4bbc-a33d-ae541048d4b9",
+                            SecurityStamp = "94f104c3-09d4-47f4-8cf0-1892419f98d3",
                             TwoFactorEnabled = false,
                             UserName = "user3@hotmail.com"
                         });
@@ -378,6 +378,40 @@ namespace FlowerShop_Web.Migrations
                     b.HasIndex("ID_Product");
 
                     b.ToTable("FavoriteProductDetails");
+                });
+
+            modelBuilder.Entity("Flower_Models.Feedback", b =>
+                {
+                    b.Property<int>("FeedbackId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("FeedbackId"));
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Rate")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("FeedbackId");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Feedbacks");
                 });
 
             modelBuilder.Entity("Flower_Models.FlashSale", b =>
@@ -894,13 +928,13 @@ namespace FlowerShop_Web.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "9b783a59-e175-4f0a-987c-3e9787bcac1a",
+                            Id = "508fd932-05dc-4f9f-9411-8a166fdb9c93",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "2733f7ef-fca5-492b-a1a5-7982d4b35897",
+                            Id = "3c6015ea-44be-40d7-9a17-3f63d8f46af9",
                             Name = "Manager",
                             NormalizedName = "MANAGER"
                         });
@@ -995,13 +1029,13 @@ namespace FlowerShop_Web.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = "9ec82931-6689-4d81-bcc8-fb85c6dfaad5",
-                            RoleId = "2733f7ef-fca5-492b-a1a5-7982d4b35897"
+                            UserId = "ff739ad0-a48b-47ff-9c5f-2aa71c4f7db6",
+                            RoleId = "3c6015ea-44be-40d7-9a17-3f63d8f46af9"
                         },
                         new
                         {
-                            UserId = "09409e55-c163-46a8-9566-d4fec30f30e6",
-                            RoleId = "9b783a59-e175-4f0a-987c-3e9787bcac1a"
+                            UserId = "03be5608-7a8a-4961-8f6a-363e8de81ea3",
+                            RoleId = "508fd932-05dc-4f9f-9411-8a166fdb9c93"
                         });
                 });
 
@@ -1131,6 +1165,25 @@ namespace FlowerShop_Web.Migrations
                     b.Navigation("FavoriteProducts");
 
                     b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("Flower_Models.Feedback", b =>
+                {
+                    b.HasOne("Flower_Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Flower_Models.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Flower_Models.ManagerUserProduct", b =>

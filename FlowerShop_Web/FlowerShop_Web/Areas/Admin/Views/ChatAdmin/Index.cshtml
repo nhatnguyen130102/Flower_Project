@@ -80,6 +80,17 @@
                     <div class="h-4 w-4 rounded-full bg-red-600"></div>
                     <div class="h-4 w-4 rounded-full bg-yellow-300"></div>
                     <div class="h-4 w-4 rounded-full bg-green-500"></div>
+                    @{
+                        string idroom1 = ViewBag.room as string;
+                        if(idroom1 != null)
+                        {
+                            var user1 = _context.ApplicationUsers.FirstOrDefault(x => x.Id == idroom1);
+                            if(user1 != null)
+                            {
+                                <div> @user1.UserName</div> 
+                            }
+                        }
+                    }
                 </div>
 
                 <!-- chat-box-users-list -->
@@ -100,18 +111,16 @@
                                 else
                                 {
                                     <!-- User-Message -->
-                                    <div class="row justify-between text-end mb-10">
+                                    <div class="row justify-between text-end  ">
                                         @{
                                             if (userType != "Admin")
                                             {
                                                 <div class="space-y-4">
-                                                    <div class="font-semibold flex justify-end" style="justify-content: flex-start;display: flex;">
-                                                        <button class="rounded-full bg-yellow-300 px-4 py-2 text-sm font-normal text-black" disabled>@userType</button>
-                                                    </div>
+                                                    
                                                     <div class="grid grid-cols-5" style="justify-content: flex-start;display: flex;">
                                                         <div class="col-span-3"></div>
                                                         <div class="col-span-2">
-                                                            <div class="rounded-2xl border px-4 py-2 text-start bg-green-700">@mess.Content</div>
+                                                            <div class="rounded-2xl border px-4 py-2 text-start ">@mess.Content</div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -119,9 +128,7 @@
                                             else
                                             {
                                                 <div class="space-y-4">
-                                                    <div class="font-semibold flex justify-end">
-                                                        <button class="rounded-full bg-yellow-300 px-4 py-2 text-sm font-normal text-black" disabled>@userType</button>
-                                                    </div>
+                                                    
                                                     <div class="grid grid-cols-5" style="justify-content: flex-end;display: flex;">
                                                         <div class="col-span-3"></div>
                                                         <div class="col-span-2">
@@ -220,13 +227,12 @@
     connection.on("ReceiveMessage", function (user, message) {
         const chatArea = document.getElementById("chatArea");
         if (user != "Admin") {
-            chatArea.innerHTML += `<div class="row justify-between text-end">
+            chatArea.innerHTML += `<div class="row justify-between text-end" style="margin:0;">
                             <div class="space-y-4">
-                                            <div class="font-semibold flex justify-start"><button class="rounded-full bg-yellow-300 px-4 py-2 text-sm font-normal text-black" disabled>${user}</button></div>
-                                                <div class="grid grid-cols-5" style="justify-content: flex-start;display: flex;">
+                                            <div class="grid grid-cols-5" style="justify-content: flex-start;display: flex;">
                                             <div class="col-span-3"></div>
                                             <div class="col-span-2">
-                                                        <div class="rounded-2xl border px-4 py-2 text-start bg-green-700">
+                                                        <div class="rounded-2xl border px-4 py-2 text-start">
                                                         ${message}
                                                 </div>
                                             </div>
@@ -237,7 +243,7 @@
             chatArea.innerHTML +=
                 `<div class="row justify-between text-end">
                             <div class="space-y-4">
-                                            <div class="font-semibold flex justify-end"><button class="rounded-full bg-yellow-300 px-4 py-2 text-sm font-normal text-black" disabled>${user}</button></div>
+                                            
                                             <div class="grid grid-cols-5" style="justify-content: flex-end;display: flex;">
                                             <div class="col-span-3"></div>
                                             <div class="col-span-2">
@@ -266,10 +272,6 @@
         function scrollToBottom() {
             scrollingDiv.scrollTop(scrollingDiv[0].scrollHeight);
         }
-
-        // Gọi hàm scrollToBottom khi nội dung được thay đổi
-        // Ví dụ: scrollingDiv.append("Nội dung mới");
-        // Thay đổi nội dung và cuộn xuống dưới cùng
         scrollToBottom();
     });
 </script>

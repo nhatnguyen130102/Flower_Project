@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "E:\\Document\\VS\\New_Project_1\\FlowerShop_Web\\Flower_Models\\Flower_Models.csproj": {}
+    "C:\\Users\\GF\\Documents\\Nam_4\\ecommerce\\FW-6\\Flower_Project\\FlowerShop_Web\\Flower_Models\\Flower_Models.csproj": {}
   },
   "projects": {
-    "E:\\Document\\VS\\New_Project_1\\FlowerShop_Web\\Flower_Models\\Flower_Models.csproj": {
+    "C:\\Users\\GF\\Documents\\Nam_4\\ecommerce\\FW-6\\Flower_Project\\FlowerShop_Web\\Flower_Models\\Flower_Models.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\Document\\VS\\New_Project_1\\FlowerShop_Web\\Flower_Models\\Flower_Models.csproj",
+        "projectUniqueName": "C:\\Users\\GF\\Documents\\Nam_4\\ecommerce\\FW-6\\Flower_Project\\FlowerShop_Web\\Flower_Models\\Flower_Models.csproj",
         "projectName": "Flower_Models",
-        "projectPath": "E:\\Document\\VS\\New_Project_1\\FlowerShop_Web\\Flower_Models\\Flower_Models.csproj",
-        "packagesPath": "C:\\Users\\nhatn\\.nuget\\packages\\",
-        "outputPath": "E:\\Document\\VS\\New_Project_1\\FlowerShop_Web\\Flower_Models\\obj\\",
+        "projectPath": "C:\\Users\\GF\\Documents\\Nam_4\\ecommerce\\FW-6\\Flower_Project\\FlowerShop_Web\\Flower_Models\\Flower_Models.csproj",
+        "packagesPath": "C:\\Users\\GF\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\GF\\Documents\\Nam_4\\ecommerce\\FW-6\\Flower_Project\\FlowerShop_Web\\Flower_Models\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\nhatn\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\GF\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [

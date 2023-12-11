@@ -41,6 +41,7 @@ namespace FlowerShop_Web.Controllers
             if (_signInManager.IsSignedIn(User))
             {
                 var user = await _userManager.GetUserAsync(User);
+                TempData["UserId"] = user.Id;
                 if (user != null)
                 {
                     var getFavorite = await _context.FavoriteProducts.Where(x => x.ID_Customer == user.Id).FirstOrDefaultAsync();
@@ -169,6 +170,7 @@ namespace FlowerShop_Web.Controllers
             {
                 return NotFound();
             }
+            TempData["ProductId"] = id;
             var flashsale = await _context.FlashSales.FindAsync(product.ID_FlashSale);
             if (flashsale != null)
             {
@@ -179,7 +181,13 @@ namespace FlowerShop_Web.Controllers
                 ViewBag.FlashSale = null;
             }
             // đếm lượt xem sản phẩm
-            product.ViewCount++;
+            if (product.ViewCount == null)
+            {
+                product.ViewCount = 1;
+            }
+            else 
+                product.ViewCount++;
+            _context.Products.Update(product);
             _context.SaveChanges();
             // Đếm lượt xem sản phẩm khi user login
             var user = await _userManager.GetUserAsync(User);
@@ -190,10 +198,75 @@ namespace FlowerShop_Web.Controllers
                 if (MUP != null)
                 {
                     MUP.ViewCount++;
+                    _context.ManagerUserProducts.Update(MUP);
+                    _context.SaveChanges();
+                } else
+                {
+                    ManagerUserProduct newMUP = new ManagerUserProduct()
+                    {
+                        ID_Customer = user.Id,
+                        ID_Product = (int)id,
+                        ViewCount = 1,
+                    };
+                    _context.ManagerUserProducts.Add(newMUP);
                     _context.SaveChanges();
                 }
             }
+            // recommend Product 
+            var currentProduct = _context.Products.Find(id);
+
+            var recommendedProducts = _context.Products
+            .Where(p =>
+                p.ID_ProductType == currentProduct.ID_ProductType &&
+                p.ID_Occasion == currentProduct.ID_Occasion &&
+                p.size == currentProduct.size &&
+                p.ID_Product != id && // Loại trừ sản phẩm hiện tại
+                p.isAvailabled &&
+                !p.isDiscontinued)
+            .OrderByDescending(p => p.Rating) // Sắp xếp theo Rating giảm dần
+            .Take(5) // Giới hạn số lượng sản phẩm được đề xuất
+            .ToList();
+            // Lấy danh sách 2 sản phẩm được bán chạy nhất trong 30 ngày gần nhất
+            var topSellingProducts = _context.BillDetails
+                .Where(bd => bd.Bill.CreatedAt >= DateTime.Now.AddDays(-30))
+                .GroupBy(bd => bd.ID_Product)
+                .OrderByDescending(group => group.Sum(bd => bd.Product_Quantity))
+                .Take(5)
+                .Select(group => group.Key)
+                .ToList();
+
+            // Lấy thông tin chi tiết của các sản phẩm từ bảng Product
+            var topSellproduct = _context.Products
+                .Where(p => topSellingProducts.Contains(p.ID_Product))
+                .ToList();
+            // Hợp nhất danh sách sản phẩm được đề xuất và danh sách sản phẩm bán chạy nhất
+            recommendedProducts = recommendedProducts.Union(topSellproduct).Take(4).ToList();
+            ViewBag.recommendProduct = recommendedProducts;
             return View(product);
+        }
+
+        [HttpPost]
+        public IActionResult SubmitFeedback(Feedback feedback)
+        {
+            if (TempData.TryGetValue("ProductId", out var productId) && TempData.TryGetValue("UserId", out var idUser))
+            {
+                Feedback newFeedback = new Feedback()
+                {
+                    FeedbackId = feedback.FeedbackId,
+                    Content = feedback.Content,
+                    CreatedAt = DateTime.Now,
+                    UserId = idUser.ToString(),
+                    ProductId = int.Parse(productId.ToString()),
+                    Rate = feedback.Rate,
+
+                };
+                _context.Feedbacks.Add(newFeedback);
+                _context.SaveChanges();
+                TempData.Remove("ProductId");
+                return RedirectToAction("ProductDetails", new { id = productId });
+            }
+                /// Lưu DB
+                return RedirectToAction("Index");
         }
     }
 }

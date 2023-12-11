@@ -43,6 +43,7 @@
 </script>
 
 
+
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
@@ -114,7 +115,7 @@
 
     <div class="row mb-5">
         <div class="col-9">
-            <span class="mt-5 mb-2 font-bold text-2xl">Biểu đồ doanh thu từng ngày trong tháng hiện tại</span>
+            <span class="mt-5 mb-2 font-bold text-2xl">Biểu đồ doanh thu từng ngày trong tháng</span>
             <canvas id="barChart"
                     data-te-dataset-label="Biểu đồ doanh thu từng ngày trong tháng"
                     width="200"
@@ -123,10 +124,110 @@
         </div>
     </div>
 
+
+    <div class="font-bold text-2xl mt-20 mb-3">Thống kê tỉ lệ sản phẩm</div>
+    <div class="flex w-full max-w-screen-md flex-col items-center rounded-lg bg-white p-6 pb-6 shadow-xl sm:p-8">
+
+        <!-- graph-chart -->
+        <div class="flex w-full flex-grow items-end space-x-2 sm:space-x-3">
+            @{
+                ///Thống kê của từng Sản phẩm
+                var listProducts = _context.Products.ToList();
+                foreach (var product in listProducts)
+                {
+
+                // @if (SignInManager.IsSignedIn(User))
+                    // {
+                    //     @if (User.IsInRole("Admin"))
+                    //     {
+                    //         continue;
+                    //     }
+                    // }
+                    // // var roles = await UserManager.GetRolesAsync(User);
+                    // // if (roles.Contains("Admin"))
+                    // // {
+                    // //     continue;
+                    // // }
+                    int ProductQuantities = _context.BillDetails
+                    .Where(bd => bd.ID_Product == product.ID_Product) // Lọc theosản phẩm
+                    .Sum(bd => bd.Product_Quantity);
+
+                    var ratio1 = (product.ViewCount == 0) ? 0 : (ProductQuantities * 100.0 / product.ViewCount);
+
+
+                    var sumViewAndBuy = product.ViewCount + ProductQuantities;
+                    var percentView = 10;
+                    var percentQuantities = 10;
+                    if (product == null || product.ViewCount == 0)
+                    {
+                        if (ProductQuantities > 0)
+                        {
+                            if (ProductQuantities > product.ViewCount)
+                            {
+                                product.ViewCount = ProductQuantities;
+                                _context.Products.Update(product);
+                            }
+
+                            percentView = 50;
+                            percentQuantities = 50;
+                        }
+                    }
+                    else
+                    {
+                        if (sumViewAndBuy != 0)
+                        {
+                            percentView = (int)((product.ViewCount / (double)sumViewAndBuy) * 100);
+                            percentQuantities = 100 - percentView;
+                        }
+                        else
+                        {
+                            percentView = (int)product.ViewCount;
+                            percentQuantities = ProductQuantities;
+                        }
+                    }
+
+                    //<div> @percentView : @percentQuantities</div>
+                    <br />
+                    var temp1 = percentQuantities.ToString() + "px";
+                    var temp2 = @percentView.ToString() + "px";
+                    var temp3 = @ratio1.ToString() + "px";
+                    <!-- col-chart -->
+                    <div class="group relative flex flex-grow flex-col items-center pb-5">
+                        <span class="absolute top-0 -mt-6 hidden text-xs font-bold group-hover:block">$37,500</span>
+                        <div id="quantities" class="relative flex w-full justify-center bg-blue-100" style=" height:@temp1; width: 40px;"></div>
+                        <div id="views" class="relative flex w-full justify-center bg-blue-300" style="height: @temp2; width: 40px;"></div>
+                        <div class="relative flex w-full justify-center bg-blue-600" style="height: @temp3; width: 40px;"></div>
+                        <span class="absolute bottom-0 text-xs font-bold">@product.Name_Product</span>
+                    </div>
+
+                }
+            }
+        </div>
+
+        <!-- title -->
+        <div class="flex w-full mt-4">
+            <div class="flex items-center ml-auto">
+                <span class="block w-4 h-4 bg-blue-100"></span>
+                <span class="ml-1 text-xs font-medium">Lượt mua </span>
+            </div>
+            <div class="flex items-center ml-4">
+                <span class="block w-4 h-4 bg-blue-300"></span>
+                <span class="ml-1 text-xs font-medium">Lượt xem</span>
+            </div>
+            <div class="flex items-center ml-4">
+                <span class="block w-4 h-4 bg-blue-600"></span>
+                <span class="ml-1 text-xs font-medium">Tỉ lệ</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="font-bold text-2xl mt-20 mb-3">Thống kê lượt xem của sản phẩm</div>
     <div class="mb-5 w-3/5 overflow-hidden">
         <canvas id="line-chart"></canvas>
     </div>
 
+
+    <div class="font-bold text-2xl mt-20 mb-3">Thống kê doanh thu từng tháng</div>
     <div class="mx-auto w-3/5 overflow-hidden">
         <canvas id="radar-chart"></canvas>
     </div>
@@ -157,7 +258,7 @@
 
 
 
-    <div class="font-bold text-2xl mt-10 mb-3">Thống kê tỉ lệ mua hàng của khách</div>
+    <div class="font-bold text-2xl mt-20 mb-3">Thống kê tỉ lệ mua hàng của khách</div>
     <div class="flex gap-3 grid-cols-3">
         <!-- product-card-rating -->
         @{
@@ -243,105 +344,48 @@
     </div>
 
 
-    <div class="font-bold text-2xl mt-10 mb-3">Thống kê tỉ lệ sản phẩm</div>
-    <div class="my-3 w-75 space-y-4">
-        @{
-            ///Thống kê của từng Sản phẩm
-            var listProducts = _context.Products.ToList();
-            foreach (var product in listProducts)
-            {
-
-                // @if (SignInManager.IsSignedIn(User))
-                // {
-                //     @if (User.IsInRole("Admin"))
-                //     {
-                //         continue;
-                //     }
-                // }
-                // // var roles = await UserManager.GetRolesAsync(User);
-                // // if (roles.Contains("Admin"))
-                // // {
-                // //     continue;
-                // // }
-                int ProductQuantities = _context.BillDetails
-                .Where(bd => bd.ID_Product == product.ID_Product) // Lọc theosản phẩm
-                .Sum(bd => bd.Product_Quantity);
-
-                var ratio1 = (product.ViewCount == 0) ? 0 : (ProductQuantities * 100.0 / product.ViewCount);
-                <div>
-
-                    <div class="mb-1 flex justify-between">
-                        <span class="font-medium">@product.Name_Product</span>
-                        <div class="flex gap-6">
-                            <div class="opacity-30">
-                                <div class="flex gap-3 text-sm">
-                                    <div class="flex items-center gap-1">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-4 w-4">
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
-                                        </svg>
-                                        <span>@ProductQuantities</span>
-                                    </div>
-                                    <div class="flex items-center gap-1">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-4 w-4">
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                        </svg>
-                                        <span>@product.ViewCount</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <span class="text-sm">@ratio1?.ToString("0.##")%</span>
-                        </div>
-                    </div>
-                    <div class="h-2.5 w-full rounded-full bg-gray-200">
-                        <div class="h-2.5 rounded-full bg-gradient-to-r from-green-500 to-blue-500" style="width: @ratio1?.ToString("0.##")%"></div>
-                    </div>
-                </div>
-            }
-        }
-    </div>
 
 
-    <h3>doanh thu từng tháng</h3>
+    @* <h3>doanh thu từng tháng</h3>
     @{
-        var monthlyRevenueList = ViewBag.monthlyRevenueList;
-        if (monthlyRevenueList != null)
-        {
-            foreach (var item in monthlyRevenueList)
-            {
-                <p>@item.Month.ToString(("MM/yyyy")) : @item.Revenue.ToString() </p>
-            }
-        }
+    var monthlyRevenueList = ViewBag.monthlyRevenueList;
+    if (monthlyRevenueList != null)
+    {
+    foreach (var item in monthlyRevenueList)
+    {
+    <p>@item.Month.ToString(("MM/yyyy")) : @item.Revenue.ToString() </p>
+    }
+    }
     }
 
     <h3> doanh thu từng shop</h3>
     @{
-        var shopRevenueList = ViewBag.shopRevenueList;
-        if (shopRevenueList != null)
-        {
-            foreach (var item in shopRevenueList)
-            {
-                <p>@item.Name.ToString() : @item.Revenue.ToString() </p>
-            }
-        }
+    var shopRevenueList = ViewBag.shopRevenueList;
+    if (shopRevenueList != null)
+    {
+    foreach (var item in shopRevenueList)
+    {
+    <p>@item.Name.ToString() : @item.Revenue.ToString() </p>
+    }
+    }
     }
 
     <h2> location</h2>
     @{
 
-        var listShop = ViewBag.addressShops;
-        foreach (var item in listShop)
-        {
-            <p>@item</p>
-        }
-        var location = Context.Request.Cookies["Locations"];
-        <p>@location</p>
-        <p id="location"></p>
-        // if (Request.Cookies.TryGetValue("Locations", out string locationsString))
-        // {
-        //     List<string> locations = locationsString.Split(',').ToList();
-        //     // Ở đây, chúng ta sử dụng dấu phẩy để phân tách chuỗi và chuyển nó thành danh sách.
-        // }
+    var listShop = ViewBag.addressShops;
+    foreach (var item in listShop)
+    {
+    <p>@item</p>
+    }
+    var location = Context.Request.Cookies["Locations"];
+    <p>@location</p>
+    <p id="location"></p>
+    // if (Request.Cookies.TryGetValue("Locations", out string locationsString))
+    // {
+    //     List<string> locations = locationsString.Split(',').ToList();
+    //     // Ở đây, chúng ta sử dụng dấu phẩy để phân tách chuỗi và chuyển nó thành danh sách.
+    // }
     }
 
     <div id="distance-result-cookie"></div>
@@ -349,14 +393,15 @@
 
 
     <div class="text-center">
-        <h1 class="display-4">Tính khoảng cách giữa hai địa chỉ</h1>
-        @*  <input type="text" id="address1" placeholder="Địa chỉ 1" value="29 trần thị nghĩ phường 7 gò vấp, thành phố hồ chí minh" />
-        <input type="text" id="address2" placeholder="Địa chỉ 2" value="123 lê đức thọ quận gò vấp thành phố hồ chí minh" /> *@
-        <button id="calculate-distance">Tính khoảng cách</button>
-        <p id="distance-result"></p>
-        <p id="distance-result-map"></p>
-        <p id="nearest_Shop"></p>
-    </div>
+    <h1 class="display-4">Tính khoảng cách giữa hai địa chỉ</h1>
+    @*  <input type="text" id="address1" placeholder="Địa chỉ 1" value="29 trần thị nghĩ phường 7 gò vấp, thành phố hồ chí minh" />
+    <input type="text" id="address2" placeholder="Địa chỉ 2" value="123 lê đức thọ quận gò vấp thành phố hồ chí minh" /> *@
+    @* <button id="calculate-distance">Tính khoảng cách</button>
+    <p id="distance-result"></p>
+    <p id="distance-result-map"></p>
+    <p id="nearest_Shop"></p>
+    </div>  *@
+
 
 </section>
 
@@ -409,11 +454,11 @@
     const dataLine = {
         type: 'line',
         data: {
-            labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday '],
+            labels: ['Subtle Freshness', 'Classic Love', 'Aurore', 'Infinite Strength', 'More Than Words', 'Dressed in Pink', 'Pink Bloom', 'Floral Energy', 'Ice Cream', 'Always Near', 'Gentle Harmony', 'Romantic Date'],
             datasets: [
                 {
                     label: 'Biểu đồ lượt xem của sản phẩm',
-                    data: [2112, 2343, 2545, 3423, 2365, 1985, 987],
+                    data: [112, 143, 278, 323, 235, 150, 252, 111, 421, 237, 52, 89],
                 },
             ],
         },

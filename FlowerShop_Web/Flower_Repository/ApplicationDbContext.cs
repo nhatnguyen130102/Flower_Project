@@ -59,6 +59,8 @@ namespace Flower_Repository
         // Chat
         public DbSet<Room> Rooms { get; set; }
         public DbSet<Message> Messages { get; set; }
+        //feedback
+        public DbSet<Feedback> Feedbacks { get; set; }
 
 
         //private static void SeedRoles(ModelBuilder builder)
