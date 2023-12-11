@@ -6,7 +6,7 @@
 }
 
 
-<div class="w-5/6 mx-auto mt-2 mb-20">
+<div class="w-5/6 mx-auto mt-2 mb-24">
     <div class="rounded-3xl text-white shadow-md" style="background-image:url(https://images.unsplash.com/photo-1513297887119-d46091b24bfa?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D); box-shadow: inset 5px -100px 120px 40px rgba(0, 0, 0, 0.9);">
         <!-- top -->
         <div class="row flex gap-2 border-b px-8 py-5">
@@ -17,67 +17,46 @@
 
         <!-- body -->
         <div id="chatScroll" class="web-scrollbar w-full px-8 py-6" style="height: 720px; scroll-behavior:smooth; -ms-overflow-style: none; overflow-y: scroll; ">
-            <!-- ------------------------------------------------------------------------------------------- -->
-
-            <!-- Admin-Message -->
-            <div class="row justify-between mb-10">
-                <div class="space-y-4">
-                    <div class="font-semibold">
-                        <button class="rounded-full bg-green-800 px-4 py-2 text-sm font-normal" disabled>admin@gmail.com</button>
+            <div class="w-full text-center mb-5" style="color: lightgoldenrodyellow;">
+                <div class="flex justify-between">
+                    <div>
+                        00 : 00 : 00 A.M
                     </div>
-                    <div class="grid grid-cols-5">
-                        <div class="col-span-2">
-                            <div class="rounded-2xl border px-4 py-2 text-start">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Necessitatibus quisquam eum architecto temporibus exercitationem. Fugit.</div>
-                        </div>
-                        <div class="col-span-3"></div>
+                    <div>
+                        Wed, December 13, 2023
                     </div>
                 </div>
+                <div style="font-size: 10em" class="drop-shadow-md">𝔐𝔢𝔯𝔯𝔶 ℭ𝔥𝔯𝔦𝔰𝔱𝔪𝔞𝔰</div>
+                <div style="font-size: 20px; width: 30em" class="mx-auto font-semibold">Thank you for reaching out. We received your message and will reply to you within 24 hours.</div>
             </div>
-
-            <!-- ------------------------------------------------------------------------------------------- -->
             @{
                 foreach (var mess in Model)
                 {
                     var userType = mess.UserType == Flower_Models.UserType.User ? ViewBag.nameUser : "Admin";
 
-                    <!-- User-Message -->
-                    <div class="row justify-between text-end mb-10">
-                        @{
-                            if (userType == "Admin")
-                            {
-                                <div class="space-y-4">
-                                    <div class="font-semibold flex justify-end" style="justify-content: flex-start;display: flex;">
-                                        <button class="rounded-full bg-green-800 px-4 py-2 text-sm font-normal" disabled>@userType</button>
-                                    </div>
-                                    <div class="grid grid-cols-5" style="justify-content: flex-start;display: flex;">
-                                        <div class="col-span-3"></div>
-                                        <div class="col-span-2">
-                                            <div class="rounded-2xl border px-4 py-2 text-start">@mess.Content</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            }
-                            else
-                            {
-                                <div class="space-y-4">
-                                    <div class="font-semibold flex justify-end">
-                                        <button class="rounded-full bg-yellow-300 px-4 py-2 text-sm font-normal text-black" disabled>@userType</button>
-                                    </div>
-                                    <div class="grid grid-cols-5">
-                                        <div class="col-span-3"></div>
-                                        <div class="col-span-2">
-                                            <div class="rounded-2xl border px-4 py-2 text-start">@mess.Content</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            }
+                    if (mess.Content is null || mess.Content == "") { }
+                    else
+                    {
+                        if (userType != "Admin")
+                        {
+                            <div class="w-full flex mb-4 justify-end">
+                                <div class="rounded-3xl px-4 py-3 bg-green-900 bg-opacity-75 font-semibold" style="width: 400px">@mess.Content</div>
+                            </div>
                         }
-                    </div>
+                        else
+                        {
+                            <div class="w-full flex mb-4">
+                                <div class="rounded-3xl px-4 py-3 bg-black bg-opacity-75 font-semibold" style="width: 400px">@mess.Content</div>
+                            </div>
+                        }
+                    }
                 }
             }
             <!-- ------------------------------------------------------------------------------------------- -->
             <div id="chatArea" class="space-y-10"></div>
+            <!-- ------------------------------------------------------------------------------------------- -->
         </div>
+
         <!-- bottom -->
         <div class="row flex items-center justify-between px-8 pt-6 pb-10 gap-8">
             <div class="rounded-full bg-white p-3 text-black">
@@ -86,14 +65,12 @@
                 </svg>
             </div>
 
-            <input id="messageInput" type="text" class="w-full border-b rounded-full px-5 py-4 focus:outline-none text-black" placeholder="Type your message">
+            <input id="messageInput" type="text" class="w-full border-b rounded-full px-6 py-3 focus:outline-none text-black" placeholder="Type your message">
 
 
             <div class="flex w-auto gap-6">
-                <button class="rounded-full bg-white p-3 text-black" id="sendButton">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-6 w-6">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
-                    </svg>
+                <button class="rounded-full bg-yellow-300 hover:bg-yellow-400 py-3 px-6 text-black" id="sendButton">
+                    Send
                 </button>
                 <div class="rounded-full bg-white p-3 text-black">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-6 w-6">
@@ -133,20 +110,12 @@
 
         connection.on("ReceiveMessage", function (user, message) {
             const chatArea = document.getElementById("chatArea");
-            chatArea.innerHTML +=
-                `<div class="row justify-between text-end">
-                <div class="space-y-4">
-                                <div class="font-semibold flex justify-end"><button class="rounded-full bg-yellow-300 px-4 py-2 text-sm font-normal text-black" disabled>${user}</button></div>
-                            <div class="grid grid-cols-5">
-                                <div class="col-span-3"></div>
-                                <div class="col-span-2">
-                                    <div class="rounded-2xl border px-4 py-2 text-start">
-                                            ${message}
-                                    </div>
-                                </div>
-                            </div>
-                            </div>
-                </div>`
+        if (message == "") { }
+        else {
+            chatArea.innerHTML +=`<div class="w-full flex mb-4 justify-end">
+                                        <div class="rounded-3xl px-4 py-3 bg-green-900 bg-opacity-75 font-semibold" style="width: 400px">${message}</div>
+                                </div>`
+        }
 
 
         var scrollingDiv = $("#chatScroll");
