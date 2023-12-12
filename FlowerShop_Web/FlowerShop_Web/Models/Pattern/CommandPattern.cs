@@ -1,4 +1,4 @@
-﻿using Flower_Repository;
+﻿using FloweShop_Web.Models.Flower_Repository;
 
 namespace FlowerShop_Web.Models.Pattern
 {

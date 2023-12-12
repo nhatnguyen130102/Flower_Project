@@ -1,21 +1,14 @@
-﻿using DesignPattern;
-using Elfie.Serialization;
-using Flower_Models;
-using Flower_Repository;
+﻿using FlowerShop_Web.Models.DesignPattern;
+using FlowerShop_Web.Models.Flower_Models;
+using FloweShop_Web.Models.Flower_Repository;
 using FlowerShop_Web.Models.Pattern;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using NuGet.Packaging.Signing;
-using System.Collections.Immutable;
-using System.Net.WebSockets;
 
 namespace FlowerShop_Web.Areas.Admin.Controllers
 {
     [Area("Admin")]
-
-
     public class BillController : Controller
     {
         private readonly ApplicationDbContext _context;

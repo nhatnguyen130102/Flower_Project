@@ -1,0 +1,21 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace FlowerShop_Web.Models.Flower_ViewModels
+{
+    public class VoucherVM
+    {
+        public int ID_Voucher { get; set; }
+        public string Code { get; set; }
+        public string Type { get; set; }
+        public double Discount { get; set; }
+        public DateTime StartedAt { get; set; }
+        public DateTime EndedAt { get; set; }
+        public int Voucher_Quantity { get; set; }
+        public double MinimumAmount { get; set; }
+        public bool IsActive { get; set; }
+    }
+}

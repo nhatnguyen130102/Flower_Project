@@ -1,4 +1,4 @@
-﻿using Flower_Repository;
+﻿using FloweShop_Web.Models.Flower_Repository;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FlowerShop_Web.Areas.Admin.Controllers

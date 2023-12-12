@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Flower_Models.Message>
+﻿@model IEnumerable<FlowerShop_Web.Models.Flower_Models.Message>
 
 @{
     ViewData["Title"] = "ChatUser";
@@ -70,7 +70,7 @@
             @{
                 foreach (var mess in Model)
                 {
-                    var userType = mess.UserType == Flower_Models.UserType.User ? ViewBag.nameUser : "Admin";
+                    var userType = mess.UserType == FlowerShop_Web.Models.Flower_Models.UserType.User ? ViewBag.nameUser : "Admin";
 
                     if (mess.Content is null || mess.Content == ""){} else{
                                 <!-- User-Message -->

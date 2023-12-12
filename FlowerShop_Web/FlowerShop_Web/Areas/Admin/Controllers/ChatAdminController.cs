@@ -1,10 +1,12 @@
-﻿using Flower_Models;
-using Flower_Repository;
+﻿using FlowerShop_Web.Models.Flower_Models;
+using FloweShop_Web.Models.Flower_Repository;
 using FlowerShop_Web.Chat;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
-using System.Text.RegularExpressions;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace FlowerShop_Web.Areas.Admin.Controllers
 {
@@ -13,32 +15,33 @@ namespace FlowerShop_Web.Areas.Admin.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly IHubContext<ChatHub> _hubContext;
+
         public ChatAdminController(IHubContext<ChatHub> hubContext, ApplicationDbContext context)
         {
             _hubContext = hubContext;
             _context = context;
-            //_userManager = userManager;
         }
-
-
 
         public async Task<IActionResult> Index(string idRoom = null)
         {
             var listRoom = _context.Rooms.ToList();
             List<Room> noResponseMess = new List<Room>();
+
             foreach (var room in listRoom)
             {
                 var lastMessage = await _context.Messages
-                .Where(x => x.IdRoom == room.Id)
-                .OrderByDescending(x => x.Id)
-                .FirstOrDefaultAsync();
+                    .Where(x => x.IdRoom == room.Id)
+                    .OrderByDescending(x => x.Id)
+                    .FirstOrDefaultAsync();
 
                 if (lastMessage != null && lastMessage.UserType == UserType.User)
                 {
                     noResponseMess.Add(room);
                 }
             }
+
             ViewBag.noResponseMess = noResponseMess;
+
             // Sắp xếp listRoom
             listRoom.Sort((room1, room2) =>
             {
@@ -62,6 +65,7 @@ namespace FlowerShop_Web.Areas.Admin.Controllers
                     return 0; // Giữ nguyên thứ tự
                 }
             });
+
             if (!string.IsNullOrEmpty(idRoom))
             {
                 var listMess = _context.Messages.Where(x => x.IdRoom == idRoom).ToList();
@@ -70,12 +74,14 @@ namespace FlowerShop_Web.Areas.Admin.Controllers
             }
             else
             {
-                var listMess = _context.Messages.Where(x => x.IdRoom == listRoom[0].Id);
+                var listMess = _context.Messages.Where(x => x.IdRoom == listRoom[0].Id).ToList();
                 ViewBag.listMess = listMess;
                 ViewBag.room = listRoom[0].Id;
             }
+
             return View(listRoom);
         }
+
         //public IActionResult AddRoom(string roomName)
         //{
         //    // Thêm phòng vào cơ sở dữ liệu
@@ -88,11 +94,11 @@ namespace FlowerShop_Web.Areas.Admin.Controllers
 
         //    return RedirectToAction("Index");
         //}
+
         public async Task<IActionResult> SendMessage(string user, string message)
         {
             await _hubContext.Clients.All.SendAsync("ReceiveMessage", user, message);
             return Ok();
         }
-
     }
 }

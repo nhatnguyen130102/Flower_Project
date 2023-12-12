@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "EqgADlY/P/k+eQWuT9pVv6SK5aL07JIIOJN20uveU1Dl2Sv6nkWp0o78FIqsxk7npuJ9kQTOo3xS6y1pZhO0Zw==",
+  "dgSpecHash": "FSSaW8FKAK1sdlqLRmMEVNEgA+AqXBZIFMBs74MC18PYUyYSPGIi8g+P6LX/yEQOJ9afvpB0t+en5MEPUC2sag==",
   "success": true,
-  "projectFilePath": "C:\\Users\\GF\\Documents\\Nam_4\\ecommerce\\FW-6\\Flower_Project\\FlowerShop_Web\\FlowerShop_Web\\FlowerShop_Web.csproj",
+  "projectFilePath": "C:\\Users\\GF\\Documents\\Nam_4\\ecommerce\\FW-7\\Flower_Project\\FlowerShop_Web\\FlowerShop_Web\\FlowerShop_Web.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\GF\\.nuget\\packages\\azure.core\\1.36.0\\azure.core.1.36.0.nupkg.sha512",
     "C:\\Users\\GF\\.nuget\\packages\\azure.identity\\1.7.0\\azure.identity.1.7.0.nupkg.sha512",

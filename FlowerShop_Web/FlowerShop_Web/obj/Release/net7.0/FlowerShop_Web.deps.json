@@ -9,12 +9,7 @@
       "FlowerShop_Web/1.0.0": {
         "dependencies": {
           "Azure.Search.Documents": "11.5.1",
-          "DesignPattern": "1.0.0",
           "EPPlus": "7.0.2",
-          "Flower_Models": "1.0.0",
-          "Flower_Repository": "1.0.0",
-          "Flower_Services": "1.0.0",
-          "Flower_ViewModels": "1.0.0",
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "7.0.13",
           "Microsoft.AspNetCore.Identity.UI": "7.0.12",
           "Microsoft.AspNetCore.Session": "2.2.0",
@@ -3129,90 +3124,6 @@
             "fileVersion": "8.4.7.0"
           }
         }
-      },
-      "DesignPattern/1.0.0": {
-        "dependencies": {
-          "Azure.Search.Documents": "11.5.1",
-          "Flower_Models": "1.0.0",
-          "Flower_Repository": "1.0.0",
-          "Flower_Services": "1.0.0",
-          "Flower_ViewModels": "1.0.0",
-          "Microsoft.Azure.Cosmos": "3.37.0",
-          "PayPal.Api": "1.0.6",
-          "PayPalCoreSDK": "1.7.1"
-        },
-        "runtime": {
-          "DesignPattern.dll": {}
-        }
-      },
-      "Flower_Models/1.0.0": {
-        "dependencies": {
-          "Azure.Search.Documents": "11.5.1",
-          "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "7.0.13",
-          "Microsoft.AspNetCore.Session": "2.2.0",
-          "Microsoft.Azure.Cosmos": "3.37.0",
-          "Microsoft.EntityFrameworkCore.SqlServer": "7.0.13",
-          "Microsoft.Extensions.Caching.Memory": "8.0.0",
-          "PayPal.Api": "1.0.6",
-          "PayPalCoreSDK": "1.7.1",
-          "X.PagedList": "8.4.7"
-        },
-        "runtime": {
-          "Flower_Models.dll": {}
-        }
-      },
-      "Flower_Repository/1.0.0": {
-        "dependencies": {
-          "Azure.Search.Documents": "11.5.1",
-          "Flower_Models": "1.0.0",
-          "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "7.0.13",
-          "Microsoft.AspNetCore.Identity.UI": "7.0.12",
-          "Microsoft.AspNetCore.Session": "2.2.0",
-          "Microsoft.Azure.Cosmos": "3.37.0",
-          "Microsoft.EntityFrameworkCore.SqlServer": "7.0.13",
-          "Microsoft.Extensions.Caching.Memory": "8.0.0",
-          "PayPal.Api": "1.0.6",
-          "PayPalCoreSDK": "1.7.1",
-          "X.PagedList": "8.4.7"
-        },
-        "runtime": {
-          "Flower_Repository.dll": {}
-        }
-      },
-      "Flower_Services/1.0.0": {
-        "dependencies": {
-          "Azure.Search.Documents": "11.5.1",
-          "EPPlus": "7.0.2",
-          "Flower_Models": "1.0.0",
-          "Flower_Repository": "1.0.0",
-          "Microsoft.AspNetCore.Identity.UI": "7.0.12",
-          "Microsoft.AspNetCore.Session": "2.2.0",
-          "Microsoft.Azure.Cosmos": "3.37.0",
-          "Microsoft.Extensions.Caching.Memory": "8.0.0",
-          "PayPal.Api": "1.0.6",
-          "PayPalCoreSDK": "1.7.1",
-          "SendGrid": "9.28.1",
-          "X.PagedList": "8.4.7"
-        },
-        "runtime": {
-          "Flower_Services.dll": {}
-        }
-      },
-      "Flower_ViewModels/1.0.0": {
-        "dependencies": {
-          "Azure.Search.Documents": "11.5.1",
-          "Flower_Models": "1.0.0",
-          "Flower_Repository": "1.0.0",
-          "Flower_Services": "1.0.0",
-          "Microsoft.AspNetCore.Session": "2.2.0",
-          "Microsoft.Azure.Cosmos": "3.37.0",
-          "Microsoft.Extensions.Caching.Memory": "8.0.0",
-          "PayPal.Api": "1.0.6",
-          "PayPalCoreSDK": "1.7.1"
-        },
-        "runtime": {
-          "Flower_ViewModels.dll": {}
-        }
       }
     }
   },
@@ -5125,31 +5036,6 @@
       "sha512": "sha512-ZA1WcyNviMUhivCgwKAm/5/YsNP3Yf/n81SzrPaHSJOcFzavA9MrXTT8M+ZX4fvHwLCL1bY6BPXvwZF5pRtgTg==",
       "path": "x.pagedlist/8.4.7",
       "hashPath": "x.pagedlist.8.4.7.nupkg.sha512"
-    },
-    "DesignPattern/1.0.0": {
-      "type": "project",
-      "serviceable": false,
-      "sha512": ""
-    },
-    "Flower_Models/1.0.0": {
-      "type": "project",
-      "serviceable": false,
-      "sha512": ""
-    },
-    "Flower_Repository/1.0.0": {
-      "type": "project",
-      "serviceable": false,
-      "sha512": ""
-    },
-    "Flower_Services/1.0.0": {
-      "type": "project",
-      "serviceable": false,
-      "sha512": ""
-    },
-    "Flower_ViewModels/1.0.0": {
-      "type": "project",
-      "serviceable": false,
-      "sha512": ""
     }
   }
 }

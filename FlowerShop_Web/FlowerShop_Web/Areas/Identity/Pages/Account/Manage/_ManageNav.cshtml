@@ -1,4 +1,4 @@
-﻿@using Flower_Models;
+﻿@using FlowerShop_Web.Models.Flower_Models;
 @inject SignInManager<ApplicationUser> SignInManager
 @{
     var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();

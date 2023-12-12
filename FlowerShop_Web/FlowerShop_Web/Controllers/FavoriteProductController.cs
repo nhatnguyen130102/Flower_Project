@@ -1,6 +1,6 @@
-﻿using DesignPattern;
-using Flower_Models;
-using Flower_Repository;
+﻿using FlowerShop_Web.Models.DesignPattern;
+using FlowerShop_Web.Models.Flower_Models;
+using FloweShop_Web.Models.Flower_Repository;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;

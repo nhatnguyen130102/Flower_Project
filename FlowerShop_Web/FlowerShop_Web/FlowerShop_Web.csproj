@@ -30,14 +30,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DesignPattern\DesignPattern.csproj" />
-    <ProjectReference Include="..\Flower_Models\Flower_Models.csproj" />
-    <ProjectReference Include="..\Flower_Repository\Flower_Repository.csproj" />
-    <ProjectReference Include="..\Flower_Services\Flower_Services.csproj" />
-    <ProjectReference Include="..\Flower_ViewModels\Flower_ViewModels.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Folder Include="Areas\Customer\Controllers\" />
     <Folder Include="Areas\Customer\Views\" />
     <Folder Include="wwwroot\images\materials\" />

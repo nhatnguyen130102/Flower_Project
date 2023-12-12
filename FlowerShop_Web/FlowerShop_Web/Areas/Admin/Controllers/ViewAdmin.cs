@@ -1,6 +1,6 @@
-﻿using Flower_Models;
-using Flower_Repository;
-using Flower_ViewModels;
+﻿using FlowerShop_Web.Models.Flower_Models;
+using FloweShop_Web.Models.Flower_Repository;
+using FlowerShop_Web.Models.Flower_ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -14,7 +14,6 @@ namespace FlowerShop_Web.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [Authorize(Roles = "Admin")]
-
     public class ViewAdmin : Controller
     {
         private readonly ApplicationDbContext _context;

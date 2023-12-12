@@ -1,16 +1,17 @@
-﻿using Flower_Repository;
+﻿using FloweShop_Web.Models.Flower_Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.CodeAnalysis.Emit;
-using Flower_Models;
+using FlowerShop_Web.Models.Flower_Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Flower_Services;
-using DesignPattern;
+using FlowerShop_Web.Models.Flower_Services;
+using FlowerShop_Web.Models.DesignPattern;
 using FlowerShop_Web.Models.Pattern;
 using FlowerShop_Web.Chat;
+using FlowerShop_Web.Models.Flower_Reponsitory;
 
 var builder = WebApplication.CreateBuilder(args);
 

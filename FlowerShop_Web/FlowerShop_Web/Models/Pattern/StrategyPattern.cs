@@ -1,6 +1,6 @@
 ﻿using Azure.Core;
-using Flower_Models;
-using Flower_Repository;
+using FlowerShop_Web.Models.Flower_Models;
+using FloweShop_Web.Models.Flower_Repository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;

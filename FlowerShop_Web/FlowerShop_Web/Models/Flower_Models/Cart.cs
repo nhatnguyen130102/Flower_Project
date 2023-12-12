@@ -1,0 +1,29 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace FlowerShop_Web.Models.Flower_Models
+{
+    public class Cart
+    {
+        [Key]
+        public int ID_Cart { get; set; }
+        public string? ID_Customer { get; set; }
+
+        // Mối quan hệ với Customer
+        [ForeignKey("ID_Customer")]
+        public ApplicationUser? ApplicationUser { get; set; }
+      
+        public List<CartDetails>? CartDetails { get; set; }
+
+        public Cart()
+        {
+            CartDetails = new List<CartDetails>();
+        }
+    }
+
+}

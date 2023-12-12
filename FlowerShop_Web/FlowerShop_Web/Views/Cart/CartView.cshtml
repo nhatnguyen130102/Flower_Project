@@ -1,9 +1,10 @@
-﻿@model IEnumerable<Flower_Models.CartDetails>
+﻿@model IEnumerable<FlowerShop_Web.Models.Flower_Models.CartDetails>
 @{
     ViewData["Title"] = "Cart";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-@using Flower_Repository;
+@using FloweShop_Web.Models.Flower_Repository;
+@using FlowerShop_Web.Models.Flower_Reponsitory;
 @using Microsoft.AspNetCore.Identity;
 @inject ApplicationDbContext _context
 <!DOCTYPE html>

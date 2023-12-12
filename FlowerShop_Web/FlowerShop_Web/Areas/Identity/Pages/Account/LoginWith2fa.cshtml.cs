@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
-using Flower_Models;
+using FlowerShop_Web.Models.Flower_Models;
 
 namespace FlowerShop_Web.Areas.Identity.Pages.Account
 {

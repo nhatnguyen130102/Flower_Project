@@ -4790,115 +4790,6 @@
         "runtime": {
           "lib/net7.0/X.PagedList.dll": {}
         }
-      },
-      "DesignPattern/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v7.0",
-        "dependencies": {
-          "Azure.Search.Documents": "11.5.1",
-          "Flower_Models": "1.0.0",
-          "Flower_Repository": "1.0.0",
-          "Flower_Services": "1.0.0",
-          "Flower_ViewModels": "1.0.0",
-          "Microsoft.Azure.Cosmos": "3.37.0",
-          "PayPal.Api": "1.0.6",
-          "PayPalCoreSDK": "1.7.1"
-        },
-        "compile": {
-          "bin/placeholder/DesignPattern.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/DesignPattern.dll": {}
-        }
-      },
-      "Flower_Models/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v7.0",
-        "dependencies": {
-          "Azure.Search.Documents": "11.5.1",
-          "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "7.0.13",
-          "Microsoft.AspNetCore.Session": "2.2.0",
-          "Microsoft.Azure.Cosmos": "3.37.0",
-          "Microsoft.EntityFrameworkCore.SqlServer": "7.0.13",
-          "Microsoft.Extensions.Caching.Memory": "8.0.0",
-          "PayPal.Api": "1.0.6",
-          "PayPalCoreSDK": "1.7.1",
-          "X.PagedList": "8.4.7"
-        },
-        "compile": {
-          "bin/placeholder/Flower_Models.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/Flower_Models.dll": {}
-        }
-      },
-      "Flower_Repository/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v7.0",
-        "dependencies": {
-          "Azure.Search.Documents": "11.5.1",
-          "Flower_Models": "1.0.0",
-          "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "7.0.13",
-          "Microsoft.AspNetCore.Identity.UI": "7.0.12",
-          "Microsoft.AspNetCore.Session": "2.2.0",
-          "Microsoft.Azure.Cosmos": "3.37.0",
-          "Microsoft.EntityFrameworkCore.SqlServer": "7.0.13",
-          "Microsoft.Extensions.Caching.Memory": "8.0.0",
-          "PayPal.Api": "1.0.6",
-          "PayPalCoreSDK": "1.7.1",
-          "X.PagedList": "8.4.7"
-        },
-        "compile": {
-          "bin/placeholder/Flower_Repository.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/Flower_Repository.dll": {}
-        }
-      },
-      "Flower_Services/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v7.0",
-        "dependencies": {
-          "Azure.Search.Documents": "11.5.1",
-          "EPPlus": "7.0.2",
-          "Flower_Models": "1.0.0",
-          "Flower_Repository": "1.0.0",
-          "Microsoft.AspNetCore.Identity.UI": "7.0.12",
-          "Microsoft.AspNetCore.Session": "2.2.0",
-          "Microsoft.Azure.Cosmos": "3.37.0",
-          "Microsoft.Extensions.Caching.Memory": "8.0.0",
-          "PayPal.Api": "1.0.6",
-          "PayPalCoreSDK": "1.7.1",
-          "SendGrid": "9.28.1",
-          "X.PagedList": "8.4.7"
-        },
-        "compile": {
-          "bin/placeholder/Flower_Services.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/Flower_Services.dll": {}
-        }
-      },
-      "Flower_ViewModels/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v7.0",
-        "dependencies": {
-          "Azure.Search.Documents": "11.5.1",
-          "Flower_Models": "1.0.0",
-          "Flower_Repository": "1.0.0",
-          "Flower_Services": "1.0.0",
-          "Microsoft.AspNetCore.Session": "2.2.0",
-          "Microsoft.Azure.Cosmos": "3.37.0",
-          "Microsoft.Extensions.Caching.Memory": "8.0.0",
-          "PayPal.Api": "1.0.6",
-          "PayPalCoreSDK": "1.7.1"
-        },
-        "compile": {
-          "bin/placeholder/Flower_ViewModels.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/Flower_ViewModels.dll": {}
-        }
       }
     }
   },
@@ -13478,42 +13369,12 @@
         "x.pagedlist.8.4.7.nupkg.sha512",
         "x.pagedlist.nuspec"
       ]
-    },
-    "DesignPattern/1.0.0": {
-      "type": "project",
-      "path": "../DesignPattern/DesignPattern.csproj",
-      "msbuildProject": "../DesignPattern/DesignPattern.csproj"
-    },
-    "Flower_Models/1.0.0": {
-      "type": "project",
-      "path": "../Flower_Models/Flower_Models.csproj",
-      "msbuildProject": "../Flower_Models/Flower_Models.csproj"
-    },
-    "Flower_Repository/1.0.0": {
-      "type": "project",
-      "path": "../Flower_Repository/Flower_Repository.csproj",
-      "msbuildProject": "../Flower_Repository/Flower_Repository.csproj"
-    },
-    "Flower_Services/1.0.0": {
-      "type": "project",
-      "path": "../Flower_Services/Flower_Services.csproj",
-      "msbuildProject": "../Flower_Services/Flower_Services.csproj"
-    },
-    "Flower_ViewModels/1.0.0": {
-      "type": "project",
-      "path": "../Flower_ViewModels/Flower_ViewModels.csproj",
-      "msbuildProject": "../Flower_ViewModels/Flower_ViewModels.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net7.0": [
       "Azure.Search.Documents >= 11.5.1",
-      "DesignPattern >= 1.0.0",
       "EPPlus >= 7.0.2",
-      "Flower_Models >= 1.0.0",
-      "Flower_Repository >= 1.0.0",
-      "Flower_Services >= 1.0.0",
-      "Flower_ViewModels >= 1.0.0",
       "Microsoft.AspNetCore.Identity.EntityFrameworkCore >= 7.0.13",
       "Microsoft.AspNetCore.Identity.UI >= 7.0.12",
       "Microsoft.AspNetCore.Session >= 2.2.0",
@@ -13537,11 +13398,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\GF\\Documents\\Nam_4\\ecommerce\\FW-6\\Flower_Project\\FlowerShop_Web\\FlowerShop_Web\\FlowerShop_Web.csproj",
+      "projectUniqueName": "C:\\Users\\GF\\Documents\\Nam_4\\ecommerce\\FW-7\\Flower_Project\\FlowerShop_Web\\FlowerShop_Web\\FlowerShop_Web.csproj",
       "projectName": "FlowerShop_Web",
-      "projectPath": "C:\\Users\\GF\\Documents\\Nam_4\\ecommerce\\FW-6\\Flower_Project\\FlowerShop_Web\\FlowerShop_Web\\FlowerShop_Web.csproj",
+      "projectPath": "C:\\Users\\GF\\Documents\\Nam_4\\ecommerce\\FW-7\\Flower_Project\\FlowerShop_Web\\FlowerShop_Web\\FlowerShop_Web.csproj",
       "packagesPath": "C:\\Users\\GF\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\GF\\Documents\\Nam_4\\ecommerce\\FW-6\\Flower_Project\\FlowerShop_Web\\FlowerShop_Web\\obj\\",
+      "outputPath": "C:\\Users\\GF\\Documents\\Nam_4\\ecommerce\\FW-7\\Flower_Project\\FlowerShop_Web\\FlowerShop_Web\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\GF\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -13557,23 +13418,7 @@
       "frameworks": {
         "net7.0": {
           "targetAlias": "net7.0",
-          "projectReferences": {
-            "C:\\Users\\GF\\Documents\\Nam_4\\ecommerce\\FW-6\\Flower_Project\\FlowerShop_Web\\DesignPattern\\DesignPattern.csproj": {
-              "projectPath": "C:\\Users\\GF\\Documents\\Nam_4\\ecommerce\\FW-6\\Flower_Project\\FlowerShop_Web\\DesignPattern\\DesignPattern.csproj"
-            },
-            "C:\\Users\\GF\\Documents\\Nam_4\\ecommerce\\FW-6\\Flower_Project\\FlowerShop_Web\\Flower_Models\\Flower_Models.csproj": {
-              "projectPath": "C:\\Users\\GF\\Documents\\Nam_4\\ecommerce\\FW-6\\Flower_Project\\FlowerShop_Web\\Flower_Models\\Flower_Models.csproj"
-            },
-            "C:\\Users\\GF\\Documents\\Nam_4\\ecommerce\\FW-6\\Flower_Project\\FlowerShop_Web\\Flower_Repository\\Flower_Repository.csproj": {
-              "projectPath": "C:\\Users\\GF\\Documents\\Nam_4\\ecommerce\\FW-6\\Flower_Project\\FlowerShop_Web\\Flower_Repository\\Flower_Repository.csproj"
-            },
-            "C:\\Users\\GF\\Documents\\Nam_4\\ecommerce\\FW-6\\Flower_Project\\FlowerShop_Web\\Flower_Services\\Flower_Services.csproj": {
-              "projectPath": "C:\\Users\\GF\\Documents\\Nam_4\\ecommerce\\FW-6\\Flower_Project\\FlowerShop_Web\\Flower_Services\\Flower_Services.csproj"
-            },
-            "C:\\Users\\GF\\Documents\\Nam_4\\ecommerce\\FW-6\\Flower_Project\\FlowerShop_Web\\Flower_ViewModels\\Flower_ViewModels.csproj": {
-              "projectPath": "C:\\Users\\GF\\Documents\\Nam_4\\ecommerce\\FW-6\\Flower_Project\\FlowerShop_Web\\Flower_ViewModels\\Flower_ViewModels.csproj"
-            }
-          }
+          "projectReferences": {}
         }
       },
       "warningProperties": {
@@ -13676,7 +13521,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.401\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.404\\RuntimeIdentifierGraph.json"
       }
     }
   },

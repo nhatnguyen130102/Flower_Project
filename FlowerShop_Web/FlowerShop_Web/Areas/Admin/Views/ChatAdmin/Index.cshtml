@@ -1,5 +1,5 @@
-﻿﻿@using Flower_Repository;
-@model IEnumerable<Flower_Models.Room>
+﻿@using FloweShop_Web.Models.Flower_Repository;
+@model IEnumerable<FlowerShop_Web.Models.Flower_Models.Room>
 @inject ApplicationDbContext _context;
 @{
     ViewData["Title"] = "Index";
@@ -24,7 +24,7 @@
 </div> *@
 <div class="w-full flex shadow-md rounded-2xl text-white" style="background-image:url(https://images.unsplash.com/photo-1513297887119-d46091b24bfa?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D); box-shadow: inset 5px -100px 120px 40px rgba(0, 0, 0, 0.9);">
     @{
-        var noResponseMess = ViewBag.noResponseMess as List<Flower_Models.Room>;
+        var noResponseMess = ViewBag.noResponseMess as List<FlowerShop_Web.Models.Flower_Models.Room>;
 
         <div class="w-1/3 p-4" style="border-right: 1px solid">
             @{
@@ -102,10 +102,10 @@
                         if (ViewBag.listMess != null)
                         {
 
-                            foreach (Flower_Models.Message mess in ViewBag.listMess)
+                            foreach (FlowerShop_Web.Models.Flower_Models.Message mess in ViewBag.listMess)
                             {
                                 var user = _context.ApplicationUsers.FirstOrDefault(x => x.Id == mess.IdRoom);
-                                var userType = mess.UserType == Flower_Models.UserType.User ? user.UserName : "Admin";
+                                var userType = mess.UserType == FlowerShop_Web.Models.Flower_Models.UserType.User ? user.UserName : "Admin";
 
                                 if (mess.Content is null || mess.Content == "") { }
                                 else

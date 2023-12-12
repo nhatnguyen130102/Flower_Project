@@ -1,13 +1,13 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
-@model IEnumerable<Flower_Models.Product>
+@model IEnumerable<FlowerShop_Web.Models.Flower_Models.Product>
 @inject ApplicationDbContext _context;
 @inject SignInManager<ApplicationUser> _signInManager;
 @inject UserManager<ApplicationUser> _userManager
-@using Flower_Models;
-@using Flower_Repository;
-@using Flower_ViewModels;
+@using FloweShop_Web.Models.Flower_Repository;
+@using FlowerShop_Web.Models.Flower_Models;
+@using FlowerShop_Web.Models.Flower_ViewModels;
 @using Microsoft.AspNetCore.Identity;
 @using Microsoft.EntityFrameworkCore;
 <section>

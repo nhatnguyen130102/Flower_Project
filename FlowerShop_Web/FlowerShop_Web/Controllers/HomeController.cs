@@ -1,5 +1,5 @@
-﻿using Flower_Models;
-using Flower_Repository;
+﻿using FlowerShop_Web.Models.Flower_Models;
+using FloweShop_Web.Models.Flower_Repository;
 using FlowerShop_Web.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -7,14 +7,14 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
-using Flower_ViewModels;
+using FlowerShop_Web.Models.Flower_ViewModels;
 using Microsoft.Identity.Client;
 using Newtonsoft.Json.Linq;
 using System.Net.WebSockets;
 using System.Net;
 using Microsoft.DotNet.Scaffolding.Shared.Messaging;
 using Microsoft.AspNetCore.Http.HttpResults;
-using DesignPattern;
+using FlowerShop_Web.Models.DesignPattern;
 
 namespace FlowerShop_Web.Controllers
 {
@@ -24,7 +24,7 @@ namespace FlowerShop_Web.Controllers
         private readonly ApplicationDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
-        private FlowerShop flowerShop;
+        private readonly FlowerShop flowerShop;
 
         public HomeController(ILogger<HomeController> logger, ApplicationDbContext context, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, FlowerShop flowerShop)
         {

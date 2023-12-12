@@ -1,15 +1,10 @@
-﻿using DesignPattern;
-using Flower_Models;
-using Flower_Repository;
-using Flower_Services;
-using Flower_ViewModels;
+﻿using FlowerShop_Web.Models.DesignPattern;
+using FlowerShop_Web.Models.Flower_Models;
+using FloweShop_Web.Models.Flower_Repository;
+using FlowerShop_Web.Models.Flower_ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
-using System;
-using System.Linq;
-using System.Net.WebSockets;
 
 namespace FlowerShop_Web.Controllers
 {
