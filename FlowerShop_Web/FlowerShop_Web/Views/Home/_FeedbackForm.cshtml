@@ -2,11 +2,11 @@
 
 <form asp-action="SubmitFeedback" asp-controller="Home" method="post">
     <div>
-        <h2>Feedback Form</h2>
+        <h2>Feedback</h2>
 
         <div>
-            <label asp-for="Content">Enter your feedback:</label>
-            <textarea asp-for="Content" rows="4" cols="50"></textarea>
+            <label asp-for="Content" class="text-sm leading-7 text-gray-600">Feedback:</label>
+            <textarea asp-for="Content" rows="4" cols="50" class="h-32 w-full resize-none rounded border border-gray-300 bg-white py-1 px-3 text-base leading-6 text-gray-700 outline-none transition-colors duration-200 ease-in-out focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200"></textarea>
         </div>
 
         <div>
@@ -19,7 +19,7 @@
             <input type="hidden" id="hdnRating" name="Rate"asp-for="Rate" />
         </div>
 
-        <button type="submit" onclick="return validateForm();">Submit feedback</button>
+        <button class="rounded border-0 bg-indigo-500 py-2 px-6 text-lg text-white hover:bg-indigo-600 focus:outline-none" ="submit" onclick="return validateForm();">Submit feedback</button>
     </div>
 </form>
 
